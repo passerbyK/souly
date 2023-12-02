@@ -11,7 +11,7 @@ jobs:
       - name: Setup Node.js for Backend
         uses: actions/setup-node@v2
         with:
-          node-version: '18'
+          node-version: "18"
 
       - name: Install Backend Dependencies
         run: yarn install
