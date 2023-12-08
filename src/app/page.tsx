@@ -14,7 +14,9 @@ export default function Home() {
       <header className="flex w-full flex-wrap items-center justify-between p-4 px-8 pt-8">
         <div className="mb-2 flex items-center justify-center gap-4 md:mb-0">
           <div className="mr-2 h-20 w-20">
-            <Image src="/souly.svg" alt="Souly Logo" className="w-full" />
+            <Link href="/" className="text-4xl">
+              <Image src="/souly.svg" alt="Souly Logo" className="w-full mr-2" width={20} height={20}/>
+            </Link>
           </div>
           <Link href="/introduction" className="text-4xl">
             About Us
@@ -36,13 +38,13 @@ export default function Home() {
         </div>
       </header>
       <div className="m-4 flex w-full flex-wrap items-center justify-center gap-20 p-8">
-        <div className="mb-4 w-full rounded-2xl border-4 border-bdr md:mb-0 md:mr-4 md:w-2/5">
-          <Image
-            src="/souly.svg"
-            alt="Souly Logo"
-            className="w-full rounded-2xl"
-          />
-        </div>
+        <Image
+          src="/souly.svg"
+          alt="Souly Logo"
+          className="mb-4 w-full rounded-2xl border-4 border-bdr md:mb-0 md:mr-4 md:w-2/5"
+          width={25}
+          height={25}
+        />
         <div className="mx-4 flex flex-col items-center gap-4 md:w-2/5">
           <h1 className="mb-16 text-center text-6xl font-bold text-description">
             Welcome to Souly !
