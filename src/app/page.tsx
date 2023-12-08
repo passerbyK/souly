@@ -15,7 +15,13 @@ export default function Home() {
         <div className="mb-2 flex items-center justify-center gap-4 md:mb-0">
           <div className="mr-2 h-20 w-20">
             <Link href="/" className="text-4xl">
-              <Image src="/souly.svg" alt="Souly Logo" className="w-full mr-2" width={20} height={20}/>
+              <Image
+                src="/souly.svg"
+                alt="Souly Logo"
+                className="mr-2 w-full"
+                width={20}
+                height={20}
+              />
             </Link>
           </div>
           <Link href="/introduction" className="text-4xl">
