@@ -34,21 +34,28 @@ export default function Introduction() {
     <main className="flex min-h-screen flex-col items-center bg-brand">
       <header className="fixed top-0 z-50 flex w-full items-center justify-between border-b-4 border-bdr bg-brand p-4 px-8">
         <div className="mb-2 flex items-center justify-center gap-4 md:mb-0">
-          <div className="mr-2 h-20 w-20">
-            <Link href="/" className="text-4xl">
-              <Image
-                src="/souly.svg"
-                alt="Souly Logo"
-                className="mr-2 w-full"
-                width={20}
-                height={20}
-              />
+          <div className="mr-2 h-25 w-25">
+            <Link href="/" className="flex text-4xl items-center mr-6">
+              <div className="h-20 w-20">
+                <Image
+                  src="/Logo_new.png"
+                  alt="Souly Logo"
+                  className="mr-2 w-full"
+                  width={20}
+                  height={20}
+                />
+              </div>
+              <p className="text-txt_2">S</p>
+              <p className="text-txt_3">O</p>
+              <p className="text-txt_2">U</p>
+              <p className="text-txt_3">L</p>
+              <p className="text-txt_2">Y</p>
             </Link>
           </div>
         </div>
         <div className="flex flex-wrap justify-center gap-4 md:justify-end">
           <Link
-            href="/signup"
+            href="/auth/signup"
             className="m-2 rounded-2xl border-4 border-bdr bg-btn_2 px-4 py-2 text-center text-3xl text-txt"
           >
             Start Painting

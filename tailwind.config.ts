@@ -20,7 +20,11 @@ module.exports = {
         brand: "#FBEFDF", // background color
         btn: "#F5B263", // button color
         btn_2: "#E5A582", // button-2 color
+        btn_3: "#D1C1A1", // button-3 color
         txt: "#7A4405", // text color
+        txt_2: "#D9875A", // text-2 color
+        txt_3: "#CFC1A1", // text-3 color
+        txt_4: "#846425", // text-4 color
         description: "#D88253", // description color
         bdr: "#7A4405", // border color
         border: "hsl(var(--border))",

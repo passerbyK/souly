@@ -13,30 +13,35 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center bg-brand">
       <header className="flex w-full flex-wrap items-center justify-between p-4 px-8 pt-8">
         <div className="mb-2 flex items-center justify-center gap-4 md:mb-0">
-          <div className="mr-2 h-20 w-20">
-            <Link href="/" className="text-4xl">
+          <Link href="/" className="flex text-4xl items-center mr-6">
+            <div className="h-20 w-20">
               <Image
-                src="/souly.svg"
+                src="/Logo_new.png"
                 alt="Souly Logo"
                 className="mr-2 w-full"
                 width={20}
                 height={20}
               />
-            </Link>
-          </div>
-          <Link href="/introduction" className="text-4xl">
+            </div>
+            <p className="text-txt_2">S</p>
+            <p className="text-txt_3">O</p>
+            <p className="text-txt_2">U</p>
+            <p className="text-txt_3">L</p>
+            <p className="text-txt_2">Y</p>
+          </Link>
+          <Link href="/introduction" className="m-2 rounded-2xl border-4 border-bdr bg-btn px-4 py-2 text-center text-3xl text-txt">
             About Us
           </Link>
         </div>
         <div className="flex flex-wrap justify-center gap-4 md:justify-end">
           <Link
-            href="/signin"
+            href="/auth/login"
             className="m-2 rounded-2xl border-4 border-bdr bg-btn_2 px-4 py-2 text-center text-3xl text-txt"
           >
             Sign In
           </Link>
           <Link
-            href="/signup"
+            href="/auth/signup"
             className="m-2 rounded-2xl border-4 border-bdr bg-btn px-4 py-2 text-center text-3xl text-txt"
           >
             Sign Up
@@ -66,7 +71,7 @@ export default function Home() {
             Create Your Soul
           </p>
           <Link
-            href="/signup"
+            href="/auth/signup"
             className="m-2 rounded-2xl border-4 border-bdr bg-btn px-4 py-2 text-center text-3xl text-txt"
           >
             Start Painting
