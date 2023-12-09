@@ -39,7 +39,7 @@ function SignUp() {
               </div>
             </Link>
             <div className="hidden md:flex items-center">
-              <p className="text-description mr-2">Welcome Back to</p>
+              <p className="text-description mr-2">Testing DEMO</p>
               <p className="text-txt_2">S</p>
               <p className="text-txt_3">O</p>
               <p className="text-txt_2">U</p>
