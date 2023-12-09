@@ -34,8 +34,8 @@ export default function Introduction() {
     <main className="flex min-h-screen flex-col items-center bg-brand">
       <header className="fixed top-0 z-50 flex w-full items-center justify-between border-b-4 border-bdr bg-brand p-4 px-8">
         <div className="mb-2 flex items-center justify-center gap-4 md:mb-0">
-          <div className="mr-2 h-25 w-25">
-            <Link href="/" className="flex text-4xl items-center mr-6">
+          <div className="h-25 w-25 mr-2">
+            <Link href="/" className="mr-6 flex items-center text-4xl">
               <div className="h-20 w-20">
                 <Image
                   src="/Logo_new.png"
