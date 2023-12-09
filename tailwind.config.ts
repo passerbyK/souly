@@ -18,6 +18,7 @@ module.exports = {
     extend: {
       colors: {
         brand: "#FBEFDF", // background color
+        brand_2: "#DFD3C4", // background-2 color
         btn: "#F5B263", // button color
         btn_2: "#E5A582", // button-2 color
         btn_3: "#D1C1A1", // button-3 color
@@ -27,6 +28,7 @@ module.exports = {
         txt_4: "#846425", // text-4 color
         description: "#D88253", // description color
         bdr: "#7A4405", // border color
+        bdr_2: "#E6B555", // border-2 color
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

@@ -23,3 +23,7 @@ yarn migrate
 ```bash
 yarn dev
 ```
+
+### Reference:
+1. https://github.com/joschan21/canvas-drawing-app
+2. https://github.com/LHRUN/paint-board/blob/main/src/hooks/event.ts
