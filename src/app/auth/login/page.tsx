@@ -42,7 +42,7 @@ function SignUp() {
               </div>
             </Link>
             <div className="hidden items-center md:flex">
-              <p className="mr-2 text-description">Testing DEMO</p>
+              <p className="mr-2 text-description">Welcome Back to</p>
               <p className="text-txt_2">S</p>
               <p className="text-txt_3">O</p>
               <p className="text-txt_2">U</p>
