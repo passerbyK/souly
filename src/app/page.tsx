@@ -13,7 +13,7 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center bg-brand">
       <header className="flex w-full flex-wrap items-center justify-between p-4 px-8 pt-8">
         <div className="mb-2 flex items-center justify-center gap-4 md:mb-0">
-          <Link href="/" className="flex text-4xl items-center mr-6">
+          <Link href="/" className="mr-6 flex items-center text-4xl">
             <div className="h-20 w-20">
               <Image
                 src="/Logo_new.png"
@@ -29,7 +29,10 @@ export default function Home() {
             <p className="text-txt_3">L</p>
             <p className="text-txt_2">Y</p>
           </Link>
-          <Link href="/introduction" className="m-2 rounded-2xl border-4 border-bdr bg-btn px-4 py-2 text-center text-3xl text-txt">
+          <Link
+            href="/introduction"
+            className="m-2 rounded-2xl border-4 border-bdr bg-btn px-4 py-2 text-center text-3xl text-txt"
+          >
             About Us
           </Link>
         </div>

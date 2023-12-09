@@ -13,15 +13,17 @@ type Props = {
 
 function AuthInput({ label, type, value, setValue }: Props) {
   return (
-    <div className="w-full flex flex-col gap-4 text-center items-center md:flex-row md:items-center mb-2">
-      <Label className="w-[200px] text-center text-xl md:justify-center">{label}</Label>
+    <div className="mb-2 flex w-full flex-col items-center gap-4 text-center md:flex-row md:items-center">
+      <Label className="w-[200px] text-center text-xl md:justify-center">
+        {label}
+      </Label>
       <Input
         type={type}
         value={value}
         onChange={(e) => {
           setValue(e.target.value);
         }}
-        className="bg-btn_3 border-4 border-txt_4 text-xl"
+        className="border-4 border-txt_4 bg-btn_3 text-xl"
       />
     </div>
   );

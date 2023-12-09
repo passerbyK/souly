@@ -1,13 +1,16 @@
 "use client";
 
 import { useState } from "react";
+
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+
+import AuthInput from "../_components/AuthInput";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { publicEnv } from "@/lib/env/public";
-import AuthInput from "../_components/AuthInput";
 
 function SignUp() {
   const [username, setUsername] = useState<string>("");
@@ -24,46 +27,46 @@ function SignUp() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-brand">
-      <Card className="w-4/5 lg:w-[800px] md:w-[600px] bg-brand border-4 border-bdr">
+    <div className="flex min-h-screen items-center justify-center bg-brand">
+      <Card className="w-4/5 border-4 border-bdr bg-brand md:w-[600px] lg:w-[800px]">
         <CardHeader>
-        <CardHeader>
-        <CardTitle className="flex items-center justify-between text-4xl">
-            <Link href="/" className="flex items-center mr-6">
-              <div className="h-20 w-20">
-                <Image
-                  src="/Logo_new.png"
-                  alt="Souly Logo"
-                  className="mr-2 w-full"
-                  width={20}
-                  height={20}
-                />
-              </div>
-            </Link>
-            <div className="hidden md:flex items-center">
-              <p className="text-description mr-2">Welcome to</p>
-              <p className="text-txt_2">S</p>
-              <p className="text-txt_3">O</p>
-              <p className="text-txt_2">U</p>
-              <p className="text-txt_3">L</p>
-              <p className="text-txt_2">Y</p>
-              <p className="text-description ml-2">!</p>
-            </div>
-            <div className="flex-col md:hidden items-center justify-center text-2xl">
-              <div>
-                <p className="text-description mr-2">Welcome to</p>
-              </div>
-              <div className="flex items-center justify-center">
+          <CardHeader>
+            <CardTitle className="flex items-center justify-between text-4xl">
+              <Link href="/" className="mr-6 flex items-center">
+                <div className="h-20 w-20">
+                  <Image
+                    src="/Logo_new.png"
+                    alt="Souly Logo"
+                    className="mr-2 w-full"
+                    width={20}
+                    height={20}
+                  />
+                </div>
+              </Link>
+              <div className="hidden items-center md:flex">
+                <p className="mr-2 text-description">Welcome to</p>
                 <p className="text-txt_2">S</p>
                 <p className="text-txt_3">O</p>
                 <p className="text-txt_2">U</p>
                 <p className="text-txt_3">L</p>
                 <p className="text-txt_2">Y</p>
-                <p className="text-description ml-2">!</p>
+                <p className="ml-2 text-description">!</p>
               </div>
-            </div>
-          </CardTitle>
-        </CardHeader>
+              <div className="flex-col items-center justify-center text-2xl md:hidden">
+                <div>
+                  <p className="mr-2 text-description">Welcome to</p>
+                </div>
+                <div className="flex items-center justify-center">
+                  <p className="text-txt_2">S</p>
+                  <p className="text-txt_3">O</p>
+                  <p className="text-txt_2">U</p>
+                  <p className="text-txt_3">L</p>
+                  <p className="text-txt_2">Y</p>
+                  <p className="ml-2 text-description">!</p>
+                </div>
+              </div>
+            </CardTitle>
+          </CardHeader>
         </CardHeader>
         <CardContent className="flex flex-col gap-2">
           <form onSubmit={handleSubmit} className="flex flex-col gap-2">
@@ -85,22 +88,25 @@ function SignUp() {
               value={confirmPassword}
               setValue={setConfirmPassword}
             />
-            <div className="mt-4 mb-2 text-xl text-center justify-center text-gray-500">
+            <div className="mb-2 mt-4 justify-center text-center text-xl text-gray-500">
               <span>
                 Already have an account?{" "}
                 <Link
-                  className="cursor-pointer underline ml-4"
+                  className="ml-4 cursor-pointer underline"
                   href="/auth/login"
                 >
                   Sign In
                 </Link>
               </span>
             </div>
-            <Button type="submit" className="w-full rounded-2xl border-4 border-bdr bg-btn text-center text-xl text-txt">
+            <Button
+              type="submit"
+              className="w-full rounded-2xl border-4 border-bdr bg-btn text-center text-xl text-txt"
+            >
               Sign Up
             </Button>
           </form>
-          <div className="flex gap-2 justify-center">
+          <div className="flex justify-center gap-2">
             <Button
               onClick={async () => {
                 signIn("github", {
@@ -110,7 +116,12 @@ function SignUp() {
               className="flex w-full rounded-2xl border-4 border-bdr bg-btn text-center text-xl text-txt"
               variant={"outline"}
             >
-              <Image src="/github.png" alt="github icon" width={20} height={20} />
+              <Image
+                src="/github.png"
+                alt="github icon"
+                width={20}
+                height={20}
+              />
               <span className="grow text-xl">Sign Up with Github</span>
             </Button>
             <Button
@@ -122,7 +133,12 @@ function SignUp() {
               className="flex w-full rounded-2xl border-4 border-bdr bg-btn text-center text-xl text-txt"
               variant={"outline"}
             >
-              <Image src="/github.png" alt="github icon" width={20} height={20} />
+              <Image
+                src="/github.png"
+                alt="github icon"
+                width={20}
+                height={20}
+              />
               <span className="grow text-xl">Sign Up with Github</span>
             </Button>
           </div>
