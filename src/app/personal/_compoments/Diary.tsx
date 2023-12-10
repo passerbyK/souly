@@ -3,7 +3,7 @@ import Image from "next/image";
 
 function Diary() {
     return (
-        <div className="w-[32%] h-[250px] border-solid border-2 border-[#7C5A16] rounded-2xl bg-white">
+        <div className="w-[32%] h-[50%] border-solid border-2 border-[#7C5A16] rounded-2xl bg-white">
         <div className="flex items-center justify-center h-4/5">
           <Image src="/logo.png" alt="Logo" width={100} height={100} className="h-2/3 w-2/3 rounded-2xl"/>
         </div>
