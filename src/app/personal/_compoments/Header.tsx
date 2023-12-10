@@ -1,12 +1,19 @@
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { IoPersonCircleSharp } from "react-icons/io5";
+
 import Image from "next/image";
 
 function Header() {
   return (
-    <div className="flex items-center gap-6 h-full w-full bg-header px-8 py-4 text-xl font-bold text-[#DF8558]">
+    <div className="flex h-full w-full items-center gap-6 bg-header px-8 py-4 text-xl font-bold text-[#DF8558]">
       <div className="">
-          <Image src="/logo.png" alt="Logo" width={100} height={100} className="h-2/3 w-2/3"/>
+        <Image
+          src="/logo.png"
+          alt="Logo"
+          width={100}
+          height={100}
+          className="h-2/3 w-2/3"
+        />
       </div>
       <div className="grow"></div>
       <div className=""></div>
@@ -20,7 +27,7 @@ function Header() {
         <IoPersonCircleSharp />
       </div>
     </div>
-  ) 
+  );
 }
 
 export default Header;
