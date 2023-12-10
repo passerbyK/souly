@@ -1,5 +1,4 @@
-import { BiSolidMessageRoundedAdd } from "react-icons/bi";
-
+// import { BiSolidMessageRoundedAdd } from "react-icons/bi";
 // import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -26,9 +25,14 @@ async function RequestDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-      <Button 
-        className="rounded-full border-4 text-xl items-center px-3 py-1"
-        style={{ color: '#A8450F', borderColor: '#A8450F', backgroundColor: '#E5A582' }}>
+        <Button
+          className="items-center rounded-full border-4 px-3 py-1 text-xl"
+          style={{
+            color: "#A8450F",
+            borderColor: "#A8450F",
+            backgroundColor: "#E5A582",
+          }}
+        >
           Request
         </Button>
       </DialogTrigger>
@@ -47,8 +51,7 @@ async function RequestDialog() {
             console.log(result);
             if (!result) {
               // TODO:: tell user no this specific user or chat already exist!!!
-            }
-            else{
+            } else {
               redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/docs/${result}`);
             }
           }}

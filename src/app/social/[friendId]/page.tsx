@@ -2,10 +2,10 @@
 
 //import { useChat } from "@/hooks/useChat";
 //import { useRef } from "react";
-
 import { GoHeartFill } from "react-icons/go";
 
-function ChatPage({userId}: {userId: string}) {
+// {userId}: {userId: string}
+function ChatPage() {
   // const { messages, announcedMessage } = useChat({userId});
   // // console.log(userId);
   // // console.log(messages);
@@ -28,18 +28,26 @@ function ChatPage({userId}: {userId: string}) {
   // console.log(messages);
 
   return (
-    <div className="h-full w-full" style={{ backgroundColor: '#DFD3C4' }}>
+    <div className="h-full w-full" style={{ backgroundColor: "#DFD3C4" }}>
       <div className="flex">
-        <h1 className="text-6xl p-4" style={{ color: '#8E6920' }}>friend's name</h1>
-        <h2 className="text-4xl p-8 ml-auto" style={{ color: '#998D73' }}>2023/12/09(Sat.)</h2>
+        <h1 className="p-4 text-6xl" style={{ color: "#8E6920" }}>
+          friend's name
+        </h1>
+        <h2 className="ml-auto p-8 text-4xl" style={{ color: "#998D73" }}>
+          2023/12/09(Sat.)
+        </h2>
       </div>
-      <div className="mx-8 h-4/5 border-4 bg-white rounded-xl flex items-end" style={{ borderColor: '#7C5A16' }}>
-        <div 
-        className="flex w-full h-min rounded-b-lg text-5xl justify-between py-4 px-8" 
-        style={{ backgroundColor: '#E8BA5D', borderColor: '#7C5A16' }}>
+      <div
+        className="mx-8 flex h-4/5 items-end rounded-xl border-4 bg-white"
+        style={{ borderColor: "#7C5A16" }}
+      >
+        <div
+          className="flex h-min w-full justify-between rounded-b-lg px-8 py-4 text-5xl"
+          style={{ backgroundColor: "#E8BA5D", borderColor: "#7C5A16" }}
+        >
           topic
           <span className="flex gap-4 self-center">
-            <GoHeartFill size={48}/> 2 
+            <GoHeartFill size={48} /> 2
           </span>
         </div>
       </div>

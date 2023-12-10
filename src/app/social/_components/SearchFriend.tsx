@@ -1,14 +1,13 @@
-import { getChat } from "./actions";
-
-import { Input } from "@/components/ui/input";
-
 import { RiSearchLine } from "react-icons/ri";
 
 import { redirect } from "next/navigation";
-// import { revalidatePath } from "next/cache";
 
-import { publicEnv } from "@/lib/env/public";
+import { Input } from "@/components/ui/input";
 import { auth } from "@/lib/auth";
+// import { revalidatePath } from "next/cache";
+import { publicEnv } from "@/lib/env/public";
+
+import { getChat } from "./actions";
 
 // import AskCreateDialog from "./AskCreateDialog";
 
@@ -27,8 +26,8 @@ export default async function SearchC() {
           const searchUser = e.get("searchUser");
           if (!searchUser) return;
           if (typeof searchUser !== "string") return;
-            const result = await getChat(userId, searchUser);
-            console.log(result);
+          const result = await getChat(userId, searchUser);
+          console.log(result);
           if (!result) {
             // TODO:: open <AskCreateDialog /> --> create or not, open CreateDialog if yes, close and redirect if no!!!
             redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/docs`);
@@ -42,7 +41,7 @@ export default async function SearchC() {
           <Input placeholder="Who are you looking for?" name="searchUser" />
         </div>
         <button type="submit" className="pr-2">
-          <RiSearchLine size={32}/>
+          <RiSearchLine size={32} />
         </button>
       </form>
     </div>

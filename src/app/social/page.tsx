@@ -1,8 +1,10 @@
 //import { auth } from "@/lib/auth";
-import { publicEnv } from "@/lib/env/public";
+import { IoLogoSnapchat } from "react-icons/io";
+
 import { redirect } from "next/navigation";
 
-import { IoLogoSnapchat } from "react-icons/io";
+import { publicEnv } from "@/lib/env/public";
+
 //import { getChats } from "./_components/actions";
 
 async function DocsPage() {
@@ -20,12 +22,12 @@ async function DocsPage() {
   // }
 
   redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/social/ffdvnjgmorivgjoim`);
-  
+
   return (
     <div className="flex h-[90vh] w-full items-center justify-center">
       <div className="flex flex-col items-center justify-center">
         <IoLogoSnapchat size={80} />
-        <p className="text-lg pt-6 font-semibold text-slate-700">
+        <p className="pt-6 text-lg font-semibold text-slate-700">
           Invite your friends to paint with you.
         </p>
       </div>
