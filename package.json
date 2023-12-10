@@ -34,7 +34,13 @@
     "react-icons": "^4.11.0",
     "tailwind-merge": "^2.0.0",
     "tailwindcss-animate": "^1.0.7",
-    "use-debounce": "^10.0.0"
+    "use-debounce": "^10.0.0",
+
+    "dayjs": "^1.10.4",
+    "@mui/material": "^5.4.4",
+    "@emotion/react": "^11.4.0",
+    "@emotion/styled": "^11.3.0",
+    "@mui/x-date-pickers": "7.0.0-alpha.3"
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.2.1",
