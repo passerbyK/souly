@@ -3,9 +3,6 @@
 //import { useChat } from "@/hooks/useChat";
 //import { useRef } from "react";
 
-import { TfiAnnouncement } from "react-icons/tfi";
-import { AiFillNotification } from "react-icons/ai";
-import { RiArrowGoBackFill } from "react-icons/ri";
 import { GoHeartFill } from "react-icons/go";
 
 function ChatPage({userId}: {userId: string}) {
