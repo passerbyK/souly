@@ -3,11 +3,12 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { FC, useState } from 'react';
+import type { FC } from 'react';
+import { useState } from 'react';
 import { useDraw } from '@/hooks/useDraw';
 import { ChromePicker } from 'react-color';
 
-interface pageProps {}
+interface pageProps {};
 
 const Paint: FC<pageProps> = ({}) => {
   const [color, setColor] = useState<string>('#000');
@@ -23,7 +24,7 @@ const Paint: FC<pageProps> = ({}) => {
     const lineColor = color
     const lineWidth = 5
 
-    let startPoint = prevPoint ?? currentPoint
+    const startPoint = prevPoint ?? currentPoint
     ctx.beginPath()
     ctx.lineWidth = lineWidth
     ctx.strokeStyle = lineColor
@@ -91,24 +92,21 @@ const Paint: FC<pageProps> = ({}) => {
             2023/12/09 {" "} {"(Sat.)"}
           </div>
         </div>
-        <div className="flex md:3/5">
-          <div className="flex-col justify-center items-center">
-            <div className="w-full md:w-4/5 bg-white rounded-2xl border-4 border-bdr_2 my-4 relative">
-              <canvas
-                ref={canvasRef}
-                onMouseDown={onMouseDown}
-              />
-            </div>
+        <div className="flex justify-between gap-4 my-4">
+          <div className="w-full bg-white items-center rounded-2xl border-4 border-bdr_2 relative">
+            <canvas
+              ref={canvasRef}
+              onMouseDown={onMouseDown}
+              className="w-full rounded-2xl"
+            />
           </div>
-          <div className="flex flex-col md:flex-row justify-between w-1/2 gap-4 mb-12">
-            <div className="w-full md:w-1/2">
-              <input
-                type="text"
-                className="w-full p-2 text-xl bg-brand rounded-2xl border-4 border-bdr_2"
-                placeholder="Type something..."
-              />
-              <p className="text-md text-center mt-2 text-gray-500">View others’ painting after you accomplish your mission.</p>
-            </div>
+          <div className="w-full flex flex-col gap-4">
+            <input
+              type="text"
+              className="w-full p-2 text-xl bg-brand rounded-2xl border-4 border-bdr_2"
+              placeholder="Type something..."
+            />
+            <p className="text-md text-center mt-2 text-gray-500">View others’ painting after you accomplish your mission.</p>
           </div>
         </div>
         <div className="flex md:2/5">
