@@ -16,7 +16,7 @@ function Header() {
         />
       </div>
       <div className="grow"></div>
-      <div className=""></div>
+      <div className="">About</div>
       <div className="">Painting</div>
       <div className="">Personal</div>
       <div className="">Social</div>
