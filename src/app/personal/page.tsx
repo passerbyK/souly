@@ -18,13 +18,8 @@ function PersonalPage() {
           <div className="m-4 flex h-1/6 items-center justify-center rounded-2xl bg-[#D8D2C7]">
             Complete: 3/21 days
           </div>
-          <div className=" m-4 h-2/3 rounded-2xl bg-[#B7AD97]">
-            <div className="text-x2 flex items-center justify-center pt-2 font-bold text-black">
-              December
-            </div>
-            <div className="mx-4 my-2 h-4/5 rounded-2xl bg-[#FFF1D4]">
-              <Calendar />
-            </div>
+          <div className=" m-4 h-2/3 p-1 rounded-2xl bg-[#B7AD97] text-[black] text-base">
+            <Calendar />
           </div>
         </div>
       </div>

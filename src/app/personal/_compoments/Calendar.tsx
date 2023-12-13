@@ -1,53 +1,50 @@
 "use client";
 
-import React from "react";
+import { DayPicker } from 'react-day-picker';
+import 'react-day-picker/dist/style.css';
 
-import Badge from "@mui/material/Badge";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { PickersDay } from "@mui/x-date-pickers/PickersDay";
-import type { PickersDayProps } from "@mui/x-date-pickers/PickersDay";
-import dayjs from "dayjs";
-import type { Dayjs } from "dayjs";
 
-const highlightedDates = ["2023-12-06", "2023-12-08", "2023-12-30"];
+const fromDate = new Date(2023, 11, 1);
+const toDate = new Date(2024, 0, 30);
 
-function isDateHighlighted(date: Dayjs) {
-  return highlightedDates.includes(date.format("YYYY-MM-DD"));
-}
+const today = new Date();
+const todayStyle = { border: '2px solid black' };
 
-// 使用 PickersDayProps 來定義 ServerDay 元件的 props
-type ServerDayProps = PickersDayProps<Dayjs>;
+const succeddDays = [new Date(2023, 11, 1), new Date(2023, 11, 2), new Date(2023, 11, 3), new Date(2023, 11, 4), new Date(2023, 11, 5), new Date(2023, 11, 10), new Date(2023, 11, 11), new Date(2023, 11, 12)];
+const successStyle = { 
+  backgroundColor: '#FBEFDF',
+};
 
-function ServerDay(props: ServerDayProps) {
-  const { day, outsideCurrentMonth, ...other } = props;
-  const isSelected = !outsideCurrentMonth && isDateHighlighted(day);
+const failDays = [new Date(2023, 11, 6), new Date(2023, 11, 7), new Date(2023, 11, 8), new Date(2023, 11, 9)];
+const failStyle = { 
+  backgroundColor: 'rgba(251,239,223,0.4)',
+  color: 'rgba(0,0,0,0.4)',
+};
+
+function Calendar() {
 
   return (
-    <Badge
-      key={day.toString()}
-      overlap="circular"
-      badgeContent={isSelected ? "🌚" : undefined}
-    >
-      <PickersDay
-        {...other}
-        outsideCurrentMonth={outsideCurrentMonth}
-        day={day}
-      />
-    </Badge>
-  );
+    <>
+    <style>
+        {`
+          .rdp {
+            --rdp-cell-size: 28px;
+          }
+          .rdp-day {
+            margin: 3px;
+          }
+
+        `}
+      </style>
+    <DayPicker 
+      defaultMonth={new Date(2023, 11, 1)}
+      fromDate={fromDate}
+      toDate={toDate}
+      modifiers={{ today: today, successDays: succeddDays, failDays: failDays}}
+      modifiersStyles={{ today: todayStyle, successDays: successStyle, failDays: failStyle }}
+    />
+    </>
+  )
 }
 
-export default function Calendar() {
-  return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DateCalendar
-        defaultValue={dayjs("2023-12-06")}
-        slots={{
-          day: ServerDay,
-        }}
-      />
-    </LocalizationProvider>
-  );
-}
+export default Calendar;
