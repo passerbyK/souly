@@ -43,7 +43,7 @@ function Header() {
       <Link
       className="rounded-2xl p-2 px-4 transition-colors hover:bg-[#D88253]/30"
       href={{
-        pathname: `/Personal`,
+        pathname: `/personal`,
       }}
       >
         <div className="">Personal</div>
@@ -51,7 +51,7 @@ function Header() {
       <Link
       className="rounded-2xl p-2 px-4 transition-colors hover:bg-[#D88253]/30"
       href={{
-        pathname: `/Social`,
+        pathname: `/social`,
       }}
       >
         <div className="">Social</div>
