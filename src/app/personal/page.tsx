@@ -5,6 +5,7 @@ function PersonalPage() {
   return (
     <>
       <div className="relative flex h-full w-full bg-body">
+
         <div className="flex w-3/4 flex-wrap overflow-y-auto px-8 py-6">
           <Diary />
           <Diary />
@@ -12,6 +13,7 @@ function PersonalPage() {
           <Diary />
           <Diary />
         </div>
+
         <div className="mx-6 my-6 w-1/4 flex-col rounded-2xl bg-header py-2 pt-4 text-xl font-bold text-[#998D73]">
           <div className="flex h-[8%] items-center justify-center rounded-2xl">
             2023/12/6 (Wed.)
