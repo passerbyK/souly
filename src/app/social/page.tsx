@@ -1,9 +1,9 @@
 //import { auth } from "@/lib/auth";
 import { IoLogoSnapchat } from "react-icons/io";
 
-import { redirect } from "next/navigation";
+//import { redirect } from "next/navigation";
 
-import { publicEnv } from "@/lib/env/public";
+//import { publicEnv } from "@/lib/env/public";
 
 //import { getChats } from "./_components/actions";
 
@@ -21,13 +21,19 @@ async function DocsPage() {
   //   redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/docs/${newestChat}`);
   // }
 
-  redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/social/ffdvnjgmorivgjoim`);
+  //redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/social/ffdvnjgmorivgjoim`);
 
   return (
-    <div className="flex h-[90vh] w-full items-center justify-center">
+    <div
+      className="flex h-full w-full items-center justify-center"
+      style={{ backgroundColor: "#DFD3C4" }}
+    >
       <div className="flex flex-col items-center justify-center">
-        <IoLogoSnapchat size={80} />
-        <p className="pt-6 text-lg font-semibold text-slate-700">
+        <IoLogoSnapchat size={100} style={{ color: "#A8450F" }} />
+        <p
+          className="pt-6 text-2xl font-semibold text-slate-700"
+          style={{ color: "#A8450F" }}
+        >
           Invite your friends to paint with you.
         </p>
       </div>

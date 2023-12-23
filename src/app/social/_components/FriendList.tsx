@@ -1,7 +1,7 @@
 import { AiFillDelete } from "react-icons/ai";
 
 import { revalidatePath } from "next/cache";
-// import Link from "next/link";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 //import SearchFriend from "./SearchFriend";
@@ -62,25 +62,25 @@ async function FriendList() {
                 key={i}
                 className="group flex w-full cursor-pointer items-center justify-between gap-2 p-2 hover:bg-slate-200 "
               >
-                {/* <Link
-                className="grow px-3 py-1"
-                href={`/painting/${chat.chat.displayId}`}
-              > */}
-                <div className="items-center gap-2">
-                  <div
-                    className="flex gap-2 text-2xl font-semibold"
-                    style={{ color: "#000000" }}
-                  >
-                    {friend.name}
+                <Link
+                  className="grow px-3 py-1"
+                  href={`/social/${friend.display_id}`}
+                >
+                  <div className="items-center gap-2">
+                    <div
+                      className="flex gap-2 text-2xl font-semibold"
+                      style={{ color: "#000000" }}
+                    >
+                      {friend.name}
+                    </div>
+                    <div
+                      className="flex gap-2 whitespace-normal break-words text-xl"
+                      style={{ color: "#000000" }}
+                    >
+                      {friend.topic}
+                    </div>
                   </div>
-                  <div
-                    className="flex gap-2 whitespace-normal break-words text-xl"
-                    style={{ color: "#000000" }}
-                  >
-                    {friend.topic}
-                  </div>
-                </div>
-                {/*</Link>*/}
+                </Link>
                 <form
                   className="hidden px-2 text-slate-400 hover:text-red-400 group-hover:flex"
                   action={async () => {
@@ -91,7 +91,7 @@ async function FriendList() {
                   }}
                 >
                   <button type={"submit"}>
-                    <AiFillDelete size={20} />
+                    <AiFillDelete size={24} />
                   </button>
                 </form>
               </div>

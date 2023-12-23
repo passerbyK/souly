@@ -5,7 +5,6 @@ function PersonalPage() {
   return (
     <>
       <div className="relative flex h-full w-full bg-body">
-
         <div className="flex w-3/4 flex-wrap overflow-y-auto px-8 py-6">
           <Diary />
           <Diary />

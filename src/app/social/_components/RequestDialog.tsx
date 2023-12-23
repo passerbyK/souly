@@ -1,6 +1,8 @@
 // import { BiSolidMessageRoundedAdd } from "react-icons/bi";
 // import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
+// import { auth } from "@/lib/auth";
+import { AiFillDelete } from "react-icons/ai";
+import { IoMdAddCircle } from "react-icons/io";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -11,9 +13,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-// import { auth } from "@/lib/auth";
-import { publicEnv } from "@/lib/env/public";
 
 // import { createChat } from "./actions";
 
@@ -21,6 +20,17 @@ async function RequestDialog() {
   // const session = await auth();
   // if (!session?.user?.id) return null;
   // const userId = session.user.id;
+
+  const request_friends = [
+    { id: "4", display_id: "svrkinhlcgmoidrngkdh", name: "aaa", topic: "sun" },
+    {
+      id: "5",
+      display_id: "vgsjclimjeihmgshmrgi",
+      name: "bbb",
+      topic: "flower",
+    },
+    { id: "6", display_id: "nchmunhmgkisnsxmiafl", name: "ccc", topic: "sky" },
+  ];
 
   return (
     <Dialog>
@@ -38,28 +48,58 @@ async function RequestDialog() {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Create new chat!</DialogTitle>
-          <DialogDescription>Who do you want to chat with?</DialogDescription>
+          <DialogTitle className="py-1 text-3xl" style={{ color: "#D88253" }}>
+            Friend requests
+          </DialogTitle>
+          <DialogDescription className="text-xl" style={{ color: "#8E6920" }}>
+            You can decide who you want to add.
+          </DialogDescription>
         </DialogHeader>
-        <form
-          action={async (e) => {
-            "use server";
-            const otherUser = e.get("otherUser");
-            if (!otherUser) return;
-            if (typeof otherUser !== "string") return;
-            const result = await createChat(userId, otherUser);
-            console.log(result);
-            if (!result) {
-              // TODO:: tell user no this specific user or chat already exist!!!
-            } else {
-              redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/docs/${result}`);
-            }
-          }}
-          className="flex flex-row gap-4"
-        >
-          <Input placeholder="Type in his/her username." name="otherUser" />
-          <Button type="submit">Add</Button>
-        </form>
+        {request_friends.map(async (friend, i) => {
+          return (
+            <div
+              key={i}
+              className="group flex w-full cursor-pointer items-center justify-between gap-2 p-2 hover:bg-slate-200 "
+            >
+              <div className="items-center gap-2">
+                <div
+                  className="flex gap-2 text-2xl font-semibold"
+                  style={{ color: "#000000" }}
+                >
+                  {friend.name}
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <form
+                  className="px-2 hover:text-[#8E6920] group-hover:flex"
+                  action={async () => {
+                    "use server";
+                    //await deleteFriend(friend.display_id);
+                    //revalidatePath("/social");
+                    //redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/social`);
+                  }}
+                >
+                  <button type={"submit"}>
+                    <IoMdAddCircle size={24} />
+                  </button>
+                </form>
+                <form
+                  className="px-2 hover:text-[#8E6920] group-hover:flex"
+                  action={async () => {
+                    "use server";
+                    //await deleteFriend(friend.display_id);
+                    //revalidatePath("/social");
+                    //redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/social`);
+                  }}
+                >
+                  <button type={"submit"}>
+                    <AiFillDelete size={24} />
+                  </button>
+                </form>
+              </div>
+            </div>
+          );
+        })}
       </DialogContent>
     </Dialog>
   );

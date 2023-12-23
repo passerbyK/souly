@@ -45,7 +45,10 @@ function ChatPage() {
           className="flex h-min w-full justify-between rounded-b-lg px-8 py-4 text-5xl"
           style={{ backgroundColor: "#E8BA5D", borderColor: "#7C5A16" }}
         >
-          topic
+          <div className="flex flex-col gap-2">
+            <p className="text-4xl">topic</p>
+            <p className="text-2xl">description</p>
+          </div>
           <span className="flex gap-4 self-center">
             <GoHeartFill size={48} /> 2
           </span>
