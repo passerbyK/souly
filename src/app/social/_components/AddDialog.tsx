@@ -1,7 +1,6 @@
 // import { BiSolidMessageRoundedAdd } from "react-icons/bi";
 // import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
-
+// import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,8 +11,9 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+
 // import { auth } from "@/lib/auth";
-import { publicEnv } from "@/lib/env/public";
+// import { publicEnv } from "@/lib/env/public";
 
 // import { createChat } from "./actions";
 
@@ -23,13 +23,7 @@ async function AddDialog() {
   // const userId = session.user.id;
 
   return (
-    <Dialog
-      style={{
-        color: "#A8450F",
-        borderColor: "#A8450F",
-        backgroundColor: "#E5A582",
-      }}
-    >
+    <Dialog>
       <DialogTrigger asChild>
         <Button
           className="items-center rounded-full border-4 px-3 py-1 text-xl"
@@ -57,13 +51,13 @@ async function AddDialog() {
             const otherUser = e.get("otherUser");
             if (!otherUser) return;
             if (typeof otherUser !== "string") return;
-            const result = await createChat(userId, otherUser);
-            console.log(result);
-            if (!result) {
-              // TODO:: tell user no this specific user or chat already exist!!!
-            } else {
-              redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/docs/${result}`);
-            }
+            //const result = await createChat(userId, otherUser);
+            //console.log(result);
+            //if (!result) {
+            // TODO:: tell user no this specific user or chat already exist!!!
+            //} else {
+            //  redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/docs/${result}`);
+            //}
           }}
           className="flex flex-row gap-4"
         >
