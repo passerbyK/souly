@@ -4,7 +4,7 @@ import Diary from "./_compoments/Diary";
 function PersonalPage() {
   return (
     <>
-      <div className="relative flex h-full w-full bg-body">
+      <div className="relative flex h-screen w-full bg-body">
         <div className="flex w-3/4 flex-wrap overflow-y-auto px-8 py-6">
           <Diary />
           <Diary />
@@ -20,7 +20,7 @@ function PersonalPage() {
           <div className="m-4 flex h-[12%] items-center justify-center rounded-2xl bg-[#D8D2C7]">
             Complete: 3/21 days
           </div>
-          <div className="mx-4 flex h-[70%] justify-center rounded-2xl bg-[#B7AD97] p-1 text-base text-[black]">
+          <div className="mx-4 flex h-[70%] justify-center rounded-2xl bg-[#B7AD97] p-1 text-base text-black">
             <Calendar />
           </div>
         </div>

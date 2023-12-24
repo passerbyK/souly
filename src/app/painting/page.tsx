@@ -4,9 +4,6 @@ import { useState } from "react";
 import { ChromePicker } from "react-color";
 import type { ColorResult } from "react-color";
 
-import Image from "next/image";
-import Link from "next/link";
-
 import { useDraw } from "@/hooks/useDraw";
 import type { Draw } from "@/lib/types/shared_types";
 
@@ -40,46 +37,7 @@ export default function Home() {
 
   return (
     <main className="flex h-screen min-h-screen flex-col items-center bg-brand">
-      <header className="flex w-full flex-wrap items-center justify-between p-4 px-8 pt-8">
-        <div className="mb-2 flex items-center justify-center gap-4 md:mb-0">
-          <Link href="/" className="mr-6 flex items-center text-4xl">
-            <div className="h-20 w-20">
-              <Image
-                src="/Logo_new.png"
-                alt="Souly Logo"
-                className="mr-2 w-full"
-                width={20}
-                height={20}
-              />
-            </div>
-            <p className="text-txt_2">S</p>
-            <p className="text-txt_3">O</p>
-            <p className="text-txt_2">U</p>
-            <p className="text-txt_3">L</p>
-            <p className="text-txt_2">Y</p>
-          </Link>
-          <Link
-            href="/introduction"
-            className="m-2 rounded-2xl border-4 border-bdr bg-btn px-4 py-2 text-center text-3xl text-txt"
-          >
-            About Us
-          </Link>
-        </div>
-        <div className="flex flex-wrap justify-center gap-4 md:justify-end">
-          <Link
-            href="/auth/login"
-            className="m-2 rounded-2xl border-4 border-bdr bg-btn_2 px-4 py-2 text-center text-3xl text-txt"
-          >
-            Sign In
-          </Link>
-          <Link
-            href="/auth/signup"
-            className="m-2 rounded-2xl border-4 border-bdr bg-btn px-4 py-2 text-center text-3xl text-txt"
-          >
-            Sign Up
-          </Link>
-        </div>
-      </header>
+      <div className="h-1/6 w-full"></div>
       <div className="w-full flex-col items-center justify-center bg-brand_2 px-4 md:px-12">
         <div className="mt-4 flex w-full flex-col items-center justify-between gap-4 px-4 text-4xl md:flex-row">
           <div className="mb-2 text-center text-txt_4 md:mb-0 md:w-1/2">
