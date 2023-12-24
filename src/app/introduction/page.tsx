@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 import localFont from "next/font/local";
 import Image from "next/image";
+
 // import Link from "next/link";
 
 const pattaya = localFont({
