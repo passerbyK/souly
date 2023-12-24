@@ -3,7 +3,7 @@ import { SessionProvider } from "next-auth/react";
 import localFont from "next/font/local";
 
 import "./globals.css";
-import Header from "./personal/_compoments/Header";
+import Header from "../components/ui/Header";
 
 const poetsenOne = localFont({
   src: "./fonts/Poetsen-One.woff2",
@@ -24,8 +24,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${poetsenOne.className}`}>
-        <Header />
+      <body className={`${poetsenOne.className} overflow-y-scroll`}>
+        <Header/>
         <SessionProvider>{children}</SessionProvider>
       </body>
     </html>

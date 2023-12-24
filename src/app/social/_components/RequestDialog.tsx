@@ -48,7 +48,7 @@ async function RequestDialog() {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="py-1 text-3xl" style={{ color: "#D88253" }}>
+          <DialogTitle className="py-1 text-3xl text-description">
             Friend requests
           </DialogTitle>
           <DialogDescription className="text-xl" style={{ color: "#8E6920" }}>

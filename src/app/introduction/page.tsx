@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import localFont from "next/font/local";
 import Image from "next/image";
-import Link from "next/link";
+// import Link from "next/link";
 
 const pattaya = localFont({
   src: "../fonts/Pattaya-Regular.ttf",
@@ -32,36 +32,6 @@ export default function Introduction() {
 
   return (
     <main className="flex min-h-screen flex-col items-center bg-brand">
-      <header className="fixed top-0 z-50 flex w-full items-center justify-between border-b-4 border-bdr bg-brand p-4 px-8">
-        <div className="mb-2 flex items-center justify-center gap-4 md:mb-0">
-          <div className="h-25 w-25 mr-2">
-            <Link href="/" className="mr-6 flex items-center text-4xl">
-              <div className="h-20 w-20">
-                <Image
-                  src="/Logo_new.png"
-                  alt="Souly Logo"
-                  className="mr-2 w-full"
-                  width={20}
-                  height={20}
-                />
-              </div>
-              <p className="text-txt_2">S</p>
-              <p className="text-txt_3">O</p>
-              <p className="text-txt_2">U</p>
-              <p className="text-txt_3">L</p>
-              <p className="text-txt_2">Y</p>
-            </Link>
-          </div>
-        </div>
-        <div className="flex flex-wrap justify-center gap-4 md:justify-end">
-          <Link
-            href="/auth/signup"
-            className="m-2 rounded-2xl border-4 border-bdr bg-btn_2 px-4 py-2 text-center text-3xl text-txt"
-          >
-            Start Painting
-          </Link>
-        </div>
-      </header>
       <div className="flex w-full flex-wrap items-center justify-between p-4 px-8 pt-8"></div>
       <div className="flex w-full flex-wrap items-center justify-between p-4 px-8 pt-8"></div>
       <div
