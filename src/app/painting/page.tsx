@@ -8,7 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { useDraw } from "@/hooks/useDraw";
-import type { Draw } from "@/types/shared_types";
+import type { Draw } from "@/lib/types/shared_types";
 
 export default function Home() {
   const [color, setColor] = useState<string>("#000");
