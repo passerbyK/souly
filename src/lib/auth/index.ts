@@ -7,6 +7,7 @@ import { db } from "@/db";
 import { usersTable } from "@/db/schema";
 
 import CredentialsProvider from "./CredentialsProvider";
+// import CredentialsProvider from "next-auth/providers/credentials"
 
 export const {
   handlers: { GET, POST },

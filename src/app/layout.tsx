@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { SessionProvider } from "next-auth/react";
 import localFont from "next/font/local";
 
-import Header from "../components/ui/Header";
+import Header from "@/components/Header";
 
 import "./globals.css";
 
