@@ -26,7 +26,7 @@ function SignUp() {
   };
 
   return (
-    <div className="flex relative min-h-screen items-center justify-center bg-brand z-50">
+    <div className="relative z-50 flex min-h-screen items-center justify-center bg-brand">
       <Card className="w-4/5 border-4 border-bdr bg-brand md:w-[600px] lg:w-[800px]">
         <CardHeader>
           <CardTitle className="flex items-center justify-between text-4xl">
