@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-import type { Point, Draw } from "@/types/shared_types";
+import type { Point, Draw } from "@/lib/types/shared_types";
 
 export const useDraw = (
   onDraw: ({ ctx, currentPoint, prevPoint }: Draw) => void,
