@@ -1,4 +1,4 @@
-import { relations } from "drizzle-orm";
+import { sql, relations } from "drizzle-orm";
 import {
   index,
   text,
@@ -7,6 +7,10 @@ import {
   uuid,
   varchar,
   unique,
+  boolean,
+  timestamp,
+  integer,
+  pgEnum,
 } from "drizzle-orm/pg-core";
 
 // Checkout the many-to-many relationship in the following tutorial:
@@ -26,6 +30,11 @@ export const usersTable = pgTable(
     })
       .notNull()
       .default("credentials"),
+    isNotified: boolean("is_notified").notNull().default(false),
+    paintingTime: varchar("painting_time", { length: 100 })
+      .notNull()
+      .default(""),
+    isDeveloper: boolean("is_developer").notNull().default(false),
   },
   (table) => ({
     displayIdIndex: index("display_id_index").on(table.displayId),
@@ -33,29 +42,96 @@ export const usersTable = pgTable(
   }),
 );
 
-export const usersRelations = relations(usersTable, ({ many }) => ({
-  usersToDocumentsTable: many(usersToDocumentsTable),
-}));
-
-export const documentsTable = pgTable(
-  "documents",
+export const postsTable = pgTable(
+  "posts",
   {
     id: serial("id").primaryKey(),
     displayId: uuid("display_id").defaultRandom().notNull().unique(),
-    title: varchar("title", { length: 100 }).notNull(),
-    content: text("content").notNull(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => usersTable.displayId, {
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      }),
+    createdAt: timestamp("created_at")
+      .notNull()
+      .default(sql`now()`),
+    topic: varchar("topic", { length: 100 }).notNull(),
+    description: text("description").notNull().default(""),
+    image: varchar("image").notNull(),
+    liked_count: integer("liked_count").notNull().default(0),
   },
   (table) => ({
     displayIdIndex: index("display_id_index").on(table.displayId),
+    imageIndex: index("image_index").on(table.image),
   }),
 );
 
-export const documentsRelations = relations(documentsTable, ({ many }) => ({
-  usersToDocumentsTable: many(usersToDocumentsTable),
+export const subjectsTable = pgTable(
+  "subjects",
+  {
+    id: serial("id").primaryKey(),
+    displayId: uuid("display_id").defaultRandom().notNull().unique(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => usersTable.displayId, {
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      }),
+    createdAt: timestamp("created_at")
+      .notNull()
+      .default(sql`now()`),
+    targetDay: integer("target_day").notNull().notNull().default(21), // default 21 days
+  },
+  (table) => ({
+    userIdIndex: index("display_id_index").on(table.userId),
+  }),
+);
+
+export const friendEnum = pgEnum("friend_status", ["pending", "accepted"]);
+
+export const friendsTable = pgTable(
+  "friends",
+  {
+    id: serial("id").primaryKey(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => usersTable.displayId, {}),
+    friendId: uuid("friend_id")
+      .notNull()
+      .references(() => usersTable.displayId, {}),
+    createdAt: timestamp("created_at")
+      .notNull()
+      .default(sql`now()`),
+    updatedAt: timestamp("updated_at")
+      .notNull()
+      .default(sql`now()`),
+    status: friendEnum("status").notNull().default("pending"),
+  },
+  (table) => ({
+    userIdIndex: index("display_id_index").on(table.userId),
+  }),
+);
+
+export const usersRelations = relations(usersTable, ({ many }) => ({
+  usersToSubjectsTable: many(usersToSubjectsTable),
+  usersToFriendsTable: many(usersToFriendsTable),
+  postsTable: many(postsTable),
 }));
 
-export const usersToDocumentsTable = pgTable(
-  "users_to_documents",
+export const postsRelations = relations(postsTable, ({ one }) => ({
+  user: one(usersTable, {
+    fields: [postsTable.userId],
+    references: [usersTable.displayId],
+  }),
+}));
+
+export const subjectsRelations = relations(subjectsTable, ({ many }) => ({
+  usersToSubjectsTable: many(usersToSubjectsTable),
+}));
+
+export const usersToSubjectsTable = pgTable(
+  "users_to_subjects",
   {
     id: serial("id").primaryKey(),
     userId: uuid("user_id")
@@ -64,33 +140,76 @@ export const usersToDocumentsTable = pgTable(
         onDelete: "cascade",
         onUpdate: "cascade",
       }),
-    documentId: uuid("document_id")
+    subjectId: uuid("subject_id")
       .notNull()
-      .references(() => documentsTable.displayId, {
+      .references(() => subjectsTable.displayId, {
         onDelete: "cascade",
         onUpdate: "cascade",
       }),
   },
   (table) => ({
-    userAndDocumentIndex: index("user_and_document_index").on(
+    userAndSubjectIndex: index("user_and_subject_index").on(
       table.userId,
-      table.documentId,
+      table.subjectId,
     ),
-    // This is a unique constraint on the combination of userId and documentId.
-    // This ensures that there is no duplicate entry in the table.
-    uniqCombination: unique().on(table.documentId, table.userId),
+    uniqCombination: unique().on(table.subjectId, table.userId),
   }),
 );
 
-export const usersToDocumentsRelations = relations(
-  usersToDocumentsTable,
+export const usersToSubjectsRelations = relations(
+  usersToSubjectsTable,
   ({ one }) => ({
-    document: one(documentsTable, {
-      fields: [usersToDocumentsTable.documentId],
-      references: [documentsTable.displayId],
+    subject: one(subjectsTable, {
+      fields: [usersToSubjectsTable.subjectId],
+      references: [subjectsTable.displayId],
     }),
     user: one(usersTable, {
-      fields: [usersToDocumentsTable.userId],
+      fields: [usersToSubjectsTable.userId],
+      references: [usersTable.displayId],
+    }),
+  }),
+);
+
+export const friendsRelations = relations(usersTable, ({ many }) => ({
+  usersToFriendsTable: many(usersToFriendsTable),
+}));
+
+export const usersToFriendsTable = pgTable(
+  "users_to_friends",
+  {
+    id: serial("id").primaryKey(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => usersTable.displayId, {}),
+    friendId: uuid("friend_id")
+      .notNull()
+      .references(() => usersTable.displayId, {}), // it seems strange here.
+    createdAt: timestamp("created_at")
+      .notNull()
+      .default(sql`now()`),
+    updatedAt: timestamp("updated_at")
+      .notNull()
+      .default(sql`now()`),
+    status: friendEnum("status").notNull().default("pending"),
+  },
+  (table) => ({
+    userAndFriendIndex: index("user_and_friend_index").on(
+      table.userId,
+      table.friendId,
+    ),
+    uniqCombination: unique().on(table.friendId, table.userId),
+  }),
+);
+
+export const usersToFriendsRelations = relations(
+  usersToFriendsTable,
+  ({ one }) => ({
+    friend: one(friendsTable, {
+      fields: [usersToFriendsTable.friendId],
+      references: [friendsTable.friendId],
+    }),
+    user: one(usersTable, {
+      fields: [usersToFriendsTable.userId],
       references: [usersTable.displayId],
     }),
   }),
