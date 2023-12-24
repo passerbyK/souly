@@ -13,20 +13,20 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { publicEnv } from "@/lib/env/public";
 
 function SignUp() {
-  const [username, setUsername] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     signIn("credentials", {
-      username,
+      email,
       password,
-      callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/chats`,
+      callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/personal`,
     });
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-brand">
+    <div className="relative z-50 flex min-h-screen items-center justify-center bg-brand">
       <Card className="w-4/5 border-4 border-bdr bg-brand md:w-[600px] lg:w-[800px]">
         <CardHeader>
           <CardTitle className="flex items-center justify-between text-4xl">
@@ -68,10 +68,10 @@ function SignUp() {
         <CardContent className="flex flex-col gap-2">
           <form onSubmit={handleSubmit} className="flex flex-col gap-2">
             <AuthInput
-              label="Username"
-              type="text"
-              value={username}
-              setValue={setUsername}
+              label="Email"
+              type="email"
+              value={email}
+              setValue={setEmail}
             />
             <AuthInput
               label="Password"
@@ -97,11 +97,11 @@ function SignUp() {
               Sign In
             </Button>
           </form>
-          <div className="flex justify-center gap-2">
+          <div className="flex flex-wrap justify-center gap-2">
             <Button
               onClick={async () => {
                 signIn("github", {
-                  callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/chats`,
+                  callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/personal`,
                 });
               }}
               className="flex w-full rounded-2xl border-4 border-bdr bg-btn_2 text-center text-xl text-txt"
@@ -118,7 +118,7 @@ function SignUp() {
             <Button
               onClick={async () => {
                 signIn("github", {
-                  callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/chats`,
+                  callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/personal`,
                 });
               }}
               className="flex w-full rounded-2xl border-4 border-bdr bg-btn_2 text-center text-xl text-txt"
