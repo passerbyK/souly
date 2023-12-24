@@ -10,7 +10,7 @@ import {
   boolean,
   timestamp,
   integer,
-  pgEnum
+  pgEnum,
 } from "drizzle-orm/pg-core";
 
 // Checkout the many-to-many relationship in the following tutorial:
@@ -31,8 +31,10 @@ export const usersTable = pgTable(
       .notNull()
       .default("credentials"),
     isNotified: boolean("is_notified").notNull().default(false),
-    paintingTime: varchar("painting_time", { length: 100 }).notNull().default(""),
-    isDeveloper: boolean("is_developer").notNull().default(false)
+    paintingTime: varchar("painting_time", { length: 100 })
+      .notNull()
+      .default(""),
+    isDeveloper: boolean("is_developer").notNull().default(false),
   },
   (table) => ({
     displayIdIndex: index("display_id_index").on(table.displayId),
@@ -51,7 +53,9 @@ export const postsTable = pgTable(
         onDelete: "cascade",
         onUpdate: "cascade",
       }),
-    createdAt: timestamp("created_at").notNull().default(sql`now()`),
+    createdAt: timestamp("created_at")
+      .notNull()
+      .default(sql`now()`),
     topic: varchar("topic", { length: 100 }).notNull(),
     description: text("description").notNull().default(""),
     image: varchar("image").notNull(),
@@ -59,7 +63,7 @@ export const postsTable = pgTable(
   },
   (table) => ({
     displayIdIndex: index("display_id_index").on(table.displayId),
-    imageIndex: index("image_index").on(table.image)
+    imageIndex: index("image_index").on(table.image),
   }),
 );
 
@@ -74,11 +78,13 @@ export const subjectsTable = pgTable(
         onDelete: "cascade",
         onUpdate: "cascade",
       }),
-    createdAt: timestamp("created_at").notNull().default(sql`now()`),
+    createdAt: timestamp("created_at")
+      .notNull()
+      .default(sql`now()`),
     targetDay: integer("target_day").notNull().notNull().default(21), // default 21 days
   },
   (table) => ({
-    userIdIndex: index("display_id_index").on(table.userId)
+    userIdIndex: index("display_id_index").on(table.userId),
   }),
 );
 
@@ -94,12 +100,16 @@ export const friendsTable = pgTable(
     friendId: uuid("friend_id")
       .notNull()
       .references(() => usersTable.displayId, {}),
-    createdAt: timestamp("created_at").notNull().default(sql`now()`),
-    updatedAt: timestamp("updated_at").notNull().default(sql`now()`),
+    createdAt: timestamp("created_at")
+      .notNull()
+      .default(sql`now()`),
+    updatedAt: timestamp("updated_at")
+      .notNull()
+      .default(sql`now()`),
     status: friendEnum("status").notNull().default("pending"),
   },
   (table) => ({
-    userIdIndex: index("display_id_index").on(table.userId)
+    userIdIndex: index("display_id_index").on(table.userId),
   }),
 );
 
@@ -174,8 +184,12 @@ export const usersToFriendsTable = pgTable(
     friendId: uuid("friend_id")
       .notNull()
       .references(() => usersTable.displayId, {}), // it seems strange here.
-    createdAt: timestamp("created_at").notNull().default(sql`now()`),
-    updatedAt: timestamp("updated_at").notNull().default(sql`now()`),
+    createdAt: timestamp("created_at")
+      .notNull()
+      .default(sql`now()`),
+    updatedAt: timestamp("updated_at")
+      .notNull()
+      .default(sql`now()`),
     status: friendEnum("status").notNull().default("pending"),
   },
   (table) => ({
