@@ -30,15 +30,11 @@ function ChatPage() {
   return (
     <div className="h-full w-full bg-brand_2">
       <div className="flex">
-        <h1 className="p-4 text-6xl text-txt_5">
-          friend's name
-        </h1>
-        <h2 className="ml-auto p-8 text-4xl text-txt_6">
-          2023/12/09(Sat.)
-        </h2>
+        <h1 className="p-4 text-6xl text-txt_5">friend's name</h1>
+        <h2 className="ml-auto p-8 text-4xl text-txt_6">2023/12/09(Sat.)</h2>
       </div>
-      <div className="mx-8 flex h-4/5 items-end rounded-xl border-4 bg-white border-bdr_4">
-        <div className="flex h-min w-full justify-between rounded-b-lg px-8 py-4 text-5xl border-bdr_4 bg-brand_3">
+      <div className="mx-8 flex h-4/5 items-end rounded-xl border-4 border-bdr_4 bg-white">
+        <div className="flex h-min w-full justify-between rounded-b-lg border-bdr_4 bg-brand_3 px-8 py-4 text-5xl">
           <div className="flex flex-col gap-2">
             <p className="text-4xl">topic</p>
             <p className="text-2xl">description</p>

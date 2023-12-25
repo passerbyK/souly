@@ -1,8 +1,8 @@
 import { RiSearchLine } from "react-icons/ri";
 
 // import { redirect } from "next/navigation";
-
 import { Input } from "@/components/ui/input";
+
 // import { auth } from "@/lib/auth";
 // import { revalidatePath } from "next/cache";
 // import { publicEnv } from "@/lib/env/public";
@@ -29,7 +29,7 @@ export default async function Search() {
           // const result = await getChat(userId, searchUser);
           // console.log(result);
           // if (!result) {
-            // TODO:: open <AskCreateDialog /> --> create or not, open CreateDialog if yes, close and redirect if no!!!
+          // TODO:: open <AskCreateDialog /> --> create or not, open CreateDialog if yes, close and redirect if no!!!
           //  redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/docs`);
           //}
           // console.log(result + "   2");

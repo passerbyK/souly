@@ -25,7 +25,7 @@ async function AddDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="items-center rounded-full border-4 px-3 py-1 text-xl border-bdr_3 text-bdr_3 bg-btn_2 hover:bg-description">
+        <Button className="items-center rounded-full border-4 border-bdr_3 bg-btn_2 px-3 py-1 text-xl text-bdr_3 hover:bg-description">
           Add
         </Button>
       </DialogTrigger>
@@ -57,11 +57,11 @@ async function AddDialog() {
           <Input
             placeholder="Type in his/her email."
             name="otherUser"
-            className="items-center rounded-lg border-4 px-3 py-1 text-xl text-txt_4 border-txt_4 bg-btn_3"
+            className="items-center rounded-lg border-4 border-txt_4 bg-btn_3 px-3 py-1 text-xl text-txt_4"
           />
           <Button
             type="submit"
-            className="items-center rounded-full border-4 px-3 py-1 text-xl border-bdr_3 text-bdr_3 bg-btn_2 hover:bg-description"
+            className="items-center rounded-full border-4 border-bdr_3 bg-btn_2 px-3 py-1 text-xl text-bdr_3 hover:bg-description"
           >
             Add
           </Button>
