@@ -37,11 +37,37 @@ async function FriendList() {
       name: "xiang yi",
       topic: "sky",
     },
+    { id: "1", display_id: "ffdvnjgmorivgjoim", name: "vivi", topic: "sun" },
+    {
+      id: "2",
+      display_id: "dvnjscjkfcnhhkmkf",
+      name: "winnie",
+      topic: "flower",
+    },
+    {
+      id: "3",
+      display_id: "mkvgclimjiomivmhfh",
+      name: "xiang yi",
+      topic: "sky",
+    },
+    { id: "1", display_id: "ffdvnjgmorivgjoim", name: "vivi", topic: "sun" },
+    {
+      id: "2",
+      display_id: "dvnjscjkfcnhhkmkf",
+      name: "winnie",
+      topic: "flower",
+    },
+    {
+      id: "3",
+      display_id: "mkvgclimjiomivmhfh",
+      name: "xiang yi",
+      topic: "sky",
+    },
   ];
 
   return (
     <div className="flex h-full bg-brand_2">
-      <div className="m-4 flex flex-col overflow-y-scroll rounded-2xl bg-nav p-4">
+      <div className="relative m-4 flex flex-col overflow-y-scroll rounded-2xl bg-nav p-4">
         <h1 className="p-2 text-3xl text-txt_7">Your friends</h1>
         {/* <SearchFriend />  */}
         <Input
@@ -49,12 +75,12 @@ async function FriendList() {
           name="searchFriend"
           className="rounded-full border-4 border-txt_7 text-xl text-txt_7"
         />
-        <section className="flex w-full flex-col divide-y-4 divide-slate-400/25">
+        <section className="flex w-full flex-col divide-y-4 divide-slate-400/25 overflow-y-scroll pb-12">
           {friends.map(async (friend, i) => {
             return (
               <div
                 key={i}
-                className="group flex w-full cursor-pointer items-center justify-between gap-2 p-2 hover:bg-slate-200 "
+                className="group flex w-full cursor-pointer items-center justify-between gap-2 p-2 hover:bg-yellow-100"
               >
                 <Link
                   className="grow px-3 py-1"
@@ -86,7 +112,7 @@ async function FriendList() {
             );
           })}
         </section>
-        <div className="sticky bottom-0 flex justify-evenly gap-4">
+        <div className="absolute bottom-4 flex w-10/12 flex-col gap-4 xl:flex-row xl:gap-6">
           <AddDialog />
           <RequestDialog />
         </div>
