@@ -40,20 +40,14 @@ async function FriendList() {
   ];
 
   return (
-    <div className="flex h-full" style={{ backgroundColor: "#DFD3C4" }}>
-      <div
-        className="m-4 flex flex-col overflow-y-scroll rounded-2xl p-4"
-        style={{ backgroundColor: "#FFEFDC" }}
-      >
-        <h1 className="p-2 text-3xl" style={{ color: "#5C574D" }}>
-          Your friends
-        </h1>
+    <div className="flex h-full bg-brand_2">
+      <div className="m-4 flex flex-col overflow-y-scroll rounded-2xl bg-nav p-4">
+        <h1 className="p-2 text-3xl text-txt_7">Your friends</h1>
         {/* <SearchFriend />  */}
         <Input
           placeholder="search"
           name="searchFriend"
-          className="rounded-full border-4 text-xl"
-          style={{ color: "#5C574D", borderColor: "#5C574D" }}
+          className="rounded-full border-4 border-txt_7 text-xl text-txt_7"
         />
         <section className="flex w-full flex-col divide-y-4 divide-slate-400/25">
           {friends.map(async (friend, i) => {
@@ -67,16 +61,10 @@ async function FriendList() {
                   href={`/social/${friend.display_id}`}
                 >
                   <div className="items-center gap-2">
-                    <div
-                      className="flex gap-2 text-2xl font-semibold"
-                      style={{ color: "#000000" }}
-                    >
+                    <div className="flex gap-2 text-2xl font-semibold text-black">
                       {friend.name}
                     </div>
-                    <div
-                      className="flex gap-2 whitespace-normal break-words text-xl"
-                      style={{ color: "#000000" }}
-                    >
+                    <div className="flex gap-2 whitespace-normal break-words text-xl text-black">
                       {friend.topic}
                     </div>
                   </div>

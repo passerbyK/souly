@@ -24,16 +24,10 @@ async function DocsPage() {
   //redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/social/ffdvnjgmorivgjoim`);
 
   return (
-    <div
-      className="flex h-full w-full items-center justify-center"
-      style={{ backgroundColor: "#DFD3C4" }}
-    >
+    <div className="flex h-full w-full items-center justify-center bg-brand_2">
       <div className="flex flex-col items-center justify-center">
-        <IoLogoSnapchat size={100} style={{ color: "#A8450F" }} />
-        <p
-          className="pt-6 text-2xl font-semibold text-slate-700"
-          style={{ color: "#A8450F" }}
-        >
+        <IoLogoSnapchat size={100} className="text-bdr_3" />
+        <p className="pt-6 text-2xl font-semibold text-bdr_3">
           Invite your friends to paint with you.
         </p>
       </div>

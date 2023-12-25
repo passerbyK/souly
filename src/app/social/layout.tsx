@@ -11,10 +11,7 @@ function Social({ children }: Props) {
       {/* overflow-y-scroll for child to show scrollbar */}
       <div className="h-1/6 w-full"></div>
       <div className="flex-rows flex h-5/6">
-        <nav
-          className="flex w-1/5 flex-col overflow-y-scroll border-r"
-          style={{ color: "#FFEFDC" }}
-        >
+        <nav className="flex w-1/5 flex-col overflow-y-scroll border-r bg-nav">
           <FriendList />
         </nav>
         {/* overflow-y-scroll for child to show scrollbar */}

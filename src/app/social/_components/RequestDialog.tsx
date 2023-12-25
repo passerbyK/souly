@@ -35,14 +35,7 @@ async function RequestDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button
-          className="items-center rounded-full border-4 px-3 py-1 text-xl"
-          style={{
-            color: "#A8450F",
-            borderColor: "#A8450F",
-            backgroundColor: "#E5A582",
-          }}
-        >
+        <Button className="items-center rounded-full border-4 border-bdr_3 bg-btn_2 px-3 py-1 text-xl text-bdr_3 hover:bg-description">
           Request
         </Button>
       </DialogTrigger>
@@ -51,7 +44,7 @@ async function RequestDialog() {
           <DialogTitle className="py-1 text-3xl text-description">
             Friend requests
           </DialogTitle>
-          <DialogDescription className="text-xl" style={{ color: "#8E6920" }}>
+          <DialogDescription className="text-xl text-txt_5">
             You can decide who you want to add.
           </DialogDescription>
         </DialogHeader>
@@ -59,13 +52,10 @@ async function RequestDialog() {
           return (
             <div
               key={i}
-              className="group flex w-full cursor-pointer items-center justify-between gap-2 p-2 hover:bg-slate-200 "
+              className="group flex w-full cursor-pointer items-center justify-between gap-2 rounded-lg p-2 hover:bg-yellow-100"
             >
               <div className="items-center gap-2">
-                <div
-                  className="flex gap-2 text-2xl font-semibold"
-                  style={{ color: "#000000" }}
-                >
+                <div className="flex gap-2 text-2xl font-semibold text-black">
                   {friend.name}
                 </div>
               </div>
