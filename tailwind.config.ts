@@ -17,8 +17,10 @@ module.exports = {
     },
     extend: {
       colors: {
+        nav: "#FFEFDC", // navbar: social & personal sidebar color
         brand: "#FBEFDF", // background color
         brand_2: "#DFD3C4", // background-2 color
+        brand_3: "#E8BA5D", // background-3: painting detail color
         btn: "#F5B263", // button color
         btn_2: "#E5A582", // button-2 color
         btn_3: "#D1C1A1", // button-3 color
@@ -26,9 +28,14 @@ module.exports = {
         txt_2: "#D9875A", // text-2 color
         txt_3: "#CFC1A1", // text-3 color
         txt_4: "#846425", // text-4 color
+        txt_5: "#8E6920", // text-5: friend's name color
+        txt_6: "#998D73", // text-6: date color
+        txt_7: "#5C574D", // text-7: friend list title color
         description: "#D88253", // description color
         bdr: "#7A4405", // border color
         bdr_2: "#E6B555", // border-2 color
+        bdr_3: "#A8450F", // border-3: friend list button color
+        bdr_4: "#7C5A16", // border-4: painting area color
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
