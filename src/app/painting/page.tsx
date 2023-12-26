@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { useSession } from "next-auth/react";
 import { ChromePicker } from "react-color";
 import type { ColorResult } from "react-color";
 
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 import { useDraw } from "@/hooks/useDraw";
@@ -47,28 +47,30 @@ export default function Painting() {
     return (
       <main className="flex h-screen min-h-screen flex-col items-center bg-brand">
         <div className="h-1/6 w-full"></div>
-        <div className="w-full h-full flex-col items-center justify-center bg-brand_2 px-4 md:px-12">
+        <div className="h-full w-full flex-col items-center justify-center bg-brand_2 px-4 md:px-12">
           <div className="mt-4 flex w-full items-center gap-4 px-4 text-4xl ">
-            <div className="flex-wrap grow w-3/4 my-4 text-center text-txt_4 md:w-1/2">
+            <div className="my-4 w-3/4 grow flex-wrap text-center text-txt_4 md:w-1/2">
               Today's Topic:{" "}
               <span className="max-w-full overflow-hidden whitespace-nowrap underline">
                 A dog running in the park
               </span>
             </div>
-            <div className="flex-wrap w-1/4 text-gray-500">2023/12/09 {"(Sat.)"}</div>
+            <div className="w-1/4 flex-wrap text-gray-500">
+              2023/12/09 {"(Sat.)"}
+            </div>
           </div>
           <div className="mb-4 flex gap-4">
-            <div className="relative w-[1000px] h-[400px] items-center rounded-2xl border-4 border-bdr_2 bg-white">
+            <div className="relative h-[400px] w-[1000px] items-center rounded-2xl border-4 border-bdr_2 bg-white">
               <canvas
                 ref={canvasRef}
                 onMouseDown={onMouseDown}
-                className="w-full h-full rounded-2xl"
+                className="h-full w-full rounded-2xl"
               />
             </div>
             <div className="flex flex w-1/3 flex-col gap-4">
               <input
                 type="text"
-                className="flex grow w-full rounded-2xl border-4 border-bdr_2 bg-brand p-2 text-xl"
+                className="flex w-full grow rounded-2xl border-4 border-bdr_2 bg-brand p-2 text-xl"
                 placeholder="Type something..."
               />
               <p className="text-md mt-2 text-center text-gray-500">
@@ -77,7 +79,7 @@ export default function Painting() {
             </div>
           </div>
           <div className="flex">
-            <div className="grow flex gap-10 pr-10">
+            <div className="flex grow gap-10 pr-10">
               <button
                 type="button"
                 className="rounded-md border border-black p-2"
@@ -86,7 +88,7 @@ export default function Painting() {
                 Clear canvas
               </button>
               <div
-                className="w-[50px] h-[50px] self-center rounded-full border-2 border-black p-2"
+                className="h-[50px] w-[50px] self-center rounded-full border-2 border-black p-2"
                 onClick={handleColorIconClick}
                 style={{ backgroundColor: color, cursor: "pointer" }}
               >
