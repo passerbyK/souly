@@ -61,7 +61,7 @@ export const {
         username: name,
         email: email.toLowerCase(),
         provider,
-        photo: ""
+        photo: "",
       });
       return token;
     },

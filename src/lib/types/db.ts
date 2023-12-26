@@ -12,4 +12,4 @@ export type Post = {
   created_at: string;
   description: string;
   image: string;
-}
+};
