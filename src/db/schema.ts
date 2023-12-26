@@ -11,7 +11,6 @@ import {
   timestamp,
   integer,
   pgEnum,
-  customType
 } from "drizzle-orm/pg-core";
 
 // Checkout the many-to-many relationship in the following tutorial:
@@ -35,7 +34,9 @@ export const usersTable = pgTable(
     paintingTime: varchar("painting_time", { length: 100 })
       .notNull()
       .default(""),
-    createdAt: timestamp("created_at").notNull().default(sql`now()`),
+    createdAt: timestamp("created_at")
+      .notNull()
+      .default(sql`now()`),
     lastingDays: integer("lasting_days").notNull().default(21), // default 21 days
     photo: varchar("photo").notNull(),
     isDeveloper: boolean("is_developer").notNull().default(false),
