@@ -61,6 +61,7 @@ export default CredentialsProvider({
         .returning();
       return {
         name: createdUser.username,
+        email: createdUser.email,
         id: createdUser.displayId,
       };
     }
@@ -82,6 +83,7 @@ export default CredentialsProvider({
     }
     return {
       name: existedUser.username,
+      email: existedUser.email,
       id: existedUser.id,
     };
   },
