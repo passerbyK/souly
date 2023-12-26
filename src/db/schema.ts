@@ -38,7 +38,7 @@ export const usersTable = pgTable(
       .notNull()
       .default(sql`now()`),
     lastingDays: integer("lasting_days").notNull().default(21), // default 21 days
-    photo: varchar("photo").notNull(),
+    photo: varchar("photo").notNull().default(""),
     isDeveloper: boolean("is_developer").notNull().default(false),
   },
   (table) => ({
@@ -61,9 +61,9 @@ export const postsTable = pgTable(
     createdAt: timestamp("created_at")
       .notNull()
       .default(sql`now()`),
-    topic: varchar("topic", { length: 100 }).notNull(),
+    topic: varchar("topic", { length: 100 }).notNull().default(""),
     description: text("description").notNull().default(""),
-    image: varchar("image").notNull(),
+    image: varchar("image").notNull().default(""),
   },
   (table) => ({
     displayIdIndex: index("display_id_index").on(table.displayId),
@@ -82,7 +82,7 @@ export const subjectsTable = pgTable(
         onDelete: "cascade",
         onUpdate: "cascade",
       }),
-    subject: varchar("subject", { length: 100 }).notNull(),
+    subject: varchar("subject", { length: 100 }).notNull().default(""),
     topic: varchar("topic").notNull().default("[]"),
     createdAt: timestamp("created_at")
       .notNull()
