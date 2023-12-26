@@ -6,6 +6,25 @@ export const usePost = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
+  const posted = useCallback(
+    async ({ userId }: { userId: string }) => {
+      try {
+        const res = await fetch(`/api/paint/${userId}`);
+
+        if (!res.ok) {
+          router.push(`/personal`);
+          return;
+        }
+
+        const data = await res.json();
+        return data.posted;
+      } catch (error) {
+        console.error("Error fetching the topic:", error);
+      }
+    },
+    [router],
+  );
+
   const postPaint = useCallback(
     async ({
       userId,
@@ -69,6 +88,7 @@ export const usePost = () => {
   return {
     postPaint,
     fetchTopic,
+    posted,
     loading,
   };
 };
