@@ -11,6 +11,7 @@ import {
   timestamp,
   integer,
   pgEnum,
+  customType
 } from "drizzle-orm/pg-core";
 
 // Checkout the many-to-many relationship in the following tutorial:
@@ -34,6 +35,9 @@ export const usersTable = pgTable(
     paintingTime: varchar("painting_time", { length: 100 })
       .notNull()
       .default(""),
+    createdAt: timestamp("created_at").notNull().default(sql`now()`),
+    lastingDays: integer("lasting_days").notNull().default(21), // default 21 days
+    photo: varchar("photo").notNull(),
     isDeveloper: boolean("is_developer").notNull().default(false),
   },
   (table) => ({
@@ -59,7 +63,6 @@ export const postsTable = pgTable(
     topic: varchar("topic", { length: 100 }).notNull(),
     description: text("description").notNull().default(""),
     image: varchar("image").notNull(),
-    liked_count: integer("liked_count").notNull().default(0),
   },
   (table) => ({
     displayIdIndex: index("display_id_index").on(table.displayId),
@@ -78,13 +81,14 @@ export const subjectsTable = pgTable(
         onDelete: "cascade",
         onUpdate: "cascade",
       }),
+    subject: varchar("subject", { length: 100 }).notNull(),
+    topic: varchar("topic").notNull().default("[]"),
     createdAt: timestamp("created_at")
       .notNull()
       .default(sql`now()`),
-    targetDay: integer("target_day").notNull().notNull().default(21), // default 21 days
   },
   (table) => ({
-    userIdIndex: index("display_id_index").on(table.userId),
+    displayIdIndex: index("display_id_index").on(table.displayId),
   }),
 );
 
@@ -109,7 +113,26 @@ export const friendsTable = pgTable(
     status: friendEnum("status").notNull().default("pending"),
   },
   (table) => ({
-    userIdIndex: index("display_id_index").on(table.userId),
+    userIdIndex: index("user_id_index").on(table.userId),
+  }),
+);
+
+export const likesTable = pgTable(
+  "likes",
+  {
+    id: serial("id").primaryKey(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => usersTable.displayId, {}),
+    postId: uuid("post_id")
+      .notNull()
+      .references(() => postsTable.displayId, {}),
+    createdAt: timestamp("created_at")
+      .notNull()
+      .default(sql`now()`),
+  },
+  (table) => ({
+    postIdIndex: index("post_id_index").on(table.postId),
   }),
 );
 
@@ -119,10 +142,18 @@ export const usersRelations = relations(usersTable, ({ many }) => ({
   postsTable: many(postsTable),
 }));
 
-export const postsRelations = relations(postsTable, ({ one }) => ({
+export const postsRelations = relations(postsTable, ({ one, many }) => ({
   user: one(usersTable, {
     fields: [postsTable.userId],
     references: [usersTable.displayId],
+  }),
+  likes: many(likesTable),
+}));
+
+export const likesRelations = relations(likesTable, ({ one }) => ({
+  likes: one(postsTable, {
+    fields: [likesTable.postId],
+    references: [postsTable.displayId],
   }),
 }));
 
@@ -184,13 +215,6 @@ export const usersToFriendsTable = pgTable(
     friendId: uuid("friend_id")
       .notNull()
       .references(() => usersTable.displayId, {}), // it seems strange here.
-    createdAt: timestamp("created_at")
-      .notNull()
-      .default(sql`now()`),
-    updatedAt: timestamp("updated_at")
-      .notNull()
-      .default(sql`now()`),
-    status: friendEnum("status").notNull().default("pending"),
   },
   (table) => ({
     userAndFriendIndex: index("user_and_friend_index").on(
