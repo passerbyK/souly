@@ -8,8 +8,6 @@ import { usersTable } from "@/db/schema";
 
 import CredentialsProvider from "./CredentialsProvider";
 
-// import CredentialsProvider from "next-auth/providers/credentials"
-
 export const {
   handlers: { GET, POST },
   auth,
@@ -30,7 +28,6 @@ export const {
         .from(usersTable)
         .where(eq(usersTable.email, email.toLowerCase()))
         .execute();
-
       return {
         ...session,
         user: {
@@ -64,8 +61,8 @@ export const {
         username: name,
         email: email.toLowerCase(),
         provider,
+        photo: ""
       });
-
       return token;
     },
   },
