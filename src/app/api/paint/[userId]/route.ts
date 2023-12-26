@@ -64,59 +64,59 @@ export async function POST(
 
 // GET /api/paint/:userId
 export async function GET(
-    _: NextRequest,
-    {
-      params,
-    }: {
-      params: {
-        userId: string;
-      };
-    },
-  ) {
-    try {
-      // Get user from session
-      const session = await auth();
-      if (!session || !session?.user?.id) {
-        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-      }
-  
-      // Get the post, if any
-      const post = await db.query.postsTable.findFirst({
-        where: and(eq(postsTable.userId, params.userId)),
-      });
+  _: NextRequest,
+  {
+    params,
+  }: {
+    params: {
+      userId: string;
+    };
+  },
+) {
+  try {
+    // Get user from session
+    const session = await auth();
+    if (!session || !session?.user?.id) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
 
-      if (!post) {
-        return NextResponse.json(
-          {
-            posted: false
-          },
-          { status: 200 },
-        );
-      }
+    // Get the post, if any
+    const post = await db.query.postsTable.findFirst({
+      where: and(eq(postsTable.userId, params.userId)),
+    });
 
-      if (Date.now() - post?.createdAt.getTime() > 24 * 60 * 60 * 1000) {
-        return NextResponse.json(
-          {
-            posted: false
-          },
-          { status: 200 },
-        );
-      }
-  
+    if (!post) {
       return NextResponse.json(
         {
-          posted: true
+          posted: false,
         },
         { status: 200 },
       );
-    } catch (error) {
+    }
+
+    if (Date.now() - post?.createdAt.getTime() > 24 * 60 * 60 * 1000) {
       return NextResponse.json(
         {
-          error: "Internal Server Error",
+          posted: false,
         },
-        {
-          status: 500,
-        },
+        { status: 200 },
       );
     }
+
+    return NextResponse.json(
+      {
+        posted: true,
+      },
+      { status: 200 },
+    );
+  } catch (error) {
+    return NextResponse.json(
+      {
+        error: "Internal Server Error",
+      },
+      {
+        status: 500,
+      },
+    );
   }
+}

@@ -48,7 +48,7 @@ export default function Painting() {
           console.error("Error fetching the topic:", error);
         }
       };
-  
+
       loadTopic();
 
       const mainElement = document.getElementById("main-element");
@@ -63,8 +63,7 @@ export default function Painting() {
     } else {
       window.alert("You have already posted today!");
       router.push(`/personal`);
-    };
-    
+    }
   }, [userId, fetchTopic, isPost, posted, router]);
 
   if (!userId || userId === "") {
@@ -79,7 +78,7 @@ export default function Painting() {
   const handlePostClick = async () => {
     if (elementRef.current) {
       try {
-        const isConfirmed = window.confirm("Are you sure you want to post?")
+        const isConfirmed = window.confirm("Are you sure you want to post?");
 
         if (!isConfirmed) {
           return;
@@ -123,7 +122,9 @@ export default function Painting() {
   } else {
     return (
       <div id="main-element" className="blur-lg">
-        <main className={`flex h-screen min-h-screen flex-col items-center bg-brand`}>
+        <main
+          className={`flex h-screen min-h-screen flex-col items-center bg-brand`}
+        >
           <div className="h-1/6 w-full"></div>
           <div className="h-full w-full flex-col items-center justify-center bg-brand_2 px-4 md:px-12">
             <div className="mt-4 flex w-full items-center gap-4 px-4 text-4xl ">
