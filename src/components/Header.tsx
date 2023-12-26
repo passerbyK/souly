@@ -1,10 +1,10 @@
-import { IoIosNotificationsOutline } from "react-icons/io";
-import { IoPersonCircleSharp } from "react-icons/io5";
-
 import Image from "next/image";
 import Link from "next/link";
 
 import { auth } from "@/lib/auth";
+
+import NotificationDialog from "./_components/NotificationDialog";
+import PersonalDialog from "./_components/PersonalDialog";
 
 async function Header() {
   const session = await auth();
@@ -111,12 +111,8 @@ async function Header() {
         >
           <div className="">Social</div>
         </Link>
-        <div className="cursor-pointer p-2 px-4 text-3xl transition-colors hover:rounded-full hover:bg-description/30">
-          <IoIosNotificationsOutline />
-        </div>
-        <div className="mx-2 text-5xl text-black hover:cursor-pointer">
-          <IoPersonCircleSharp />
-        </div>
+        <NotificationDialog />
+        <PersonalDialog />
       </div>
     </div>
   );
