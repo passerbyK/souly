@@ -9,7 +9,16 @@ import { postSchema } from "@/validators/post";
 // POST /api/paint/:userId
 export async function POST(
   req: NextRequest,
-  { params }: { params: { userId: string, topic: string, description: string, image: string } },
+  {
+    params,
+  }: {
+    params: {
+      userId: string;
+      topic: string;
+      description: string;
+      image: string;
+    };
+  },
 ) {
   try {
     // Get user from session
@@ -20,7 +29,10 @@ export async function POST(
 
     // Parse the request body
     const reqBody = await req.json();
-    let validatedReqBody: Pick<Post, "userId" | "topic" | "description" | "image">;
+    let validatedReqBody: Pick<
+      Post,
+      "userId" | "topic" | "description" | "image"
+    >;
     try {
       validatedReqBody = postSchema.parse(reqBody);
     } catch (error) {
@@ -38,9 +50,7 @@ export async function POST(
       })
       .execute();
 
-    return NextResponse.json(
-      { status: 200 },
-    );
+    return NextResponse.json({ status: 200 });
   } catch (error) {
     console.log(error);
     return NextResponse.json(

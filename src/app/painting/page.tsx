@@ -3,8 +3,8 @@
 import { useRef, useEffect, useState } from "react";
 import { ChromePicker } from "react-color";
 import type { ColorResult } from "react-color";
-// import { toPng } from "html-to-image";
 
+// import { toPng } from "html-to-image";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
@@ -15,7 +15,7 @@ import type { Draw } from "@/lib/types/shared_types";
 // const topic = "A dog running in the park"; // fake data
 
 export default function Painting() {
-  const { data:session, status } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
 
   const [color, setColor] = useState<string>("#000");
@@ -31,7 +31,7 @@ export default function Painting() {
   useEffect(() => {
     const loadTopic = async () => {
       try {
-        const fetchedTopic = await fetchTopic({userId});
+        const fetchedTopic = await fetchTopic({ userId });
         setTopic(fetchedTopic);
       } catch (error) {
         console.error("Error fetching the topic:", error);
@@ -44,7 +44,7 @@ export default function Painting() {
   if (!userId || userId === "") {
     router.push("/auth/login");
     return <div></div>;
-  };
+  }
 
   const handleColorIconClick = () => {
     setShowPicker(!showPicker);
@@ -54,7 +54,12 @@ export default function Painting() {
     if (elementRef.current) {
       try {
         // const dataUrl = await toPng(elementRef.current, { cacheBust: false });
-        await postPaint({userId: userId, topic: topic, description: description, image: "https://i.imgur.com/Rj72lvJ.jpeg"});
+        await postPaint({
+          userId: userId,
+          topic: topic,
+          description: description,
+          image: "https://i.imgur.com/Rj72lvJ.jpeg",
+        });
         router.push(`/personal`);
       } catch (error) {
         console.error("Error exporting canvas:", error);
@@ -105,7 +110,7 @@ export default function Painting() {
                 <canvas
                   ref={canvasRef}
                   onMouseDown={onMouseDown}
-                  className="w-full h-full rounded-2xl"
+                  className="h-full w-full rounded-2xl"
                 />
               </div>
             </div>
@@ -131,7 +136,7 @@ export default function Painting() {
                 Clear canvas
               </button>
               <div
-                className="h-[50px] w-[50px] self-center rounded-full border-2 border-black p-2 cursor-pointer"
+                className="h-[50px] w-[50px] cursor-pointer self-center rounded-full border-2 border-black p-2"
                 onClick={handleColorIconClick}
                 style={{ backgroundColor: color }}
               >
@@ -143,7 +148,11 @@ export default function Painting() {
                 )}
               </div>
             </div>
-            <button disabled={loading} onClick={handlePostClick} className="rounded-2xl border-4 border-bdr bg-btn_2 px-4 py-2 text-center text-3xl text-txt">
+            <button
+              disabled={loading}
+              onClick={handlePostClick}
+              className="rounded-2xl border-4 border-bdr bg-btn_2 px-4 py-2 text-center text-3xl text-txt"
+            >
               POST
             </button>
           </div>
