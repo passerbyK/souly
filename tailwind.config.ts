@@ -21,6 +21,7 @@ module.exports = {
         brand: "#FBEFDF", // background color
         brand_2: "#DFD3C4", // background-2 color
         brand_3: "#E8BA5D", // background-3: painting detail color
+        brand_4: "#F8F8E3", // background-4: notification color
         btn: "#F5B263", // button color
         btn_2: "#E5A582", // button-2 color
         btn_3: "#D1C1A1", // button-3 color
@@ -31,6 +32,8 @@ module.exports = {
         txt_5: "#8E6920", // text-5: friend's name color
         txt_6: "#998D73", // text-6: date color
         txt_7: "#5C574D", // text-7: friend list title color
+        txt_8: "#9B7862", // text-8: notification color
+        txt_9: "#B18871", // text-9: notification details color
         description: "#D88253", // description color
         bdr: "#7A4405", // border color
         bdr_2: "#E6B555", // border-2 color

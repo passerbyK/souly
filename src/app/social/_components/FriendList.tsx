@@ -1,17 +1,11 @@
-import { AiFillDelete } from "react-icons/ai";
-
-import { revalidatePath } from "next/cache";
-import Link from "next/link";
-import { redirect } from "next/navigation";
-
 //import SearchFriend from "./SearchFriend";
 import { Input } from "@/components/ui/input";
-//import { auth } from "@/lib/auth";
-import { publicEnv } from "@/lib/env/public";
 
+//import { auth } from "@/lib/auth";
 // import { deleteFriend, getFriend } from "./actions";
 // import { getPainting } from "../[chatId]/_components/actions";
 import AddDialog from "./AddDialog";
+import Friend from "./Friend";
 import RequestDialog from "./RequestDialog";
 
 async function FriendList() {
@@ -68,7 +62,7 @@ async function FriendList() {
   return (
     <div className="flex h-full bg-brand_2">
       <div className="relative m-4 flex flex-col overflow-y-scroll rounded-2xl bg-nav p-4">
-        <h1 className="p-2 text-3xl text-txt_7">Your friends</h1>
+        <p className="p-2 text-4xl text-txt_7">Your friends</p>
         {/* <SearchFriend />  */}
         <Input
           placeholder="search"
@@ -76,41 +70,14 @@ async function FriendList() {
           className="rounded-full border-4 border-txt_7 text-xl text-txt_7"
         />
         <section className="flex w-full flex-col divide-y-4 divide-slate-400/25 overflow-y-scroll pb-12">
-          {friends.map(async (friend, i) => {
-            return (
-              <div
-                key={i}
-                className="group flex w-full cursor-pointer items-center justify-between gap-2 p-2 hover:bg-yellow-100"
-              >
-                <Link
-                  className="grow px-3 py-1"
-                  href={`/social/${friend.display_id}`}
-                >
-                  <div className="items-center gap-2">
-                    <div className="flex gap-2 text-2xl font-semibold text-black">
-                      {friend.name}
-                    </div>
-                    <div className="flex gap-2 whitespace-normal break-words text-xl text-black">
-                      {friend.topic}
-                    </div>
-                  </div>
-                </Link>
-                <form
-                  className="hidden px-2 text-slate-400 hover:text-red-400 group-hover:flex"
-                  action={async () => {
-                    "use server";
-                    //await deleteFriend(friend.display_id);
-                    revalidatePath("/social");
-                    redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/social`);
-                  }}
-                >
-                  <button type={"submit"}>
-                    <AiFillDelete size={24} />
-                  </button>
-                </form>
-              </div>
-            );
-          })}
+          {friends.map(async (friend) => (
+            <Friend
+              key={friend.id}
+              displayId={friend.display_id}
+              name={friend.name}
+              topic={friend.topic}
+            />
+          ))}
         </section>
         <div className="absolute bottom-4 flex w-10/12 flex-col gap-4 xl:flex-row xl:gap-6">
           <AddDialog />

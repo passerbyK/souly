@@ -173,7 +173,7 @@ export default function Introduction() {
             <p
               className={`${pattaya.className} mb-4 text-center text-4xl text-txt`}
             >
-              Wei-Fan, Zheng
+              Wei-Fan, Cheng
               <br className="text-2xl" />
               <span className="text-2xl">B09505031@ntu.edu.tw</span>
             </p>
