@@ -6,7 +6,7 @@ import Link from "next/link";
 function Diary() {
   return (
     <Link
-      className="h-[55%] w-[33%] rounded-2xl p-2 transition-colors hover:bg-white/50"
+      className="w-[33%] aspect-w-3 aspect-h-4 rounded-2xl p-2 transition-colors hover:bg-white/50"
       href={{
         pathname: `personal/${String(1)}`,
       }}

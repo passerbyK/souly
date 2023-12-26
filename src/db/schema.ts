@@ -38,7 +38,7 @@ export const usersTable = pgTable(
       .notNull()
       .default(sql`now()`),
     lastingDays: integer("lasting_days").notNull().default(21), // default 21 days
-    photo: varchar("photo").notNull().default(""),
+    photo: varchar("photo").notNull().default("https://drive.google.com/file/d/1Gizl9jq8m8BYRCwzNOa3Qs82zr7Zkoty/preview"),
     isDeveloper: boolean("is_developer").notNull().default(false),
   },
   (table) => ({
