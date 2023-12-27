@@ -9,6 +9,8 @@ import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -16,9 +18,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
+} from "@/components/ui/select";
 import { publicEnv } from "@/lib/env/public";
 
 // import topics from "@/lib/topics.json";
@@ -72,7 +72,7 @@ function SignUp() {
                 <p className="text-txt_2">Y</p>
                 <p className="ml-2 text-description">mission !</p>
               </div>
-              <div className="flex grow mt-2 justify-end">
+              <div className="mt-2 flex grow justify-end">
                 <p className="ml-2 text-lg text-gray-500">
                   This series of missions will continue for at least 21 days.
                 </p>
@@ -80,26 +80,29 @@ function SignUp() {
             </div>
             <div className="flex-col items-center justify-center text-2xl md:hidden">
               <div className="flex-wrap">
-                  <p className="ml-2 text-description">Set up your</p>
-                  <div className="ml-2 flex">
-                    <p className="text-txt_2">D</p>
-                    <p className="text-txt_3">A</p>
-                    <p className="text-txt_2">I</p>
-                    <p className="text-txt_3">L</p>
-                    <p className="text-txt_2">Y</p>
-                  </div>
-                  <p className="ml-2 text-description">mission !</p>
+                <p className="ml-2 text-description">Set up your</p>
+                <div className="ml-2 flex">
+                  <p className="text-txt_2">D</p>
+                  <p className="text-txt_3">A</p>
+                  <p className="text-txt_2">I</p>
+                  <p className="text-txt_3">L</p>
+                  <p className="text-txt_2">Y</p>
+                </div>
+                <p className="ml-2 text-description">mission !</p>
               </div>
               <div className="flex items-center justify-center">
-                  <p className="ml-2 text-lg text-gray-500">
+                <p className="ml-2 text-lg text-gray-500">
                   This series of missions will continue for at least 21 days.
-                  </p>
+                </p>
               </div>
             </div>
           </CardTitle>
         </CardHeader>
         <CardContent className="ml-2 flex flex-col gap-4">
-          <form onSubmit={handleSubmit} className="flex flex-col gap-2 items-center">
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col items-center gap-2"
+          >
             <div className="mb-2 flex w-full flex-col items-center gap-4 text-center md:flex-row md:items-center">
               <Label className="w-[200px] text-center text-xl md:justify-center">
                 Painting Subject
@@ -110,10 +113,16 @@ function SignUp() {
                 </SelectTrigger>
                 <SelectContent className="w-2/3 border-4 border-txt_4 bg-btn_3 text-xl">
                   <SelectItem value="Animal Party">Animal Party</SelectItem>
-                  <SelectItem value="Strange Patterns">Strange Patterns</SelectItem>
+                  <SelectItem value="Strange Patterns">
+                    Strange Patterns
+                  </SelectItem>
                   <SelectItem value="Nonsense Words">Nonsense Words</SelectItem>
-                  <SelectItem value="Self-Growth Time">Self-Growth Time</SelectItem>
-                  <SelectItem value="Colorful Relationships">Colorful Relationships</SelectItem>
+                  <SelectItem value="Self-Growth Time">
+                    Self-Growth Time
+                  </SelectItem>
+                  <SelectItem value="Colorful Relationships">
+                    Colorful Relationships
+                  </SelectItem>
                   <SelectItem value="Ghost Stories">Ghost Stories</SelectItem>
                 </SelectContent>
               </Select>
@@ -127,8 +136,10 @@ function SignUp() {
                 value={password}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   let newValue = parseInt(e.target.value, 10);
-                  newValue = isNaN(newValue) ? 21 : Math.max(21, Math.min(60, newValue));
-              
+                  newValue = isNaN(newValue)
+                    ? 21
+                    : Math.max(21, Math.min(60, newValue));
+
                   setPassword(newValue.toString());
                 }}
                 placeholder="21 ~ 60 days"
@@ -140,7 +151,7 @@ function SignUp() {
                 Turn on Notification
               </Label>
               <Checkbox
-                className="w-8 h-8 border-4 border-txt_4 bg-btn_3"
+                className="h-8 w-8 border-4 border-txt_4 bg-btn_3"
                 onClick={() => setShowPaintingTime(!showPaintingTime)}
               />
               <p className="text-sm text-muted-foreground">
