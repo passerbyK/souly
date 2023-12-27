@@ -66,5 +66,13 @@ export const useDraw = (
     };
   }, [onDraw, mouseDown]);
 
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (canvas) {
+      canvas.width = canvas.clientWidth;
+      canvas.height = canvas.clientHeight;
+    }
+  }, []);
+
   return { canvasRef, onMouseDown, clear };
 };
