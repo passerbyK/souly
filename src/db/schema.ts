@@ -93,25 +93,22 @@ export const subjectsTable = pgTable(
   }),
 );
 
-export const friendEnum = pgEnum("friend_status", ["pending", "accepted"]);
+export const relationshipEnum = pgEnum("relationship_status", [
+  "pending",
+  "accepted",
+]);
 
-export const friendsTable = pgTable(
-  "friends",
+export const relationsTable = pgTable(
+  "relations",
   {
     id: serial("id").primaryKey(),
+    displayId: uuid("display_id").defaultRandom().notNull().unique(),
     userId: uuid("user_id")
-      .notNull()
-      .references(() => usersTable.displayId, {}),
-    friendId: uuid("friend_id")
       .notNull()
       .references(() => usersTable.displayId, {}),
     createdAt: timestamp("created_at")
       .notNull()
       .default(sql`now()`),
-    updatedAt: timestamp("updated_at")
-      .notNull()
-      .default(sql`now()`),
-    status: friendEnum("status").notNull().default("pending"),
   },
   (table) => ({
     userIdIndex: index("user_id_index").on(table.userId),
@@ -139,7 +136,7 @@ export const likesTable = pgTable(
 
 export const usersRelations = relations(usersTable, ({ many }) => ({
   usersToSubjectsTable: many(usersToSubjectsTable),
-  usersToFriendsTable: many(usersToFriendsTable),
+  usersToFriendsTable: many(usersToRelationsTable),
   postsTable: many(postsTable),
 }));
 
@@ -202,39 +199,50 @@ export const usersToSubjectsRelations = relations(
   }),
 );
 
-export const friendsRelations = relations(usersTable, ({ many }) => ({
-  usersToFriendsTable: many(usersToFriendsTable),
+export const relationsRelations = relations(usersTable, ({ many }) => ({
+  usersToRelationsTable: many(usersToRelationsTable),
 }));
 
-export const usersToFriendsTable = pgTable(
-  "users_to_friends",
+export const usersToRelationsTable = pgTable(
+  "users_to_relations",
   {
     id: serial("id").primaryKey(),
     userId: uuid("user_id")
       .notNull()
-      .references(() => usersTable.displayId, {}),
-    friendId: uuid("friend_id")
+      .references(() => usersTable.displayId, {
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      }),
+    relationId: uuid("relation_id")
       .notNull()
-      .references(() => usersTable.displayId, {}), // it seems strange here.
+      .references(() => relationsTable.displayId, {
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      }),
+    createdAt: timestamp("created_at")
+      .notNull()
+      .default(sql`now()`),
+    acceptedAt: timestamp("accepted_at"),
+    status: relationshipEnum("status").notNull().default("pending"),
   },
   (table) => ({
-    userAndFriendIndex: index("user_and_friend_index").on(
+    userAndRelationIndex: index("user_and_relation_index").on(
       table.userId,
-      table.friendId,
+      table.relationId,
     ),
-    uniqCombination: unique().on(table.friendId, table.userId),
+    uniqCombination: unique().on(table.relationId, table.userId),
   }),
 );
 
-export const usersToFriendsRelations = relations(
-  usersToFriendsTable,
+export const usersToRelationsRelations = relations(
+  usersToRelationsTable,
   ({ one }) => ({
-    friend: one(friendsTable, {
-      fields: [usersToFriendsTable.friendId],
-      references: [friendsTable.friendId],
+    friend: one(relationsTable, {
+      fields: [usersToRelationsTable.relationId],
+      references: [relationsTable.displayId],
     }),
     user: one(usersTable, {
-      fields: [usersToFriendsTable.userId],
+      fields: [usersToRelationsTable.userId],
       references: [usersTable.displayId],
     }),
   }),

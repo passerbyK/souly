@@ -1,27 +1,25 @@
-//import { auth } from "@/lib/auth";
 import { IoLogoSnapchat } from "react-icons/io";
 
-//import { redirect } from "next/navigation";
+import { redirect } from "next/navigation";
 
-//import { publicEnv } from "@/lib/env/public";
+import { auth } from "@/lib/auth";
+import { publicEnv } from "@/lib/env/public";
 
-//import { getChats } from "./_components/actions";
+import { getAddedFriends } from "./_components/action";
 
 async function DocsPage() {
-  // const session = await auth();
-  // if (!session || !session?.user?.id) {
-  //   redirect(publicEnv.NEXT_PUBLIC_BASE_URL);
-  // }
-  // const userId = session.user.id;
+  const session = await auth();
+  if (!session || !session?.user?.id) {
+    redirect(publicEnv.NEXT_PUBLIC_BASE_URL);
+  }
+  const userId = session.user.id;
 
-  // const chats = await getChats(userId);
-  // const length = chats.length;
-  // const newestChat = (length == 0) ? null : chats[length-1].chatId;
-  // if (newestChat) {
-  //   redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/docs/${newestChat}`);
-  // }
-
-  //redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/social/ffdvnjgmorivgjoim`);
+  const friends = await getAddedFriends(userId);
+  const newestFriendId =
+    friends == null ? null : friends[friends.length - 1].userId;
+  if (newestFriendId) {
+    redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/social/${newestFriendId}`);
+  }
 
   return (
     <div className="flex h-full w-full items-center justify-center bg-brand_2">

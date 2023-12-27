@@ -1,43 +1,30 @@
-"use client";
-
-//import { useChat } from "@/hooks/useChat";
-//import { useRef } from "react";
 import { GoHeartFill } from "react-icons/go";
 
-// {userId}: {userId: string}
-function ChatPage() {
-  // const { messages, announcedMessage } = useChat({userId});
-  // // console.log(userId);
-  // // console.log(messages);
-  // const { createMessage, announceMessage, unsendMessage } = useChat({userId});
-  // const newmessageRef = useRef<HTMLInputElement>(null);
+import { getFriend } from "../_components/action";
 
-  // const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-  //   if (e.key === 'Enter') {
-  //     e.preventDefault(); // prevent line break
-  //     //console.log(newmessageRef.current?.value);
-  //     if(!newmessageRef.current?.value) return;
-  //     createMessage(newmessageRef.current?.value);
-  //     newmessageRef.current.value = "";
-  //     // commentreplyRef.current.dispatchEvent(
-  //     //   new Event("input", { bubbles: true, composed: true }),
-  //     // );
-  //   }
-  // };
+type Props = {
+  params: { friendId: string };
+};
 
-  // console.log(messages);
+async function FriendPage(props: Props) {
+  const friend = await getFriend(props.params.friendId);
 
   return (
     <div className="h-full w-full bg-brand_2">
       <div className="flex">
-        <h1 className="p-4 text-6xl text-txt_5">friend's name</h1>
-        <h2 className="ml-auto p-8 text-4xl text-txt_6">2023/12/09(Sat.)</h2>
+        <h1 className="pl-6 pt-6 text-6xl text-txt_5">{friend[0].name}</h1>
+        <h2 className="ml-auto pr-5 pt-10 text-4xl text-txt_6">
+          2023/12/09(Sat.)
+        </h2>
+        {/* date of the friend's newest post */}
       </div>
-      <div className="mx-8 flex h-4/5 items-end rounded-xl border-4 border-bdr_4 bg-white">
+      <div className="mx-8 my-4 flex h-4/5 items-end rounded-xl border-4 border-bdr_4 bg-white">
         <div className="flex h-min w-full justify-between rounded-b-lg border-bdr_4 bg-brand_3 px-8 py-4 text-5xl">
           <div className="flex flex-col gap-2">
             <p className="text-4xl">topic</p>
+            {/* topic of the friend's newest post */}
             <p className="text-2xl">description</p>
+            {/* description of the friend's newest post */}
           </div>
           <span className="flex gap-4 self-center">
             <GoHeartFill size={48} /> 2
@@ -48,4 +35,4 @@ function ChatPage() {
   );
 }
 
-export default ChatPage;
+export default FriendPage;

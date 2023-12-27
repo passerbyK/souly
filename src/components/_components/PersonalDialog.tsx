@@ -27,7 +27,7 @@ async function PersonalDialog() {
         </Button>
       </DialogTrigger>
       <DialogContent>
-        <div className="divide-y-2 divide-slate-400/25 overflow-y-scroll text-2xl text-txt_8">
+        <div className="divide-y-2 divide-slate-400/25 text-2xl text-txt_8">
           <form
             action={async () => {
               "use server";
