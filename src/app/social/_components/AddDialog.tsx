@@ -1,5 +1,6 @@
+import { redirect } from "next/navigation";
+
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   Dialog,
   DialogContent,
@@ -8,10 +9,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-
+import { Input } from "@/components/ui/input";
 import { auth } from "@/lib/auth";
-
-import { redirect } from "next/navigation";
 import { publicEnv } from "@/lib/env/public";
 
 import { requestFriend } from "./action";
@@ -48,7 +47,7 @@ async function AddDialog() {
             const result = await requestFriend(userId, otherUser);
             // console.log(result);
             if (!result) {
-            // final TODO: tell user no this specific user or chat already exist!!!
+              // final TODO: tell user no this specific user or chat already exist!!!
             } else {
               redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/social`);
             }

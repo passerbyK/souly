@@ -23,7 +23,7 @@ function SignUp() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     try {
       signIn("credentials", {
         username,
@@ -66,7 +66,7 @@ function SignUp() {
               <div>
                 <p className="mr-2 text-description">Welcome to</p>
               </div>
-              <div className="flex items-center justify-center">  
+              <div className="flex items-center justify-center">
                 <p className="text-txt_2">S</p>
                 <p className="text-txt_3">O</p>
                 <p className="text-txt_2">U</p>

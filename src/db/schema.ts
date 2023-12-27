@@ -61,8 +61,10 @@ export const postsTable = pgTable(
     createdAt: timestamp("created_at")
       .notNull()
       .default(sql`now()`),
-    topic: varchar("topic", { length: 100 }).notNull().default(""),    description: text("description").notNull().default(""),
-    image: varchar("image").notNull().default(""),  },
+    topic: varchar("topic", { length: 100 }).notNull().default(""),
+    description: text("description").notNull().default(""),
+    image: varchar("image").notNull().default(""),
+  },
   (table) => ({
     displayIdIndex: index("display_id_index").on(table.displayId),
     imageIndex: index("image_index").on(table.image),
@@ -91,7 +93,10 @@ export const subjectsTable = pgTable(
   }),
 );
 
-export const relationshipEnum = pgEnum("relationship_status", ["pending", "accepted"]);
+export const relationshipEnum = pgEnum("relationship_status", [
+  "pending",
+  "accepted",
+]);
 
 export const relationsTable = pgTable(
   "relations",
@@ -214,7 +219,9 @@ export const usersToRelationsTable = pgTable(
         onDelete: "cascade",
         onUpdate: "cascade",
       }),
-    createdAt: timestamp("created_at").notNull().default(sql`now()`),
+    createdAt: timestamp("created_at")
+      .notNull()
+      .default(sql`now()`),
     acceptedAt: timestamp("accepted_at"),
     status: relationshipEnum("status").notNull().default("pending"),
   },

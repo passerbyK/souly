@@ -1,8 +1,8 @@
 import { IoLogoSnapchat } from "react-icons/io";
 
-import { auth } from "@/lib/auth";
-
 import { redirect } from "next/navigation";
+
+import { auth } from "@/lib/auth";
 import { publicEnv } from "@/lib/env/public";
 
 import { getAddedFriends } from "./_components/action";
@@ -15,7 +15,8 @@ async function DocsPage() {
   const userId = session.user.id;
 
   const friends = await getAddedFriends(userId);
-  const newestFriendId = (friends == null) ? null : friends[friends.length-1].userId;
+  const newestFriendId =
+    friends == null ? null : friends[friends.length - 1].userId;
   if (newestFriendId) {
     redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/social/${newestFriendId}`);
   }

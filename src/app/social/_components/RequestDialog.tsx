@@ -1,6 +1,9 @@
 import { AiFillDelete } from "react-icons/ai";
 import { IoMdAddCircle } from "react-icons/io";
 
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -10,11 +13,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-
 import { auth } from "@/lib/auth";
-
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 import { publicEnv } from "@/lib/env/public";
 
 import { addFriend, deleteFriend, getRequestedUser } from "./action";
@@ -87,48 +86,54 @@ async function RequestDialog() {
             You can decide who you want to add.
           </DialogDescription>
         </DialogHeader>
-        {request_friends && request_friends.map(async (friend, i) => {
-          return (
-            <div
-              key={i}
-              className="group flex w-full cursor-pointer items-center justify-between gap-2 rounded-lg p-2 hover:bg-yellow-100"
-            >
-              <div className="items-center gap-2">
-                <div className="flex gap-2 text-2xl font-semibold text-black">
-                  {friend.user.username}
+        {request_friends &&
+          request_friends.map(async (friend, i) => {
+            return (
+              <div
+                key={i}
+                className="group flex w-full cursor-pointer items-center justify-between gap-2 rounded-lg p-2 hover:bg-yellow-100"
+              >
+                <div className="items-center gap-2">
+                  <div className="flex gap-2 text-2xl font-semibold text-black">
+                    {friend.user.username}
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  <form
+                    className="px-2 hover:text-[#8E6920] group-hover:flex"
+                    action={async () => {
+                      "use server";
+                      const friendId = await addFriend(
+                        userId,
+                        friend.user.displayId,
+                      );
+                      revalidatePath("/social");
+                      redirect(
+                        `${publicEnv.NEXT_PUBLIC_BASE_URL}/social/${friendId}`,
+                      );
+                    }}
+                  >
+                    <button type={"submit"}>
+                      <IoMdAddCircle size={24} />
+                    </button>
+                  </form>
+                  <form
+                    className="px-2 hover:text-[#8E6920] group-hover:flex"
+                    action={async () => {
+                      "use server";
+                      await deleteFriend(userId, friend.user.displayId);
+                      revalidatePath("/social");
+                      redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/social`);
+                    }}
+                  >
+                    <button type={"submit"}>
+                      <AiFillDelete size={24} />
+                    </button>
+                  </form>
                 </div>
               </div>
-              <div className="flex gap-2">
-                <form
-                  className="px-2 hover:text-[#8E6920] group-hover:flex"
-                  action={async () => {
-                    "use server";
-                    const friendId = await addFriend(userId, friend.user.displayId);
-                    revalidatePath("/social");
-                    redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/social/${friendId}`);
-                  }}
-                >
-                  <button type={"submit"}>
-                    <IoMdAddCircle size={24} />
-                  </button>
-                </form>
-                <form
-                  className="px-2 hover:text-[#8E6920] group-hover:flex"
-                  action={async () => {
-                    "use server";
-                    await deleteFriend(userId, friend.user.displayId);
-                    revalidatePath("/social");
-                    redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/social`);
-                  }}
-                >
-                  <button type={"submit"}>
-                    <AiFillDelete size={24} />
-                  </button>
-                </form>
-              </div>
-            </div>
-          );
-        })}
+            );
+          })}
       </DialogContent>
     </Dialog>
   );

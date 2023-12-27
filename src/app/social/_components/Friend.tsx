@@ -1,10 +1,10 @@
 import { AiFillDelete } from "react-icons/ai";
 
-import { auth } from "@/lib/auth";
-
-import Link from "next/link";
 import { revalidatePath } from "next/cache";
+import Link from "next/link";
 import { redirect } from "next/navigation";
+
+import { auth } from "@/lib/auth";
 import { publicEnv } from "@/lib/env/public";
 
 import { deleteFriend } from "./action";

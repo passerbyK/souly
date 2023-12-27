@@ -1,15 +1,14 @@
 //import SearchFriend from "./SearchFriend";
-import { Input } from "@/components/ui/input";
-
-import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
+
+import { Input } from "@/components/ui/input";
+import { auth } from "@/lib/auth";
 import { publicEnv } from "@/lib/env/public";
 
-import { getAddedFriends } from "./action";
-
-import Friend from "./Friend";
 import AddDialog from "./AddDialog";
+import Friend from "./Friend";
 import RequestDialog from "./RequestDialog";
+import { getAddedFriends } from "./action";
 
 async function FriendList() {
   const session = await auth();
@@ -73,14 +72,15 @@ async function FriendList() {
           className="rounded-full border-4 border-txt_7 text-xl text-txt_7"
         />
         <section className="flex w-full flex-col divide-y-4 divide-slate-400/25 overflow-y-scroll pb-12">
-          {friends && friends.map(async (friend) => (
-            <Friend
-              key={friend.id}
-              displayId={friend.user.displayId}
-              name={friend.user.username}
-              // topic={friend.topic}
-            />
-          ))}
+          {friends &&
+            friends.map(async (friend) => (
+              <Friend
+                key={friend.id}
+                displayId={friend.user.displayId}
+                name={friend.user.username}
+                // topic={friend.topic}
+              />
+            ))}
         </section>
         <div className="absolute bottom-4 flex w-10/12 flex-col gap-4 xl:flex-row xl:gap-6">
           <AddDialog />

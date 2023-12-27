@@ -9,17 +9,18 @@ export const requestFriend = async (userId: string, otheruserEmail: string) => {
 
   // get userId of other user
   const otheruser = await db
-    .select({id: usersTable.displayId})
+    .select({ id: usersTable.displayId })
     .from(usersTable)
     .where(eq(usersTable.email, otheruserEmail))
     .execute();
-  if(otheruser.length == 0) return null;
+  if (otheruser.length == 0) return null;
   const otheruserId = otheruser[0].id;
-  
+
   // check if the two user have existed relationship
   const existedRelation = await findExistedRelation(userId, otheruserId);
-  if (existedRelation) { return null; }
-
+  if (existedRelation) {
+    return null;
+  }
 
   const newRelationId = await db.transaction(async (tx) => {
     const [newRelation] = await tx
@@ -44,9 +45,11 @@ export const requestFriend = async (userId: string, otheruserEmail: string) => {
 export const addFriend = async (userId: string, otheruserId: string) => {
   "use server";
   console.log("[addRelation]");
-     
+
   const relationId = await findExistedRelation(userId, otheruserId);
-  if(!relationId) { return null; }
+  if (!relationId) {
+    return null;
+  }
 
   await db
     .update(usersToRelationsTable)
@@ -67,14 +70,15 @@ export const getAddedFriends = async (userId: string) => {
   const relations = await getAcceptedRelations(userId);
   const relationsId = relations.map((relation) => relation.id);
 
-  if(relationsId.length == 0) { return; }
+  if (relationsId.length == 0) {
+    return;
+  }
 
   const friends = await db.query.usersToRelationsTable.findMany({
-    where: 
-      and(
-        inArray(usersToRelationsTable.relationId, relationsId),
-        ne(usersToRelationsTable.userId, userId),
-      ),
+    where: and(
+      inArray(usersToRelationsTable.relationId, relationsId),
+      ne(usersToRelationsTable.userId, userId),
+    ),
     orderBy: [desc(usersToRelationsTable.acceptedAt)],
     with: {
       user: {
@@ -82,8 +86,8 @@ export const getAddedFriends = async (userId: string) => {
           id: true,
           displayId: true,
           username: true,
-        }
-      }
+        },
+      },
     },
   });
 
@@ -95,16 +99,19 @@ export const getRequestedUser = async (userId: string) => {
   console.log("[getRequestUsers]");
 
   const relations = await getPendingRelations(userId);
-  if(relations == null) { return; }
+  if (relations == null) {
+    return;
+  }
   const relationsId = relations.map((relation) => relation.id);
-  if(relationsId.length == 0) { return; }
-    
+  if (relationsId.length == 0) {
+    return;
+  }
+
   const users = await db.query.usersToRelationsTable.findMany({
-    where: 
-      and(
-        inArray(usersToRelationsTable.relationId, relationsId),
-        ne(usersToRelationsTable.userId, userId),
-      ),
+    where: and(
+      inArray(usersToRelationsTable.relationId, relationsId),
+      ne(usersToRelationsTable.userId, userId),
+    ),
     orderBy: [desc(usersToRelationsTable.createdAt)],
     with: {
       user: {
@@ -112,20 +119,22 @@ export const getRequestedUser = async (userId: string) => {
           id: true,
           displayId: true,
           username: true,
-        }
-      }
+        },
+      },
     },
   });
-  
+
   return users;
-}
+};
 
 export const deleteFriend = async (userId: string, friendId: string) => {
   "use server";
   console.log("[deleteFriend]");
 
   const existedRelationId = await findExistedRelation(userId, friendId);
-  if (!existedRelationId) { return null; }
+  if (!existedRelationId) {
+    return null;
+  }
 
   await db
     .delete(relationsTable)
@@ -135,9 +144,9 @@ export const deleteFriend = async (userId: string, friendId: string) => {
 
 export const getRelations = async (userId: string) => {
   "use server";
-  
+
   const relations = await db
-    .select({id: usersToRelationsTable.relationId})
+    .select({ id: usersToRelationsTable.relationId })
     .from(usersToRelationsTable)
     .where(eq(usersToRelationsTable.userId, userId))
     .execute();
@@ -147,28 +156,32 @@ export const getRelations = async (userId: string) => {
 
 export const getPendingRelations = async (userId: string) => {
   "use server";
-  
+
   const allRelations = await db
-    .select({id: usersToRelationsTable.relationId})
+    .select({ id: usersToRelationsTable.relationId })
     .from(usersToRelationsTable)
     .where(
       and(
         eq(usersToRelationsTable.userId, userId),
-        eq(usersToRelationsTable.status, "pending")
-      ))
+        eq(usersToRelationsTable.status, "pending"),
+      ),
+    )
     .execute();
 
   const relationsId = allRelations.map((relation) => relation.id);
-  if(relationsId.length == 0) { return; }
+  if (relationsId.length == 0) {
+    return;
+  }
 
   const relations = await db
-    .select({id: relationsTable.displayId})
+    .select({ id: relationsTable.displayId })
     .from(relationsTable)
     .where(
       and(
         inArray(relationsTable.displayId, relationsId),
-        ne(relationsTable.userId, userId)
-      ))
+        ne(relationsTable.userId, userId),
+      ),
+    )
     .execute();
 
   return relations;
@@ -176,28 +189,30 @@ export const getPendingRelations = async (userId: string) => {
 
 export const getAcceptedRelations = async (userId: string) => {
   "use server";
-  
+
   const relations = await db
-    .select({id: usersToRelationsTable.relationId})
+    .select({ id: usersToRelationsTable.relationId })
     .from(usersToRelationsTable)
     .where(
       and(
         eq(usersToRelationsTable.userId, userId),
-        eq(usersToRelationsTable.status, "accepted")))
+        eq(usersToRelationsTable.status, "accepted"),
+      ),
+    )
     .execute();
-  
+
   return relations;
 };
 
 export const findExistedRelation = async (userId: string, friendId: string) => {
   "use server";
-    
+
   const userRelations = await getRelations(userId);
   const friendRelations = await getRelations(friendId);
-  const relationship = userRelations.find(userRelation =>
-    friendRelations.some(friendRelation =>
-        userRelation.id === friendRelation.id
-    )
+  const relationship = userRelations.find((userRelation) =>
+    friendRelations.some(
+      (friendRelation) => userRelation.id === friendRelation.id,
+    ),
   );
 
   return relationship?.id;
@@ -211,6 +226,6 @@ export const getFriend = async (friendId: string) => {
     .from(usersTable)
     .where(eq(usersTable.displayId, friendId))
     .execute();
-  
+
   return friend;
 };

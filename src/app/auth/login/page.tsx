@@ -21,7 +21,7 @@ function SignUp() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     try {
       signIn("credentials", {
         email,
