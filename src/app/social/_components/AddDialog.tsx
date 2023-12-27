@@ -1,7 +1,5 @@
-// import { BiSolidMessageRoundedAdd } from "react-icons/bi";
-// import { revalidatePath } from "next/cache";
-// import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Dialog,
   DialogContent,
@@ -10,17 +8,20 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 
-// import { auth } from "@/lib/auth";
-// import { publicEnv } from "@/lib/env/public";
+import { auth } from "@/lib/auth";
 
-// import { createChat } from "./actions";
+import { redirect } from "next/navigation";
+import { publicEnv } from "@/lib/env/public";
+
+import { requestFriend } from "./action";
 
 async function AddDialog() {
-  // const session = await auth();
-  // if (!session?.user?.id) return null;
-  // const userId = session.user.id;
+  const session = await auth();
+  if (!session || !session?.user?.id) {
+    redirect(publicEnv.NEXT_PUBLIC_BASE_URL);
+  }
+  const userId = session.user.id;
 
   return (
     <Dialog>
@@ -44,13 +45,13 @@ async function AddDialog() {
             const otherUser = e.get("otherUser");
             if (!otherUser) return;
             if (typeof otherUser !== "string") return;
-            //const result = await createChat(userId, otherUser);
-            //console.log(result);
-            //if (!result) {
-            // TODO:: tell user no this specific user or chat already exist!!!
-            //} else {
-            //  redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/docs/${result}`);
-            //}
+            const result = await requestFriend(userId, otherUser);
+            // console.log(result);
+            if (!result) {
+            // final TODO: tell user no this specific user or chat already exist!!!
+            } else {
+              redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/social`);
+            }
           }}
           className="flex flex-row gap-4"
         >

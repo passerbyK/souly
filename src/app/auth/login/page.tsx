@@ -5,6 +5,7 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import AuthInput from "../_components/AuthInput";
 
@@ -16,13 +17,21 @@ function SignUp() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
+  const router = useRouter();
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    signIn("credentials", {
-      email,
-      password,
-      callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/personal`,
-    });
+    
+    try {
+      signIn("credentials", {
+        email,
+        password,
+        callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/personal`,
+      });
+    } catch (e) {
+      console.log(e);
+      router.push("/auth/login");
+    }
   };
 
   return (
@@ -100,9 +109,14 @@ function SignUp() {
           <div className="flex flex-wrap justify-center gap-2">
             <Button
               onClick={async () => {
-                signIn("github", {
-                  callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/personal`,
-                });
+                try {
+                  await signIn("github", {
+                    callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/personal`,
+                  });
+                } catch (e) {
+                  console.log(e);
+                  router.push("/auth/signup");
+                }
               }}
               className="flex w-full rounded-2xl border-4 border-bdr bg-btn_2 text-center text-xl text-txt"
               variant={"outline"}
@@ -117,9 +131,14 @@ function SignUp() {
             </Button>
             <Button
               onClick={async () => {
-                signIn("github", {
-                  callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/personal`,
-                });
+                try {
+                  await signIn("github", {
+                    callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/personal`,
+                  });
+                } catch (e) {
+                  console.log(e);
+                  router.push("/auth/signup");
+                }
               }}
               className="flex w-full rounded-2xl border-4 border-bdr bg-btn_2 text-center text-xl text-txt"
               variant={"outline"}

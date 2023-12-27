@@ -1,63 +1,66 @@
 //import SearchFriend from "./SearchFriend";
 import { Input } from "@/components/ui/input";
 
-//import { auth } from "@/lib/auth";
-// import { deleteFriend, getFriend } from "./actions";
-// import { getPainting } from "../[chatId]/_components/actions";
-import AddDialog from "./AddDialog";
+import { auth } from "@/lib/auth";
+import { redirect } from "next/navigation";
+import { publicEnv } from "@/lib/env/public";
+
+import { getAddedFriends } from "./action";
+
 import Friend from "./Friend";
+import AddDialog from "./AddDialog";
 import RequestDialog from "./RequestDialog";
 
 async function FriendList() {
-  // const session = await auth();
-  // if (!session || !session?.user?.id) {
-  //   redirect(publicEnv.NEXT_PUBLIC_BASE_URL);
-  // }
-  // const userId = session.user.id;
+  const session = await auth();
+  console.log(session?.user);
+  if (!session || !session?.user?.id) {
+    redirect(publicEnv.NEXT_PUBLIC_BASE_URL);
+  }
+  const userId = session.user.id;
 
-  // get the user's all friends
-  //  const friends = await getFriends(userId);
-  const friends = [
-    { id: "1", display_id: "ffdvnjgmorivgjoim", name: "vivi", topic: "sun" },
-    {
-      id: "2",
-      display_id: "dvnjscjkfcnhhkmkf",
-      name: "winnie",
-      topic: "flower",
-    },
-    {
-      id: "3",
-      display_id: "mkvgclimjiomivmhfh",
-      name: "xiang yi",
-      topic: "sky",
-    },
-    { id: "1", display_id: "ffdvnjgmorivgjoim", name: "vivi", topic: "sun" },
-    {
-      id: "2",
-      display_id: "dvnjscjkfcnhhkmkf",
-      name: "winnie",
-      topic: "flower",
-    },
-    {
-      id: "3",
-      display_id: "mkvgclimjiomivmhfh",
-      name: "xiang yi",
-      topic: "sky",
-    },
-    { id: "1", display_id: "ffdvnjgmorivgjoim", name: "vivi", topic: "sun" },
-    {
-      id: "2",
-      display_id: "dvnjscjkfcnhhkmkf",
-      name: "winnie",
-      topic: "flower",
-    },
-    {
-      id: "3",
-      display_id: "mkvgclimjiomivmhfh",
-      name: "xiang yi",
-      topic: "sky",
-    },
-  ];
+  const friends = await getAddedFriends(userId);
+  // const friends = [
+  //   { id: "1", display_id: "ffdvnjgmorivgjoim", name: "vivi", topic: "sun" },
+  //   {
+  //     id: "2",
+  //     display_id: "dvnjscjkfcnhhkmkf",
+  //     name: "winnie",
+  //     topic: "flower",
+  //   },
+  //   {
+  //     id: "3",
+  //     display_id: "mkvgclimjiomivmhfh",
+  //     name: "xiang yi",
+  //     topic: "sky",
+  //   },
+  //   { id: "1", display_id: "ffdvnjgmorivgjoim", name: "vivi", topic: "sun" },
+  //   {
+  //     id: "2",
+  //     display_id: "dvnjscjkfcnhhkmkf",
+  //     name: "winnie",
+  //     topic: "flower",
+  //   },
+  //   {
+  //     id: "3",
+  //     display_id: "mkvgclimjiomivmhfh",
+  //     name: "xiang yi",
+  //     topic: "sky",
+  //   },
+  //   { id: "1", display_id: "ffdvnjgmorivgjoim", name: "vivi", topic: "sun" },
+  //   {
+  //     id: "2",
+  //     display_id: "dvnjscjkfcnhhkmkf",
+  //     name: "winnie",
+  //     topic: "flower",
+  //   },
+  //   {
+  //     id: "3",
+  //     display_id: "mkvgclimjiomivmhfh",
+  //     name: "xiang yi",
+  //     topic: "sky",
+  //   },
+  // ];
 
   return (
     <div className="flex h-full bg-brand_2">
@@ -70,12 +73,12 @@ async function FriendList() {
           className="rounded-full border-4 border-txt_7 text-xl text-txt_7"
         />
         <section className="flex w-full flex-col divide-y-4 divide-slate-400/25 overflow-y-scroll pb-12">
-          {friends.map(async (friend) => (
+          {friends && friends.map(async (friend) => (
             <Friend
               key={friend.id}
-              displayId={friend.display_id}
-              name={friend.name}
-              topic={friend.topic}
+              displayId={friend.user.displayId}
+              name={friend.user.username}
+              // topic={friend.topic}
             />
           ))}
         </section>
