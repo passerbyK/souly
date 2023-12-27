@@ -29,7 +29,7 @@ function SignUp() {
         username,
         email,
         password,
-        callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/personal`,
+        callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/preference`,
       });
     } catch (e) {
       console.log(e);

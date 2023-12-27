@@ -31,11 +31,11 @@ async function PersonalDialog() {
           <form
             action={async () => {
               "use server";
-              redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}`);
+              redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/settings`);
             }}
           >
             <button type="submit" className="mr-6 flex items-center py-1">
-              Setting
+              Settings
             </button>
           </form>
           {/* <p className="mr-4 flex items-center py-1">Sign Out</p> */}
