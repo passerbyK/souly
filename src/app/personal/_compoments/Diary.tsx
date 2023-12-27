@@ -11,17 +11,17 @@ type postProps = {
   likes: number;
 };
 
-function Diary({ id,topic,image,createdAt,likes}: postProps) {
-  const daysOfWeek = ['日', '一', '二', '三', '四', '五', '六'];
+function Diary({ id, topic, image, createdAt, likes }: postProps) {
+  const daysOfWeek = ["日", "一", "二", "三", "四", "五", "六"];
   const formattedDate = `
     ${createdAt.getFullYear()}-
-    ${(createdAt.getMonth() + 1).toString().padStart(2, '0')}-
-    ${createdAt.getDate().toString().padStart(2, '0')} 
+    ${(createdAt.getMonth() + 1).toString().padStart(2, "0")}-
+    ${createdAt.getDate().toString().padStart(2, "0")} 
     (${daysOfWeek[createdAt.getDay()]})`;
   return (
     <Link
       key={id}
-      className="w-[33%] aspect-w-5/3 rounded-2xl p-2 transition-colors hover:bg-white/50"
+      className="aspect-w-5/3 w-[33%] rounded-2xl p-2 transition-colors hover:bg-white/50"
       href={{
         pathname: `personal/${String(id)}`,
       }}
@@ -42,7 +42,7 @@ function Diary({ id,topic,image,createdAt,likes}: postProps) {
             <div>
               <FaHeart />
             </div>
-            <div className="ml-1">{likes??'0'}</div>
+            <div className="ml-1">{likes ?? "0"}</div>
           </div>
           <div className="flex items-center">
             <div>

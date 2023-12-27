@@ -1,7 +1,9 @@
-import DiaryBig from "./_components/DiaryBig";
-import { db } from "@/db";
 import { eq, desc } from "drizzle-orm";
+
+import { db } from "@/db";
 import { postsTable, likesTable, usersTable } from "@/db/schema";
+
+import DiaryBig from "./_components/DiaryBig";
 
 type PostPageProps = {
   params: {
@@ -9,11 +11,10 @@ type PostPageProps = {
   };
 };
 
-async function PersonalPage({params: { diary }}: PostPageProps) {
-
+async function PersonalPage({ params: { diary } }: PostPageProps) {
   const likes = await db
     .select({
-      name: usersTable.username??'user'
+      name: usersTable.username ?? "user",
     })
     .from(likesTable)
     .leftJoin(usersTable, eq(likesTable.userId, usersTable.displayId))
@@ -37,12 +38,12 @@ async function PersonalPage({params: { diary }}: PostPageProps) {
 
   return (
     <>
-      <DiaryBig 
+      <DiaryBig
         key={post.id}
         createdAt={new Date(post.createdAt)}
         topic={post.topic}
         description={post.description}
-        likes={likes.length??'0'}
+        likes={likes.length ?? "0"}
         likeslist={likeslist}
         image="/logo.png"
       />

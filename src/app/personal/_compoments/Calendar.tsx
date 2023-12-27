@@ -7,7 +7,7 @@ type CalendarProps = {
   startDay: Date;
   endDay: Date;
   successDays: Date[];
-}
+};
 
 const todayStyle = { border: "2px solid black" };
 const successStyle = {
@@ -18,14 +18,13 @@ const failStyle = {
   color: "rgba(0,0,0,0.4)",
 };
 
-function Calendar({startDay, endDay, successDays}:CalendarProps) {
-
+function Calendar({ startDay, endDay, successDays }: CalendarProps) {
   // 將時間部分設置為零
   startDay.setUTCHours(0, 0, 0, 0);
   endDay.setUTCHours(0, 0, 0, 0);
 
   // 將 successDays 陣列中每個日期的時間部分設置為零
-  const successDay = successDays.map(date => {
+  const successDay = successDays.map((date) => {
     const dateWithoutTime = new Date(date);
     dateWithoutTime.setUTCHours(0, 0, 0, 0);
     return dateWithoutTime;
@@ -34,9 +33,15 @@ function Calendar({startDay, endDay, successDays}:CalendarProps) {
   const today = new Date();
   today.setUTCHours(0, 0, 0, 0);
   const failsDays = [];
-  for (let currentDay = new Date(startDay); currentDay <= endDay; currentDay.setDate(currentDay.getDate() + 1)) {
+  for (
+    let currentDay = new Date(startDay);
+    currentDay <= endDay;
+    currentDay.setDate(currentDay.getDate() + 1)
+  ) {
     console.log(currentDay);
-    const isInSuccessDays = successDay.some((successDay) => successDay.getDate() === currentDay.getDate());
+    const isInSuccessDays = successDay.some(
+      (successDay) => successDay.getDate() === currentDay.getDate(),
+    );
     if (!isInSuccessDays) {
       failsDays.push(new Date(currentDay));
     }

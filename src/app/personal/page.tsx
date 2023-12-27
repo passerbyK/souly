@@ -1,10 +1,13 @@
 import { redirect } from "next/navigation";
+
+import { eq, desc, sql } from "drizzle-orm";
+
+import { db } from "@/db";
+import { postsTable, likesTable } from "@/db/schema";
 import { auth } from "@/lib/auth";
 import { publicEnv } from "@/lib/env/public";
+
 import Diary from "./_compoments/Diary";
-import { db } from "@/db";
-import { eq, desc, sql } from "drizzle-orm";
-import { postsTable, likesTable } from "@/db/schema";
 
 async function PersonalPage() {
   const session = await auth();
@@ -36,21 +39,21 @@ async function PersonalPage() {
     .from(postsTable)
     .orderBy(desc(postsTable.createdAt))
     .leftJoin(likesSubquery, eq(postsTable.displayId, likesSubquery.postId))
-    .where(eq(postsTable.userId, id??" "))
+    .where(eq(postsTable.userId, id ?? " "))
     .execute();
 
   return (
     <>
       {posts.map((post) => (
-          <Diary
-            key={post.id}
-            id={post.displayId}
-            createdAt={new Date(post.createdAt)}
-            topic={post.topic}
-            image="/logo.png"
-            likes={post.likes}
-          />
-        ))}
+        <Diary
+          key={post.id}
+          id={post.displayId}
+          createdAt={new Date(post.createdAt)}
+          topic={post.topic}
+          image="/logo.png"
+          likes={post.likes}
+        />
+      ))}
     </>
   );
 }
