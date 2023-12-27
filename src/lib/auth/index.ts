@@ -15,7 +15,7 @@ export const {
   providers: [GitHub, CredentialsProvider],
   callbacks: {
     async session({ session, token }) {
-      const email = token.email || session?.user?.email;
+      const email = token.email || session?.user?.email;  
       if (!email) return session;
 
       const [user] = await db

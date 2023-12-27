@@ -60,7 +60,7 @@ async function Header() {
   }
 
   return (
-    <div className="fixed top-0 z-40 grid h-1/6 w-full bg-header px-8 py-4 text-3xl font-bold text-description">
+    <div className="fixed top-0 z-40 grid h-1/6 w-full bg-header px-8 text-3xl font-bold text-description">
       <div className="flex items-center gap-2">
         <Link href="/" className="mr-6 flex items-center text-5xl">
           <div className="h-20 w-20">

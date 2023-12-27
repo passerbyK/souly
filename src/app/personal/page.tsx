@@ -1,36 +1,56 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { publicEnv } from "@/lib/env/public";
-import Calendar from "./_compoments/Calendar";
 import Diary from "./_compoments/Diary";
+import { db } from "@/db";
+import { eq, desc, sql } from "drizzle-orm";
+import { postsTable, likesTable } from "@/db/schema";
 
 async function PersonalPage() {
   const session = await auth();
-  if (!session || !session?.user?.id) {
+  if (!session) {
     redirect(publicEnv.NEXT_PUBLIC_BASE_URL);
   }
+  const id = session.user?.id;
+
+  const likesSubquery = db.$with("likes_count").as(
+    db
+      .select({
+        postId: likesTable.postId,
+        likes: sql<number | null>`count(*)`.mapWith(Number).as("likes"),
+      })
+      .from(likesTable)
+      .groupBy(likesTable.postId),
+  );
+
+  const posts = await db
+    .with(likesSubquery)
+    .select({
+      id: postsTable.id,
+      displayId: postsTable.displayId,
+      topic: postsTable.topic,
+      image: postsTable.image,
+      createdAt: postsTable.createdAt,
+      likes: likesSubquery.likes,
+    })
+    .from(postsTable)
+    .orderBy(desc(postsTable.createdAt))
+    .leftJoin(likesSubquery, eq(postsTable.displayId, likesSubquery.postId))
+    .where(eq(postsTable.userId, id??" "))
+    .execute();
+
   return (
     <>
-      <div className="relative flex  h-screen w-full bg-body">
-        <div className="flex w-3/4 flex-wrap overflow-y-auto px-8 py-6">
-          <Diary />
-          <Diary />
-          <Diary />
-          <Diary />
-          <Diary />
-        </div>
-        <div className="mx-6 my-6 w-1/4 flex-col rounded-2xl bg-header py-2 pt-4 text-xl font-bold text-[#998D73]">
-          <div className="flex h-[8%] items-center justify-center rounded-2xl">
-            2023/12/6 (Wed.)
-          </div>
-          <div className="m-4 flex h-[12%] items-center justify-center rounded-2xl bg-[#D8D2C7]">
-            Complete: 3/21 days
-          </div>
-          <div className="mx-4 flex h-[70%] justify-center rounded-2xl bg-[#B7AD97] p-1 text-base text-black">
-            <Calendar />
-          </div>
-        </div>
-      </div>
+      {posts.map((post) => (
+          <Diary
+            key={post.id}
+            id={post.displayId}
+            createdAt={new Date(post.createdAt)}
+            topic={post.topic}
+            image="/logo.png"
+            likes={post.likes}
+          />
+        ))}
     </>
   );
 }

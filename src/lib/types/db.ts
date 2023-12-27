@@ -13,3 +13,4 @@ export type Post = {
   description: string;
   image: string;
 };
+

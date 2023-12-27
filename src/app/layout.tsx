@@ -25,7 +25,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${poetsenOne.className} overflow-y-scroll`}>
+      <body className={`${poetsenOne.className}`}>
         <SessionProvider>
           <Header />
           {children}
