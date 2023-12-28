@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
-import { signIn } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+
+import { useSettings } from "@/hooks/useSettings";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -13,41 +15,120 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+
+import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { publicEnv } from "@/lib/env/public";
 
-// import topics from "@/lib/topics.json";
+function Preference() {
+  const { data: session } = useSession();
+  const userId = session?.user?.id ?? "";
 
-function SignUp() {
-  const [email] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [showPaintingTime, setShowPaintingTime] = useState<boolean>(false);
+  const [subject, setSubject] = useState<string>("");
+  const [lastingDays, setLastingDays] = useState<number>(21); // Default value is 21
+  const [notification, setNotification] = useState<boolean>(false);
+  const [paintingTime, setPaintingTime] = useState<string>("");
+  const [showSubjectAlert, setShowSubjectAlert] = useState<boolean>(false);
+  const [isConfirmed, setIsConfirmed] = useState<boolean>(false);
+  const alertDialogTriggerRef = useRef<HTMLButtonElement>(null);
+
+  const { postSettings, isSettings } = useSettings();
 
   const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  useEffect(() => {
+    const checkSettings = async () => {
+      try {
+        const isSetting = await isSettings(userId);
+        if (isSetting === true) {
+          router.push(`/painting`);
+        }
+      } catch (error) {
+        console.error("Error fetching the settings:", error);
+      }
+    };
+
+    checkSettings();
+
+    if (alertDialogTriggerRef.current) {
+      alertDialogTriggerRef.current.click();
+    }
+  }, [isSettings, router, userId]);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
-      signIn("credentials", {
-        email,
-        password,
-        callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/personal`,
-      });
-      router.push("/painting");
-    } catch (e) {
-      console.log(e);
-      router.push("/auth/login");
+      if (!subject) {
+        setShowSubjectAlert(true);
+        return;
+      }
+
+      setIsConfirmed(true);
+    } catch (error) {
+      console.error("Error setting the info:", error);
     }
   };
 
+  const handleClick = async () => {
+    try {
+      const now = new Date();
+      const hours = now.getHours().toString().padStart(2, "0");
+      const minutes = now.getMinutes().toString().padStart(2, "0");
+      const currentTime = `${hours}:${minutes}`
+
+      await postSettings({
+        userId: userId,
+        subject: subject,
+        lastingDays: lastingDays,
+        isNotified: notification,
+        paintingTime: notification === true && paintingTime === "" ? currentTime : paintingTime,
+      });
+
+      router.push(`/painting`);
+    } catch (error) {
+      console.error("Error setting the info:", error);
+    }
+  }
+
   return (
     <div className="relative z-50 flex min-h-screen items-center justify-center bg-brand">
+      <AlertDialog >
+        <AlertDialogTrigger ref={alertDialogTriggerRef}></AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-4xl">
+                Welcome to {" "}
+                <span className="text-txt_2">S</span>
+                <span className="text-txt_3">O</span>
+                <span className="text-txt_2">U</span>
+                <span className="text-txt_3">L</span>
+                <span className="text-txt_2">Y</span> 
+                {" "}!
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-2xl">
+              Please set up your basic information before you start your journey !
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction>Continue</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
       <Card className="w-4/5 border-4 border-bdr bg-brand md:w-[600px] lg:w-[800px]">
         <CardHeader>
           <CardTitle className="flex items-center justify-between text-4xl">
@@ -57,8 +138,8 @@ function SignUp() {
                   src="/Logo_new.png"
                   alt="Souly Logo"
                   className="mr-2 w-full"
-                  width={20}
-                  height={20}
+                  width={100}
+                  height={100}
                 />
               </div>
             </Link>
@@ -107,7 +188,7 @@ function SignUp() {
               <Label className="w-[200px] text-center text-xl md:justify-center">
                 Painting Subject
               </Label>
-              <Select>
+              <Select onValueChange={(value) => setSubject(value)}>
                 <SelectTrigger className="w-2/3 border-4 border-txt_4 bg-btn_3 text-xl">
                   <SelectValue placeholder="Select your prefered subjects" />
                 </SelectTrigger>
@@ -133,14 +214,14 @@ function SignUp() {
               </Label>
               <Input
                 type="number"
-                value={password}
+                value={lastingDays}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   let newValue = parseInt(e.target.value, 10);
                   newValue = isNaN(newValue)
                     ? 21
                     : Math.max(21, Math.min(60, newValue));
 
-                  setPassword(newValue.toString());
+                  setLastingDays(newValue);
                 }}
                 placeholder="21 ~ 60 days"
                 className="w-2/3 border-4 border-txt_4 bg-btn_3 text-xl"
@@ -152,22 +233,23 @@ function SignUp() {
               </Label>
               <Checkbox
                 className="h-8 w-8 border-4 border-txt_4 bg-btn_3"
-                onClick={() => setShowPaintingTime(!showPaintingTime)}
+                checked={notification}
+                onCheckedChange={() => setNotification(!notification)}
               />
               <p className="text-sm text-muted-foreground">
                 We will remind you to paint every day !
               </p>
             </div>
-            {showPaintingTime && (
+            {notification && (
               <div className="mb-2 flex w-full flex-col items-center gap-4 text-center md:flex-row md:items-center">
                 <Label className="w-[200px] text-center text-xl md:justify-center">
                   Prefered Painting Time
                 </Label>
                 <Input
                   type="time"
-                  value={password}
+                  value={paintingTime}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    setPassword(e.target.value);
+                    setPaintingTime(e.target.value);
                   }}
                   placeholder=""
                   lang="en" // not every browser support this attribute
@@ -184,8 +266,39 @@ function SignUp() {
           </form>
         </CardContent>
       </Card>
+      <AlertDialog open={isConfirmed}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-2xl">
+              Are you sure you want to post?
+            </AlertDialogTitle>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setIsConfirmed(false)}>
+              Back
+            </AlertDialogCancel>
+            <AlertDialogAction onClick={handleClick}>
+              Confirm
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+      <AlertDialog open={showSubjectAlert}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-2xl">
+              Please select a painting subject.
+            </AlertDialogTitle>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction onClick={() => setShowSubjectAlert(false)}>
+              OK
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
 
-export default SignUp;
+export default Preference;
