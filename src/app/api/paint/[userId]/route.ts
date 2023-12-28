@@ -83,7 +83,7 @@ export async function GET(
     // Get the post, if any
     const post = await db.query.postsTable.findFirst({
       where: and(eq(postsTable.userId, params.userId)),
-      orderBy: [desc(postsTable.createdAt)]
+      orderBy: [desc(postsTable.createdAt)],
     });
 
     if (!post) {
