@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 
-import { and, eq } from "drizzle-orm";
+import { and, eq, desc } from "drizzle-orm";
 
 import { db } from "@/db";
 import { postsTable } from "@/db/schema";
@@ -83,11 +83,13 @@ export async function GET(
     // Get the post, if any
     const post = await db.query.postsTable.findFirst({
       where: and(eq(postsTable.userId, params.userId)),
+      orderBy: [desc(postsTable.createdAt)],
     });
 
     if (!post) {
       return NextResponse.json(
         {
+          firstPost: true,
           posted: false,
         },
         { status: 200 },
@@ -106,6 +108,7 @@ export async function GET(
     return NextResponse.json(
       {
         posted: true,
+        firstPost: false,
       },
       { status: 200 },
     );
