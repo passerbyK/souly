@@ -117,17 +117,17 @@ export default function Painting() {
         // const dataUrl = await toPng(elementRef.current, { cacheBust: false });
         const dataUrl = canvasRef.current?.toDataURL("image/png");
         if (!dataUrl) return;
-        const base64Img = dataUrl.replace(/^data:.+base64,/, '')
+        const base64Img = dataUrl.replace(/^data:.+base64,/, "");
 
-        const result = await fetch('/api/paint/image', {
+        const result = await fetch("/api/paint/image", {
           method: "POST",
           headers: {
-              "Content-Type": "application/json",
+            "Content-Type": "application/json",
           },
-          body: JSON.stringify({image: base64Img}),
-        })
-        const response = await result.json() // response.data is an object containing the image URL
-        
+          body: JSON.stringify({ image: base64Img }),
+        });
+        const response = await result.json(); // response.data is an object containing the image URL
+
         await postPaint({
           userId: userId,
           topic: topic,
