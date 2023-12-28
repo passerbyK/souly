@@ -115,11 +115,24 @@ export default function Painting() {
     if (elementRef.current) {
       try {
         // const dataUrl = await toPng(elementRef.current, { cacheBust: false });
+        const dataUrl = canvasRef.current?.toDataURL("image/png");
+        if (!dataUrl) return;
+        const base64Img = dataUrl.replace(/^data:.+base64,/, '')
+
+        const result = await fetch('/api/paint/image', {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify({image: base64Img}),
+        })
+        const response = await result.json() // response.data is an object containing the image URL
+        
         await postPaint({
           userId: userId,
           topic: topic,
           description: description,
-          image: "https://i.imgur.com/Rj72lvJ.jpeg",
+          image: response.image.data.link,
         });
         router.push(`/personal`);
       } catch (error) {
@@ -238,7 +251,7 @@ export default function Painting() {
                   <canvas
                     ref={canvasRef}
                     onMouseDown={onMouseDown}
-                    className="h-full w-full rounded-2xl"
+                    className="h-full w-full rounded-2xl bg-white"
                   />
                 </div>
               </div>

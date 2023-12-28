@@ -24,6 +24,9 @@ yarn migrate
 yarn dev
 ```
 
+To get your own IMGUR_CLIENT_ID, you can follow this tutorial:
+https://stark920.github.io/2022/05/06/APIimgur/
+
 ### Reference:
 
 1. https://github.com/joschan21/canvas-drawing-app
