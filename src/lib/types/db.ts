@@ -13,3 +13,11 @@ export type Post = {
   description: string;
   image: string;
 };
+
+export type Settings = {
+  userId: string;
+  subject: string;
+  lastingDays: number;
+  isNotified: boolean;
+  paintingTime: string;
+};

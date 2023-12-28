@@ -1,12 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-import { signIn } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -19,31 +28,101 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { publicEnv } from "@/lib/env/public";
+import { useSettings } from "@/hooks/useSettings";
 
-// import topics from "@/lib/topics.json";
+function Settings() {
+  const { data: session } = useSession();
+  const userId = session?.user?.id ?? "";
 
-function SignUp() {
-  const [email] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [showPaintingTime, setShowPaintingTime] = useState<boolean>(false);
+  const [subject, setSubject] = useState<string>("");
+  const [lastingDays, setLastingDays] = useState<number>(21); // Default value is 21
+  const [notification, setNotification] = useState<boolean>(false);
+  const [paintingTime, setPaintingTime] = useState<string>("");
+
+  const { updateSettings, isSettings, fetchSettings } = useSettings();
+
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [isConfirmed, setIsConfirmed] = useState<boolean>(false);
 
   const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  useEffect(() => {
+    const checkSettings = async () => {
+      try {
+        const isSetting = await isSettings(userId);
+        if (isSetting === false) {
+          router.push(`/preference`);
+        }
+      } catch (error) {
+        console.error("Error fetching the settings:", error);
+      }
+    };
+
+    checkSettings();
+
+    const fetchSettingsInfo = async () => {
+      try {
+        const settings = await fetchSettings(userId);
+        setSubject(settings.subject);
+        setLastingDays(settings.lastingDays);
+        setNotification(settings.isNotified);
+        setPaintingTime(settings.paintingTime);
+      } catch (error) {
+        console.error("Error fetching the settings:", error);
+      }
+    };
+
+    fetchSettingsInfo();
+  }, [isSettings, fetchSettings, router, userId]);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    try {
-      signIn("credentials", {
-        email,
-        password,
-        callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/personal`,
-      });
-      router.push("/painting");
-    } catch (e) {
-      console.log(e);
-      router.push("/auth/login");
+    setIsEditing(!isEditing);
+
+    if (isEditing === true) {
+      try {
+        setIsConfirmed(true);
+      } catch (error) {
+        console.error("Error update settings:", error);
+      }
     }
+  };
+
+  const handleClick = async () => {
+    try {
+      const now = new Date();
+      const hours = now.getHours().toString().padStart(2, "0");
+      const minutes = now.getMinutes().toString().padStart(2, "0");
+      const currentTime = `${hours}:${minutes}`;
+
+      await updateSettings({
+        userId: userId,
+        subject: subject,
+        lastingDays: lastingDays,
+        isNotified: notification,
+        paintingTime:
+          notification === true && paintingTime === ""
+            ? currentTime
+            : paintingTime,
+      });
+
+      setIsEditing(false);
+      setIsConfirmed(false);
+      router.refresh();
+    } catch (error) {
+      console.error("Error update settings:", error);
+    }
+  };
+
+  const handleReturn = async () => {
+    setIsEditing(!isEditing);
+    setIsConfirmed(false);
+  };
+
+  const handleBack = async (e: React.FormEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    router.back();
   };
 
   return (
@@ -57,8 +136,8 @@ function SignUp() {
                   src="/Logo_new.png"
                   alt="Souly Logo"
                   className="mr-2 w-full"
-                  width={20}
-                  height={20}
+                  width={100}
+                  height={100}
                 />
               </div>
             </Link>
@@ -107,9 +186,12 @@ function SignUp() {
               <Label className="w-[200px] text-center text-xl md:justify-center">
                 Painting Subject
               </Label>
-              <Select>
+              <Select
+                onValueChange={(value) => setSubject(value)}
+                disabled={!isEditing}
+              >
                 <SelectTrigger className="w-2/3 border-4 border-txt_4 bg-btn_3 text-xl">
-                  <SelectValue placeholder="Select your prefered subjects" />
+                  <SelectValue placeholder={subject} />
                 </SelectTrigger>
                 <SelectContent className="w-2/3 border-4 border-txt_4 bg-btn_3 text-xl">
                   <SelectItem value="Animal Party">Animal Party</SelectItem>
@@ -133,14 +215,15 @@ function SignUp() {
               </Label>
               <Input
                 type="number"
-                value={password}
+                value={lastingDays}
+                disabled={!isEditing}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   let newValue = parseInt(e.target.value, 10);
                   newValue = isNaN(newValue)
                     ? 21
                     : Math.max(21, Math.min(60, newValue));
 
-                  setPassword(newValue.toString());
+                  setLastingDays(newValue);
                 }}
                 placeholder="21 ~ 60 days"
                 className="w-2/3 border-4 border-txt_4 bg-btn_3 text-xl"
@@ -151,23 +234,26 @@ function SignUp() {
                 Turn on Notification
               </Label>
               <Checkbox
+                disabled={!isEditing}
                 className="h-8 w-8 border-4 border-txt_4 bg-btn_3"
-                onClick={() => setShowPaintingTime(!showPaintingTime)}
+                checked={notification}
+                onCheckedChange={() => setNotification(!notification)}
               />
               <p className="text-sm text-muted-foreground">
                 We will remind you to paint every day !
               </p>
             </div>
-            {showPaintingTime && (
+            {notification && (
               <div className="mb-2 flex w-full flex-col items-center gap-4 text-center md:flex-row md:items-center">
                 <Label className="w-[200px] text-center text-xl md:justify-center">
                   Prefered Painting Time
                 </Label>
                 <Input
                   type="time"
-                  value={password}
+                  disabled={!isEditing}
+                  value={paintingTime}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    setPassword(e.target.value);
+                    setPaintingTime(e.target.value);
                   }}
                   placeholder=""
                   lang="en" // not every browser support this attribute
@@ -175,17 +261,43 @@ function SignUp() {
                 />
               </div>
             )}
-            <Button
-              type="submit"
-              className="mt-2 w-1/2 rounded-2xl border-4 border-bdr bg-btn_2 text-center text-xl text-txt"
-            >
-              Confirm
-            </Button>
+            <div className="flex w-full justify-center gap-4">
+              <Button
+                type="submit"
+                className={`mt-2 w-1/2 rounded-2xl border-4 text-center text-xl ${
+                  isEditing
+                    ? "border-bdr bg-btn_2 text-txt"
+                    : "border-bdr bg-btn text-txt"
+                }`}
+              >
+                {isEditing ? "Done" : "Edit"}
+              </Button>
+              <Button
+                type="submit"
+                onClick={handleBack}
+                className="mt-2 rounded-2xl border-4 border-bdr bg-btn_3 text-center text-xl text-txt"
+              >
+                Back
+              </Button>
+            </div>
           </form>
         </CardContent>
       </Card>
+      <AlertDialog open={isConfirmed}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-2xl">
+              Are you sure you want to post?
+            </AlertDialogTitle>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={handleReturn}>Back</AlertDialogCancel>
+            <AlertDialogAction onClick={handleClick}>Confirm</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
 
-export default SignUp;
+export default Settings;
