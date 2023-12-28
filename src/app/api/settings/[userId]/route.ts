@@ -5,11 +5,9 @@ import { and, eq } from "drizzle-orm";
 import { db } from "@/db";
 import { usersTable, subjectsTable } from "@/db/schema";
 import { auth } from "@/lib/auth";
-
+import topicsInfo from "@/lib/topics/topic.json";
 import type { Settings } from "@/lib/types/db";
 import { settingsSchema } from "@/validators/settings";
-
-import topicsInfo from "@/lib/topics/topic.json";
 
 // POST /api/settings/:userId
 export async function POST(
@@ -37,9 +35,11 @@ export async function POST(
     } catch (error) {
       return NextResponse.json({ error: "Bad Request" }, { status: 400 });
     }
-    
+
     // Get topics from topic.json
-    const topics: string[] = topicsInfo[validatedReqBody.subject as keyof typeof topicsInfo].slice(0, validatedReqBody.lastingDays);
+    const topics: string[] = topicsInfo[
+      validatedReqBody.subject as keyof typeof topicsInfo
+    ].slice(0, validatedReqBody.lastingDays);
 
     // Post subject
     await db
@@ -51,7 +51,7 @@ export async function POST(
         createdAt: new Date(),
       })
       .execute();
-    
+
     // Update users
     await db
       .update(usersTable)
@@ -60,7 +60,7 @@ export async function POST(
         isNotified: validatedReqBody.isNotified,
         paintingTime: validatedReqBody.paintingTime,
       })
-      .where(eq(usersTable.displayId, params.userId))
+      .where(eq(usersTable.displayId, params.userId));
 
     return NextResponse.json({ status: 200 });
   } catch (error) {
@@ -97,7 +97,7 @@ export async function GET(
     const settingsInfo = await db.query.subjectsTable.findFirst({
       where: and(eq(subjectsTable.userId, params.userId)),
     });
-    
+
     if (!userInfo) {
       return NextResponse.json(
         { error: "Couldn't Get Any Settings Info: No User" },
@@ -113,7 +113,7 @@ export async function GET(
         { status: 200 },
       );
     }
-    
+
     const settings = {
       subject: settingsInfo.subject,
       lastingDays: userInfo.lastingDays,
@@ -124,7 +124,7 @@ export async function GET(
     return NextResponse.json(
       {
         settings: settings,
-        isDone: true
+        isDone: true,
       },
       { status: 200 },
     );
@@ -166,7 +166,7 @@ export async function PUT(
     } catch (error) {
       return NextResponse.json({ error: "Bad Request" }, { status: 400 });
     }
-    
+
     // Get all the settings info
     const userInfo = await db.query.usersTable.findFirst({
       where: and(eq(usersTable.displayId, params.userId)),
@@ -190,7 +190,9 @@ export async function PUT(
     }
 
     // Get topics from topic.json
-    const topics: string[] = topicsInfo[validatedReqBody.subject as keyof typeof topicsInfo].slice(0, validatedReqBody.lastingDays);
+    const topics: string[] = topicsInfo[
+      validatedReqBody.subject as keyof typeof topicsInfo
+    ].slice(0, validatedReqBody.lastingDays);
 
     // Update the subject info
     await db
@@ -200,7 +202,7 @@ export async function PUT(
         topic: JSON.stringify(topics),
         createdAt: new Date(),
       })
-      .where(eq(subjectsTable.userId, params.userId))
+      .where(eq(subjectsTable.userId, params.userId));
 
     // Update the settings info
     await db
@@ -210,7 +212,7 @@ export async function PUT(
         isNotified: validatedReqBody.isNotified,
         paintingTime: validatedReqBody.paintingTime,
       })
-      .where(eq(usersTable.displayId, params.userId))
+      .where(eq(usersTable.displayId, params.userId));
 
     return NextResponse.json({ status: 200 });
   } catch (error) {

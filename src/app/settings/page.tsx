@@ -7,8 +7,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-import { useSettings } from "@/hooks/useSettings";
-
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -21,15 +28,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
+import { useSettings } from "@/hooks/useSettings";
 
 function Settings() {
   const { data: session } = useSession();
@@ -71,11 +70,10 @@ function Settings() {
       } catch (error) {
         console.error("Error fetching the settings:", error);
       }
-    }
+    };
 
     fetchSettingsInfo();
-
-  }, [isSettings,fetchSettings , router, userId]);
+  }, [isSettings, fetchSettings, router, userId]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -83,7 +81,7 @@ function Settings() {
     setIsEditing(!isEditing);
 
     if (isEditing === true) {
-      try {  
+      try {
         setIsConfirmed(true);
       } catch (error) {
         console.error("Error update settings:", error);
@@ -96,14 +94,17 @@ function Settings() {
       const now = new Date();
       const hours = now.getHours().toString().padStart(2, "0");
       const minutes = now.getMinutes().toString().padStart(2, "0");
-      const currentTime = `${hours}:${minutes}`
+      const currentTime = `${hours}:${minutes}`;
 
       await updateSettings({
         userId: userId,
         subject: subject,
         lastingDays: lastingDays,
         isNotified: notification,
-        paintingTime: notification === true && paintingTime === "" ? currentTime : paintingTime,
+        paintingTime:
+          notification === true && paintingTime === ""
+            ? currentTime
+            : paintingTime,
       });
 
       setIsEditing(false);
@@ -112,7 +113,7 @@ function Settings() {
     } catch (error) {
       console.error("Error update settings:", error);
     }
-  }
+  };
 
   const handleReturn = async () => {
     setIsEditing(!isEditing);
@@ -122,7 +123,7 @@ function Settings() {
   const handleBack = async (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
     router.back();
-  }
+  };
 
   return (
     <div className="relative z-50 flex min-h-screen items-center justify-center bg-brand">
@@ -185,7 +186,10 @@ function Settings() {
               <Label className="w-[200px] text-center text-xl md:justify-center">
                 Painting Subject
               </Label>
-              <Select onValueChange={(value) => setSubject(value)} disabled={!isEditing}>
+              <Select
+                onValueChange={(value) => setSubject(value)}
+                disabled={!isEditing}
+              >
                 <SelectTrigger className="w-2/3 border-4 border-txt_4 bg-btn_3 text-xl">
                   <SelectValue placeholder={subject} />
                 </SelectTrigger>
@@ -260,8 +264,10 @@ function Settings() {
             <div className="flex w-full justify-center gap-4">
               <Button
                 type="submit"
-                className={`mt-2 w-1/2 rounded-2xl border-4 text-xl text-center ${
-                  isEditing ? "border-bdr bg-btn_2 text-txt" : "border-bdr bg-btn text-txt"
+                className={`mt-2 w-1/2 rounded-2xl border-4 text-center text-xl ${
+                  isEditing
+                    ? "border-bdr bg-btn_2 text-txt"
+                    : "border-bdr bg-btn text-txt"
                 }`}
               >
                 {isEditing ? "Done" : "Edit"}
@@ -269,7 +275,7 @@ function Settings() {
               <Button
                 type="submit"
                 onClick={handleBack}
-                className="mt-2 rounded-2xl border-4 text-xl text-center border-bdr bg-btn_3 text-txt"
+                className="mt-2 rounded-2xl border-4 border-bdr bg-btn_3 text-center text-xl text-txt"
               >
                 Back
               </Button>
@@ -285,12 +291,8 @@ function Settings() {
             </AlertDialogTitle>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel onClick={handleReturn}>
-              Back
-            </AlertDialogCancel>
-            <AlertDialogAction onClick={handleClick}>
-              Confirm
-            </AlertDialogAction>
+            <AlertDialogCancel onClick={handleReturn}>Back</AlertDialogCancel>
+            <AlertDialogAction onClick={handleClick}>Confirm</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

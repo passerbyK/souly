@@ -7,13 +7,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-import { useSettings } from "@/hooks/useSettings";
-
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -24,8 +17,12 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
-
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -33,6 +30,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useSettings } from "@/hooks/useSettings";
 
 function Preference() {
   const { data: session } = useSession();
@@ -89,39 +87,41 @@ function Preference() {
       const now = new Date();
       const hours = now.getHours().toString().padStart(2, "0");
       const minutes = now.getMinutes().toString().padStart(2, "0");
-      const currentTime = `${hours}:${minutes}`
+      const currentTime = `${hours}:${minutes}`;
 
       await postSettings({
         userId: userId,
         subject: subject,
         lastingDays: lastingDays,
         isNotified: notification,
-        paintingTime: notification === true && paintingTime === "" ? currentTime : paintingTime,
+        paintingTime:
+          notification === true && paintingTime === ""
+            ? currentTime
+            : paintingTime,
       });
 
       router.push(`/painting`);
     } catch (error) {
       console.error("Error setting the info:", error);
     }
-  }
+  };
 
   return (
     <div className="relative z-50 flex min-h-screen items-center justify-center bg-brand">
-      <AlertDialog >
+      <AlertDialog>
         <AlertDialogTrigger ref={alertDialogTriggerRef}></AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle className="text-4xl">
-                Welcome to {" "}
-                <span className="text-txt_2">S</span>
-                <span className="text-txt_3">O</span>
-                <span className="text-txt_2">U</span>
-                <span className="text-txt_3">L</span>
-                <span className="text-txt_2">Y</span> 
-                {" "}!
+              Welcome to <span className="text-txt_2">S</span>
+              <span className="text-txt_3">O</span>
+              <span className="text-txt_2">U</span>
+              <span className="text-txt_3">L</span>
+              <span className="text-txt_2">Y</span> !
             </AlertDialogTitle>
             <AlertDialogDescription className="text-2xl">
-              Please set up your basic information before you start your journey !
+              Please set up your basic information before you start your journey
+              !
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -277,9 +277,7 @@ function Preference() {
             <AlertDialogCancel onClick={() => setIsConfirmed(false)}>
               Back
             </AlertDialogCancel>
-            <AlertDialogAction onClick={handleClick}>
-              Confirm
-            </AlertDialogAction>
+            <AlertDialogAction onClick={handleClick}>Confirm</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

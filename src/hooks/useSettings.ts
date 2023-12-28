@@ -132,6 +132,6 @@ export const useSettings = () => {
     postSettings,
     fetchSettings,
     isSettings,
-    updateSettings
+    updateSettings,
   };
 };
