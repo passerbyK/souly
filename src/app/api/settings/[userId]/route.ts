@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 
-import { and, eq } from "drizzle-orm";
+import { and, eq, desc } from "drizzle-orm";
 
 import { db } from "@/db";
 import { usersTable, subjectsTable } from "@/db/schema";
@@ -96,6 +96,7 @@ export async function GET(
     });
     const settingsInfo = await db.query.subjectsTable.findFirst({
       where: and(eq(subjectsTable.userId, params.userId)),
+      orderBy: [desc(subjectsTable.createdAt)],
     });
 
     if (!userInfo) {
@@ -173,6 +174,7 @@ export async function PUT(
     });
     const settingsInfo = await db.query.subjectsTable.findFirst({
       where: and(eq(subjectsTable.userId, params.userId)),
+      orderBy: [desc(subjectsTable.createdAt)],
     });
 
     if (!userInfo) {

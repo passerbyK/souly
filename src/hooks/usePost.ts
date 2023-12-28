@@ -25,6 +25,25 @@ export const usePost = () => {
     [router],
   );
 
+  const firstPost = useCallback(
+    async ({ userId }: { userId: string }) => {
+      try {
+        const res = await fetch(`/api/paint/${userId}`);
+
+        if (!res.ok) {
+          router.push(`/personal`);
+          return;
+        }
+
+        const data = await res.json();
+        return data.firstPost;
+      } catch (error) {
+        console.error("Error fetching the topic:", error);
+      }
+    },
+    [router],
+  );
+
   const postPaint = useCallback(
     async ({
       userId,
@@ -89,6 +108,7 @@ export const usePost = () => {
     postPaint,
     fetchTopic,
     posted,
+    firstPost,
     loading,
   };
 };

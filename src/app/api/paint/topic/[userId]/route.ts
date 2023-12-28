@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 
-import { and, eq } from "drizzle-orm";
+import { and, eq, desc } from "drizzle-orm";
 
 import { db } from "@/db";
 import { usersTable, subjectsTable } from "@/db/schema";
@@ -27,6 +27,7 @@ export async function GET(
     // Get the topic
     const subject = await db.query.subjectsTable.findFirst({
       where: and(eq(subjectsTable.userId, params.userId)),
+      orderBy: [desc(subjectsTable.createdAt)],
     });
     const user = await db.query.usersTable.findFirst({
       where: and(eq(usersTable.displayId, params.userId)),

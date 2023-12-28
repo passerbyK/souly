@@ -8,6 +8,17 @@ import type { ColorResult } from "react-color";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogDescription,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+
 import { useDraw } from "@/hooks/useDraw";
 import { usePost } from "@/hooks/usePost";
 import type { Draw } from "@/lib/types/shared_types";
@@ -21,9 +32,17 @@ export default function Painting() {
   const { canvasRef, onMouseDown, clear } = useDraw(drawLine);
   const elementRef = useRef<HTMLDivElement>(null);
   const [isPost, setIsPost] = useState<boolean>(false);
+  const [isFirstPost, setIsFirstPost] = useState<boolean>(false);
   const [description, setDescription] = useState<string>("");
   const [topic, setTopic] = useState<string>("");
-  const { loading, fetchTopic, postPaint, posted } = usePost();
+  const { loading, fetchTopic, postPaint, posted, firstPost } = usePost();
+
+  const [welcomeDialog, setWelcomeDialog] = useState<boolean>(false);
+  const [personalDialog, setPersonalDialog] = useState<boolean>(false);
+  const [socialDialog, setSocialDialog] = useState<boolean>(false);
+
+  const [isPostDialog, setIsPostDialog] = useState<boolean>(false);
+  const [isConfirmed, setIsConfirmed] = useState<boolean>(false);
 
   const userId = session?.user?.id ?? "";
 
@@ -38,7 +57,26 @@ export default function Painting() {
     };
 
     checkPost();
+  }, [posted, userId])
 
+  useEffect(() => {
+    const checkFirstPost = async () => {
+      try {
+        const firstPosted = await firstPost({ userId });
+        setIsFirstPost(firstPosted);
+
+        if (isFirstPost) {
+          setWelcomeDialog(true);
+        }
+      } catch (error) {
+        console.error("Error fetching the first topic:", error);
+      }
+    }
+
+    checkFirstPost();
+  }, [firstPost, isFirstPost, isPost, userId]);
+
+  useEffect(() => {
     if (isPost === false) {
       const loadTopic = async () => {
         try {
@@ -52,7 +90,7 @@ export default function Painting() {
       loadTopic();
 
       const mainElement = document.getElementById("main-element");
-      console.log(mainElement);
+
       if (mainElement) {
         const timer = setTimeout(() => {
           mainElement.classList.remove("blur-lg");
@@ -61,10 +99,9 @@ export default function Painting() {
         return () => clearTimeout(timer);
       }
     } else {
-      window.alert("You have already posted today!");
-      router.push(`/personal`);
+      setIsPostDialog(true);
     }
-  }, [userId, fetchTopic, isPost, posted, router]);
+  }, [fetchTopic, firstPost, isFirstPost, isPost, router, userId]);
 
   if (!userId || userId === "") {
     router.push("/auth/login");
@@ -78,11 +115,6 @@ export default function Painting() {
   const handlePostClick = async () => {
     if (elementRef.current) {
       try {
-        const isConfirmed = window.confirm("Are you sure you want to post?");
-
-        if (!isConfirmed) {
-          return;
-        }
 
         // const dataUrl = await toPng(elementRef.current, { cacheBust: false });
         await postPaint({
@@ -97,6 +129,39 @@ export default function Painting() {
       }
     }
   };
+
+  const handleFirstDialog = () => {
+    setWelcomeDialog(true);
+    setPersonalDialog(false);
+    setSocialDialog(false);
+  }
+
+  const handleSecondDialog = () => {
+    setWelcomeDialog(false);
+    setPersonalDialog(true);
+    setSocialDialog(false);
+  };
+
+  const handleThirdDialog = () => {
+    setWelcomeDialog(false);
+    setPersonalDialog(false);
+    setSocialDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setWelcomeDialog(false);
+    setPersonalDialog(false);
+    setSocialDialog(false);
+  }
+
+  const handleConfirmDialog = () => {
+    setIsConfirmed(true);
+  }
+
+  const handleClosePostDialog = () => {
+    setIsPostDialog(false);
+    router.push(`/personal`);
+  }
 
   function drawLine({ prevPoint, currentPoint, ctx }: Draw) {
     const { x: currX, y: currY } = currentPoint;
@@ -125,6 +190,35 @@ export default function Painting() {
         <main
           className={`flex h-screen min-h-screen flex-col items-center bg-brand`}
         >
+          <AlertDialog open={isPostDialog}>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle className="text-2xl">
+                  You have already posted today !
+                </AlertDialogTitle>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogAction onClick={handleClosePostDialog}>
+                  OK
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+          <AlertDialog open={isConfirmed}>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle className="text-2xl">
+                  Are you sure you want to post?
+                </AlertDialogTitle>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel onClick={() => setIsConfirmed(false)}>
+                  Back
+                </AlertDialogCancel>
+                <AlertDialogAction onClick={handlePostClick}>Confirm</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
           <div className="h-1/6 w-full"></div>
           <div className="h-full w-full flex-col items-center justify-center bg-brand_2 px-4 md:px-12">
             <div className="mt-4 flex w-full items-center gap-4 px-4 text-4xl ">
@@ -184,7 +278,7 @@ export default function Painting() {
               </div>
               <button
                 disabled={loading}
-                onClick={handlePostClick}
+                onClick={handleConfirmDialog}
                 className="rounded-2xl border-4 border-bdr bg-btn_2 px-4 py-2 text-center text-3xl text-txt"
               >
                 POST
@@ -192,6 +286,87 @@ export default function Painting() {
             </div>
           </div>
         </main>
+        <AlertDialog open={isFirstPost && welcomeDialog}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle className="text-4xl">
+                Welcome to {" "}
+                <span className="text-txt_2">S</span>
+                <span className="text-txt_3">O</span>
+                <span className="text-txt_2">U</span>
+                <span className="text-txt_3">L</span>
+                <span className="text-txt_2">Y</span> 
+                {" "} !
+              </AlertDialogTitle>
+              <AlertDialogDescription className="text-2xl">
+                We're thrilled to have you here as part of our creative community. At {" "}
+                <span className="text-txt_2">S</span>
+                <span className="text-txt_3">O</span>
+                <span className="text-txt_2">U</span>
+                <span className="text-txt_3">L</span>
+                <span className="text-txt_2">Y</span>
+                , you have the artistic freedom to express yourself through daily drawings based on unique topics.
+              </AlertDialogDescription>
+              <AlertDialogDescription className="text-2xl">
+                Starting today, we'll provide you with a daily drawing topic to inspire your creations. Remember, you can post once a day, so make it count!
+              </AlertDialogDescription>
+              <AlertDialogFooter>
+                <AlertDialogAction onClick={handleSecondDialog}>
+                  Next
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogHeader>
+          </AlertDialogContent>
+        </AlertDialog>
+        <AlertDialog open={isFirstPost && personalDialog}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle className="text-4xl">
+                Additionally, explore the personal page...
+              </AlertDialogTitle>
+              <AlertDialogDescription className="text-2xl">
+                Head over to your personal page to view and cherish your posted artworks. It's your personal gallery showcasing your artistic journey.
+              </AlertDialogDescription>
+              <AlertDialogFooter>
+                <AlertDialogCancel onClick={handleFirstDialog}>
+                  Back
+                </AlertDialogCancel>
+                <AlertDialogAction onClick={handleThirdDialog}>
+                  Next
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogHeader>
+          </AlertDialogContent>
+        </AlertDialog>
+        <AlertDialog open={isFirstPost && socialDialog}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle className="text-4xl">
+                Additionally, explore the social page...
+              </AlertDialogTitle>
+              <AlertDialogDescription className="text-2xl">
+                discover the incredible artworks posted by fellow {" "}
+                <span className="text-txt_2">S</span>
+                <span className="text-txt_3">O</span>
+                <span className="text-txt_2">U</span>
+                <span className="text-txt_3">L</span>
+                <span className="text-txt_2">Y</span> 
+                {" "} creators. It's a space to connect, be inspired, and celebrate the diverse talents within our community.
+              </AlertDialogDescription>
+              <AlertDialogDescription className="text-2xl">
+                Now, let's embark on this creative adventure together. We hope you find joy, inspiration, and a piece of your soul in every stroke!
+              </AlertDialogDescription>
+              <AlertDialogFooter>
+                <AlertDialogCancel onClick={handleSecondDialog}>
+                  Back
+                </AlertDialogCancel>
+                <AlertDialogAction onClick={handleCloseDialog}>
+                  OK
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogHeader>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     );
   }
