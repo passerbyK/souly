@@ -10,9 +10,9 @@ const pattaya = localFont({
 
 export default function Home() {
   return (
-    <main className="flex h-full w-full min-h-screen flex-col items-center bg-brand_2">
+    <main className="flex h-full min-h-screen w-full flex-col items-center bg-brand_2">
       <div className="h-[200px] w-full"></div>
-      <div className="h-full m-4 flex w-full flex-wrap items-center justify-center gap-20 p-8">
+      <div className="m-4 flex h-full w-full flex-wrap items-center justify-center gap-20 p-8">
         <Image
           src="/souly.svg"
           alt="Souly Logo"

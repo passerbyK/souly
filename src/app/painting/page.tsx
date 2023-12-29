@@ -197,7 +197,7 @@ export default function Painting() {
     router.push("/auth/login");
   } else {
     return (
-      <div id="main-element" className="blur-lg overflow-y-auto">
+      <div id="main-element" className="overflow-y-auto blur-lg">
         <main
           className={`flex h-screen min-h-screen flex-col items-center bg-brand_2`}
         >
@@ -233,19 +233,18 @@ export default function Painting() {
             </AlertDialogContent>
           </AlertDialog>
           <div className="h-1/6 w-full"></div>
-          <div className="flex flex-col h-full w-full lg:mt-0 justify-center px-6 lg:px-12">
-            <div className="mt-4 lg:flex w-full items-center gap-4 px-4 py-auto text-3xl ">
-              <div className="w-full lg:flex items-center space-x-4">
-              <div className="w-full flex flex-col items-center justify-center text-txt text-center">
-                Today's Topic:{" "}
-                <span className="mt-2 text-xl sm:text-2xl overflow-hidden whitespace-normal break-all underline">
-                  {topic}
-                </span>
+          <div className="flex h-full w-full flex-col justify-center px-6 lg:mt-0 lg:px-12">
+            <div className="py-auto mt-4 w-full items-center gap-4 px-4 text-3xl lg:flex ">
+              <div className="w-full items-center space-x-4 lg:flex">
+                <div className="flex w-full flex-col items-center justify-center text-center text-txt">
+                  Today's Topic:{" "}
+                  <span className="mt-2 overflow-hidden whitespace-normal break-all text-xl underline sm:text-2xl">
+                    {topic}
+                  </span>
+                </div>
               </div>
-              </div>
-              
             </div>
-            <div className="w-full flex justify-center lg:justify-start gap-4">
+            <div className="flex w-full justify-center gap-4 lg:justify-start">
               <div
                 className="z-10 h-[25px] w-[25px] cursor-pointer self-center rounded-full p-2"
                 onClick={handleColorIconClick}
@@ -261,22 +260,23 @@ export default function Painting() {
 
               <button
                 type="button"
-                className="flex items-end my-4 rounded-lg border-2 border-black px-2 text-base text-black"
+                className="my-4 flex items-end rounded-lg border-2 border-black px-2 text-base text-black"
                 onClick={clear}
               >
                 Clear
               </button>
-              
+
               <div className="grow"></div>
-              <div className="flex mt-auto hidden lg:block ml-auto text-gray-500 text-xl">
+              <div className="ml-auto mt-auto flex hidden text-xl text-gray-500 lg:block">
                 2023/12/09 {"(Sat.)"}
               </div>
-              </div>
-            <div className="mb-4 lg:flex gap-4">
-              <div 
-              className="relative lg:w-[55%] aspect-[5/3] rounded-2xl border-4 border-bdr_2"
-              >
-                <div ref={elementRef} className="flex justify-center h-full w-full rounded-2xl bg-white">
+            </div>
+            <div className="mb-4 gap-4 lg:flex">
+              <div className="relative aspect-[5/3] rounded-2xl border-4 border-bdr_2 lg:w-[55%]">
+                <div
+                  ref={elementRef}
+                  className="flex h-full w-full justify-center rounded-2xl bg-white"
+                >
                   <canvas
                     ref={canvasRef}
                     onMouseDown={onMouseDown}
@@ -284,32 +284,31 @@ export default function Painting() {
                   />
                 </div>
               </div>
-              <div className="mt-2 lg:mb-0 flex flex-col lg:grow">
-                <p className="w-full mb-2 flex justify-center text-center lg:hidden w-5/6 text-md mt-2 ml-2 text-start text-gray-500">
+              <div className="mt-2 flex flex-col lg:mb-0 lg:grow">
+                <p className="text-md mb-2 ml-2 mt-2 flex w-5/6 w-full justify-center text-center text-start text-gray-500 lg:hidden">
                   type something, do not exceed 50 words
                 </p>
                 <textarea
                   onChange={(e) => setDescription(e.target.value)}
-                  className="items-start h-full w-full p-4 rounded-2xl border-4 border-bdr_2 bg-brand p-2 text-lg resize-none"
+                  className="h-full w-full resize-none items-start rounded-2xl border-4 border-bdr_2 bg-brand p-2 p-4 text-lg"
                   placeholder="Type something..."
                 />
                 <div className="flex justify-center">
-                <p className="hidden lg:block w-5/6 text-md mt-2 ml-2 text-start text-gray-500">
-                  type something to further deliver your thought, do not exceed 50 words
-                </p>
-                <button
-                disabled={loading}
-                onClick={handleConfirmDialog}
-                className="mb-10 lg:mb-4 flex lg-justify-end mt-2 rounded-2xl border-4 border-bdr bg-btn_2 px-4 py-2 text-xl text-txt"
-                >
-                  POST
-                </button>
+                  <p className="text-md ml-2 mt-2 hidden w-5/6 text-start text-gray-500 lg:block">
+                    type something to further deliver your thought, do not
+                    exceed 50 words
+                  </p>
+                  <button
+                    disabled={loading}
+                    onClick={handleConfirmDialog}
+                    className="lg-justify-end mb-10 mt-2 flex rounded-2xl border-4 border-bdr bg-btn_2 px-4 py-2 text-xl text-txt lg:mb-4"
+                  >
+                    POST
+                  </button>
                 </div>
               </div>
             </div>
-            
           </div>
-          
         </main>
         <AlertDialog open={isFirstPost && welcomeDialog}>
           <AlertDialogContent>

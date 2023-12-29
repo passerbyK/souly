@@ -1,11 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
 import localFont from "next/font/local";
-import Image from "next/image";
-
-// import Link from "next/link";
 
 const pattaya = localFont({
   src: "../fonts/Pattaya-Regular.ttf",
@@ -14,23 +9,6 @@ const pattaya = localFont({
 });
 
 export default function Introduction() {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const container = document.getElementById("secondSection");
-      if (container) {
-        const rect = container.getBoundingClientRect();
-        setIsVisible(rect.top <= window.innerHeight / 2);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
   return (
     <main className="flex min-h-screen flex-col items-center bg-brand_2">
       <div className="flex w-full flex-wrap items-center justify-between p-4 px-8 pt-8"></div>
@@ -56,10 +34,9 @@ export default function Introduction() {
             feed awaits, revealing daily prompts and friends' expressions. Our
             vision extends beyond features, promising an exhilarating journey of
             creativity. Seeking partners who share our passion, bringing this
-            dream to life. We welcome fresh 
-            perspectives for an enriching creative
-            voyage. Join us in crafting a space that inspires and celebrates
-            daily creativity.
+            dream to life. We welcome fresh perspectives for an enriching
+            creative voyage. Join us in crafting a space that inspires and
+            celebrates daily creativity.
           </p>
           <p
             className={`${pattaya.className} mb-4 text-center text-5xl text-txt`}
@@ -93,7 +70,7 @@ export default function Introduction() {
           </p>
         </div>
       </div>
-    
+
       <div
         id="fourthSection"
         className="m-4 flex w-full flex-wrap items-center justify-center gap-20 p-8"
