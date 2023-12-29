@@ -4,6 +4,8 @@ import { useRef, useEffect, useState } from "react";
 import { ChromePicker } from "react-color";
 import type { ColorResult } from "react-color";
 
+import { BsEraser } from "react-icons/bs";
+
 // import { toPng } from "html-to-image";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -258,9 +260,14 @@ export default function Painting() {
                 )}
               </div>
 
+              <BsEraser 
+                className="z-10 h-[30px] w-[30px] cursor-pointer self-center rounded-full p-1 hover:bg-white"
+                onClick={() => setColor("#fff")}
+              />
+
               <button
                 type="button"
-                className="my-4 flex items-end rounded-lg border-2 border-black px-2 text-base text-black"
+                className="my-4 flex items-end rounded-lg border-2 border-black px-2 text-base text-black hover:bg-description/80"
                 onClick={clear}
               >
                 Clear
@@ -301,7 +308,7 @@ export default function Painting() {
                   <button
                     disabled={loading}
                     onClick={handleConfirmDialog}
-                    className="lg-justify-end mb-10 mt-2 flex rounded-2xl border-4 border-bdr bg-btn_2 px-4 py-2 text-xl text-txt lg:mb-4"
+                    className="lg-justify-end mb-10 mt-2 flex rounded-2xl border-4 border-bdr bg-btn_2 px-4 py-2 text-xl text-txt lg:mb-4 hover:bg-description/30"
                   >
                     POST
                   </button>
