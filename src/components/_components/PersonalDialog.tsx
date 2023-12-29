@@ -36,7 +36,7 @@ async function PersonalDialog() {
           >
             <button
               type="submit"
-              className="mr-6 flex items-center py-1 hover:bg-yellow-700/20"
+              className="flex items-center p-1 hover:bg-yellow-700/20"
             >
               Settings
             </button>

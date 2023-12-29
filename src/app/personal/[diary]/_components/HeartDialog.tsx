@@ -40,7 +40,7 @@ async function HeartDialog({ likeslist }: HeartProps) {
           likeslist.map(async (like, i) => (
             <div
               key={i}
-              className="group flex w-full cursor-pointer items-center justify-between gap-2 rounded-lg p-2 hover:bg-yellow-100"
+              className="group flex w-full cursor-pointer items-center justify-between gap-2 rounded-lg p-2"
             >
               <div className="items-center gap-2">
                 <div className="flex gap-2 text-2xl font-semibold text-black">

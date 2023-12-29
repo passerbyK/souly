@@ -1,5 +1,6 @@
 import { MdOutlineDraw } from "react-icons/md";
 
+import Image from "next/image";
 import { redirect } from "next/navigation";
 
 import LikeButton from "../_components/LikeButton";
@@ -42,22 +43,33 @@ async function FriendPage(props: Props) {
     const liked = await getLiked(userId, friendPost.displayId);
 
     return (
-      <div className="h-full w-full bg-brand_2">
-        <div className="flex">
+      <div className="flex h-full w-full bg-brand_2">
+        <div className="flex-col">
           <h1 className="pl-6 pt-6 text-6xl text-txt_5">{friend[0].name}</h1>
-          <h2 className="ml-auto pr-6 pt-10 text-4xl text-txt_6">
+          <h2 className="ml-auto pl-6 pt-4 text-4xl text-txt_6">
             {outputDate}
           </h2>
         </div>
-        <div className="mx-8 my-4 flex h-4/5 items-end rounded-xl border-4 border-bdr_4 bg-white">
-          <div className="flex h-min w-full justify-between rounded-b-lg border-bdr_4 bg-brand_3 px-8 py-4 text-5xl">
-            {friendPost.image}
-            {/* position of post have to change */}
-            <div className="flex flex-col gap-2">
-              <p className="text-4xl">{friendPost.topic}</p>
-              <p className="text-2xl">{friendPost.description}</p>
+        <div className="h-11/12 mx-8 my-4 flex aspect-[4/3] flex-col items-end rounded-2xl border-2 border-[#7C5A16] bg-white">
+          <div className="h-4/5 items-center justify-center">
+            <div className="flex h-full items-center justify-center lg:h-[90%]">
+              <Image
+                src={friendPost.image}
+                alt="Logo"
+                width={1000}
+                height={1000}
+                className="h-[90%] w-[70%] rounded-2xl"
+              />
             </div>
-            <div className="px-4">
+            <div className="hidden w-full items-center justify-center text-base text-[#998D73] sm:text-2xl lg:flex">
+              {friendPost.description}
+            </div>
+          </div>
+          <div className="flex h-1/5 w-full items-center justify-center gap-6 rounded-b-2xl bg-[#F2D7A3] text-base font-bold md:text-2xl">
+            <div className="p-1/2 ml-4 rounded-2xl bg-description/60 px-4 md:p-2">
+              {friendPost.topic}
+            </div>
+            <div className="flex items-center px-4">
               <LikeButton
                 initialLikes={likes}
                 initialLiked={liked}

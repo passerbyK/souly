@@ -146,17 +146,19 @@ async function NotificationDialog() {
             Notifications
           </DialogTitle>
         </DialogHeader>
-        <div className="divide-y-2 divide-slate-400/25 overflow-y-scroll text-txt_9">
-          {likes == undefined ? (
-            <p className="flex justify-center text-2xl">no notification</p>
-          ) : (
-            likes.map(async (like) => {
+        {likes == undefined ? (
+          <p className="flex justify-center text-2xl text-txt_9">
+            no notification
+          </p>
+        ) : (
+          <div className="flex items-start divide-y-2 divide-slate-400/25 overflow-y-scroll text-txt_9">
+            {likes.map(async (like) => {
               const postDate = await getPost(like.postId);
               const userName = await getUser(like.userId);
               return (
                 <form
                   key={like.id}
-                  className="mr-6 flex items-start py-1 text-xl hover:bg-yellow-700/20"
+                  className="p-1 text-xl hover:bg-yellow-700/20"
                   action={async () => {
                     "use server";
                     redirect(
@@ -169,9 +171,9 @@ async function NotificationDialog() {
                   </button>
                 </form>
               );
-            })
-          )}
-        </div>
+            })}
+          </div>
+        )}
       </DialogContent>
     </Dialog>
   );
