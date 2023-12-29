@@ -34,7 +34,7 @@ async function PersonalDialog() {
               redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/settings`);
             }}
           >
-            <button type="submit" className="mr-6 flex items-center py-1">
+            <button type="submit" className="mr-6 flex items-center py-1 hover:bg-yellow-700/20">
               Settings
             </button>
           </form>

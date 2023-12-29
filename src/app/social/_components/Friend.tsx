@@ -27,9 +27,9 @@ export default async function Friend({ displayId, name }: FriendProps) {
       <Link className="grow px-3 py-1" href={`/social/${displayId}`}>
         <div className="items-center gap-2">
           <p className="flex gap-2 text-2xl font-semibold text-black">{name}</p>
-          <p className="flex gap-2 whitespace-normal break-words text-xl text-black">
-            {/* {topic} */}
-          </p>
+          {/*  <p className="flex gap-2 whitespace-normal break-words text-xl text-black">
+            {topic} 
+          </p>  */}
         </div>
       </Link>
       <form

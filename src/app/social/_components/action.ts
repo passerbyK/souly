@@ -1,7 +1,7 @@
 import { and, eq, ne, inArray, sql, desc } from "drizzle-orm";
 
 import { db } from "@/db";
-import { relationsTable, usersTable, usersToRelationsTable } from "@/db/schema";
+import { likesTable, postsTable, relationsTable, usersTable, usersToRelationsTable } from "@/db/schema";
 
 export const requestFriend = async (userId: string, otheruserEmail: string) => {
   "use server";
@@ -93,6 +93,41 @@ export const getAddedFriends = async (userId: string) => {
 
   return friends;
 };
+
+// export const getAddedFriends_search = async (userId: string, search: string) => {
+//   "use server";
+//   console.log("[searchFriends]");
+
+//   const relations = await getAcceptedRelations(userId);
+//   const relationsId = relations.map((relation) => relation.id);
+
+//   if (relationsId.length == 0) {
+//     return;
+//   }
+
+//   const allFriends = await db.query.usersToRelationsTable.findMany({
+//     where: and(
+//       inArray(usersToRelationsTable.relationId, relationsId),
+//       ne(usersToRelationsTable.userId, userId),
+//     ),
+//     orderBy: [desc(usersToRelationsTable.acceptedAt)],
+//     with: {
+//       user: {
+//         columns: {
+//           id: true,
+//           displayId: true,
+//           username: true,
+//         },
+//       },
+//     },
+//   });
+
+//   const friends = allFriends.filter((friend) =>
+//     friend.user.username.includes(search)
+//   );
+
+//   return friends;
+// };
 
 export const getRequestedUser = async (userId: string) => {
   "use server";
@@ -228,4 +263,103 @@ export const getFriend = async (friendId: string) => {
     .execute();
 
   return friend;
+};
+
+export const getFriendPost = async (userId: string) => {
+  "use server";
+
+  const post = await db.query.postsTable.findFirst({
+    where: eq(postsTable.userId, userId)
+  })
+
+  return post;
+};
+
+export const getLikes = async (postId: string) => {
+  "use server";
+
+  const likes = await db
+    .select({ likesId: likesTable.id })
+    .from(likesTable)
+    .where(eq(likesTable.postId, postId))
+    .execute();
+
+  return likes.length;
+};
+
+export const getLiked = async (userId: string, postId: string) => {
+  "use server";
+
+  const liked = await db
+    .select({ likesId: likesTable.id })
+    .from(likesTable)
+    .where(and(eq(likesTable.postId, postId), eq(likesTable.userId, userId)))
+    .execute();
+
+  return (liked.length==0)?false:true;
+};
+
+export const getNotifications = async (userId: string) => {
+  "use server";
+
+  const posts = await db
+    .select({ id: postsTable.displayId })
+    .from(postsTable)
+    .where(eq(postsTable.userId, userId))
+    .execute();
+  
+  if (posts == null) { return; }
+  const postsId = posts.map((post) => post.id);
+  if (postsId.length == 0) { return; }
+
+  const likes = await db
+    .select({ 
+      id: likesTable.id,
+      postId: likesTable.postId,
+      userId: likesTable.userId
+    })
+    .from(likesTable)
+    .where(inArray(likesTable.postId, postsId))
+    .orderBy(desc(likesTable.createdAt))
+    .execute();
+
+  return likes;
+};
+
+export const getPost = async (postId: string) => {
+  "use server";
+
+  const post = await db
+    .select({ date: postsTable.createdAt })
+    .from(postsTable)
+    .where(eq(postsTable.displayId, postId))
+    .execute();
+  
+  if(post) {
+    const Date = post[0].date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+      weekday: 'short',
+    });
+    const [weekday, date] = Date.split(', ');
+    const [month, day, year] = date.split('/');
+    const outputDate = `${year}/${month}/${day}(${weekday})`;
+
+    return outputDate;
+  }
+
+  return;
+};
+
+export const getUser = async (userId: string) => {
+  "use server";
+
+  const user = await db
+    .select({ name: usersTable.username })
+    .from(usersTable)
+    .where(eq(usersTable.displayId, userId))
+    .execute();
+
+  return user[0].name;
 };
