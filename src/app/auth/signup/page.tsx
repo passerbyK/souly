@@ -30,16 +30,12 @@ function SignUp() {
         return;
       }
 
-      const result = await signIn("credentials", {
+      await signIn("credentials", {
         username,
         email,
         password,
         callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/preference`,
       });
-
-      if (!result || result.error) {
-        alert("Invalid email or password. Please try again.");
-      }
     } catch (e) {
       console.log(e);
       router.push("/auth/signup");
