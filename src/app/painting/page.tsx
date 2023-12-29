@@ -331,8 +331,9 @@ export default function Painting() {
                 </p>
                 <textarea
                   onChange={(e) => setDescription(e.target.value)}
-                  className="h-full w-full resize-none items-start rounded-2xl border-4 border-bdr_2 bg-brand p-2 p-4 text-lg"
+                  className="h-full w-full resize-none items-start rounded-2xl border-4 border-bdr_2 bg-brand p-2 p-4 text-3xl"
                   placeholder="Type something..."
+                  maxLength={50}
                 />
                 <div className="flex justify-center">
                   <p className="text-md ml-2 mt-2 hidden w-5/6 text-start text-gray-500 lg:block">
