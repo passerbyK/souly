@@ -16,11 +16,11 @@ export default function Home() {
         <Image
           src="/souly.svg"
           alt="Souly Logo"
-          className="mb-4 w-full rounded-2xl border-4 border-bdr md:mb-0 md:mr-4 md:w-2/5"
+          className="mb-4 w-full rounded-2xl border-4 border-bdr lg:mb-0 lg:mr-4 lg:w-2/5"
           width={25}
           height={25}
         />
-        <div className="mx-4 flex flex-col items-center gap-4 md:w-2/5">
+        <div className="mx-4 flex flex-col items-center gap-4 lg:w-2/5">
           <h1 className="mb-16 text-center text-6xl font-bold text-description">
             Welcome to Souly !
           </h1>
