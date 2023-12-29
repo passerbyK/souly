@@ -197,7 +197,7 @@ export default function Painting() {
     router.push("/auth/login");
   } else {
     return (
-      <div id="main-element" className="blur-lg">
+      <div id="main-element" className="blur-lg overflow-y-auto">
         <main
           className={`flex h-screen min-h-screen flex-col items-center bg-brand`}
         >
@@ -233,71 +233,83 @@ export default function Painting() {
             </AlertDialogContent>
           </AlertDialog>
           <div className="h-1/6 w-full"></div>
-          <div className="h-full w-full flex-col items-center justify-center bg-brand_2 px-4 md:px-12">
-            <div className="mt-4 flex w-full items-center gap-4 px-4 text-4xl ">
-              <div className="my-4 w-3/4 grow flex-wrap text-center text-txt_4 md:w-1/2">
+          <div className="flex flex-col h-full w-full lg:mt-0 justify-center px-6 lg:px-12">
+            <div className="mt-4 lg:flex w-full items-center gap-4 px-4 py-auto text-3xl ">
+              <div className="w-full lg:flex items-center space-x-4">
+              <div className="w-full flex flex-col items-center justify-center text-txt text-center">
                 Today's Topic:{" "}
-                <span className="max-w-full overflow-hidden whitespace-nowrap underline">
+                <span className="overflow-hidden whitespace-nowrap underline">
                   {topic}
                 </span>
               </div>
-              <div className="w-1/4 flex-wrap text-gray-500">
+              </div>
+              
+            </div>
+            <div className="w-full flex justify-center lg:justify-start gap-4">
+              <div
+                className="z-10 h-[25px] w-[25px] cursor-pointer self-center rounded-full p-2"
+                onClick={handleColorIconClick}
+                style={{ backgroundColor: color }}
+              >
+                {showPicker && (
+                  <ChromePicker
+                    color={color}
+                    onChange={(e: ColorResult) => setColor(e.hex)}
+                  />
+                )}
+              </div>
+
+              <button
+                type="button"
+                className="flex items-end my-4 rounded-lg border-2 border-black px-2 text-base text-black"
+                onClick={clear}
+              >
+                Clear
+              </button>
+              
+              <div className="grow"></div>
+              <div className="flex mt-auto hidden lg:block ml-auto text-gray-500 text-xl">
                 2023/12/09 {"(Sat.)"}
               </div>
-            </div>
-            <div className="mb-4 flex gap-4">
-              <div className="relative h-[400px] w-[1000px] items-center rounded-2xl border-4 border-bdr_2">
-                <div ref={elementRef} className="rounded-2xl bg-white">
+              </div>
+            <div className="mb-4 lg:flex gap-4">
+              <div 
+              className="relative lg:w-[55%] aspect-[5/3] rounded-2xl border-4 border-bdr_2"
+              >
+                <div ref={elementRef} className="flex justify-center h-full w-full rounded-2xl bg-white">
                   <canvas
                     ref={canvasRef}
                     onMouseDown={onMouseDown}
-                    className="h-full w-full rounded-2xl bg-white"
+                    className="h-full w-full rounded-2xl"
                   />
                 </div>
               </div>
-              <div className="flex flex w-1/3 flex-col gap-4">
-                <input
-                  type="text"
+              <div className="mt-2 lg:mb-0 flex flex-col lg:grow">
+                <p className="w-full mb-2 flex justify-center text-center lg:hidden w-5/6 text-md mt-2 ml-2 text-start text-gray-500">
+                  type something, do not exceed 50 words
+                </p>
+                <textarea
                   onChange={(e) => setDescription(e.target.value)}
-                  className="flex w-full grow rounded-2xl border-4 border-bdr_2 bg-brand p-2 text-xl"
+                  className="items-start h-full w-full p-4 rounded-2xl border-4 border-bdr_2 bg-brand p-2 text-lg resize-none"
                   placeholder="Type something..."
                 />
-                <p className="text-md mt-2 text-center text-gray-500">
-                  View others’ painting after you accomplish your mission.
+                <div className="flex justify-center">
+                <p className="hidden lg:block w-5/6 text-md mt-2 ml-2 text-start text-gray-500">
+                  type something to further deliver your thought, do not exceed 50 words
                 </p>
-              </div>
-            </div>
-            <div className="flex">
-              <div className="flex grow gap-10 pr-10">
                 <button
-                  type="button"
-                  className="rounded-md border border-black p-2"
-                  onClick={clear}
-                >
-                  Clear canvas
-                </button>
-                <div
-                  className="h-[50px] w-[50px] cursor-pointer self-center rounded-full border-2 border-black p-2"
-                  onClick={handleColorIconClick}
-                  style={{ backgroundColor: color }}
-                >
-                  {showPicker && (
-                    <ChromePicker
-                      color={color}
-                      onChange={(e: ColorResult) => setColor(e.hex)}
-                    />
-                  )}
-                </div>
-              </div>
-              <button
                 disabled={loading}
                 onClick={handleConfirmDialog}
-                className="rounded-2xl border-4 border-bdr bg-btn_2 px-4 py-2 text-center text-3xl text-txt"
-              >
-                POST
-              </button>
+                className="mb-10 lg:mb-4 flex lg-justify-end mt-2 rounded-2xl border-4 border-bdr bg-btn_2 px-4 py-2 text-xl text-txt"
+                >
+                  POST
+                </button>
+                </div>
+              </div>
             </div>
+            
           </div>
+          
         </main>
         <AlertDialog open={isFirstPost && welcomeDialog}>
           <AlertDialogContent>
