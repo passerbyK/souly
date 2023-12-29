@@ -19,7 +19,7 @@ async function Header() {
 
   if (!session) {
     return (
-      <div className="fixed top-0 z-40 grid h-1/6 w-full bg-header px-8 py-4 text-3xl font-bold text-description">
+      <div className="fixed top-0 z-40 grid h-1/6 w-full sm:px-8 bg-header px-8 py-4 text-3xl font-bold text-description">
         <div className="flex items-center gap-2">
           <Link href="/" className="mr-6 flex items-center text-5xl">
             <div className="h-20 w-20">
@@ -39,28 +39,28 @@ async function Header() {
           </Link>
           <div className="grow"></div>
           <Link
-            className="rounded-2xl p-2 px-4 transition-colors hover:bg-description/30"
+            className="hidden sm:block rounded-2xl p-2 px-4 transition-colors hover:bg-description/30"
             href={{
               pathname: `/introduction`,
             }}
           >
-            <div className="">About Us</div>
+            <div className="hidden sm:block">About Us</div>
           </Link>
           <Link
-            className="rounded-2xl border-4 border-bdr bg-btn_2 p-2 px-4 text-txt transition-colors hover:bg-btn_2/30"
+            className="hidden sm:block rounded-2xl border-4 border-bdr bg-btn_2 p-2 px-4 text-txt transition-colors hover:bg-btn_2/30"
             href={{
               pathname: `/auth/login`,
             }}
           >
-            <div className="">Sign In</div>
+            <div className="hidden sm:block">Sign In</div>
           </Link>
           <Link
-            className="rounded-2xl border-4 border-bdr bg-btn p-2 px-4 text-txt transition-colors hover:bg-btn/30"
+            className="hidden sm:block rounded-2xl border-4 border-bdr bg-btn p-2 px-4 text-txt transition-colors hover:bg-btn/30"
             href={{
               pathname: `/auth/signup`,
             }}
           >
-            <div className="">Sign Up</div>
+            <div className="hidden sm:block">Sign Up</div>
           </Link>
         </div>
       </div>

@@ -199,7 +199,7 @@ export default function Painting() {
     return (
       <div id="main-element" className="blur-lg overflow-y-auto">
         <main
-          className={`flex h-screen min-h-screen flex-col items-center bg-brand`}
+          className={`flex h-screen min-h-screen flex-col items-center bg-brand_2`}
         >
           <AlertDialog open={isPostDialog}>
             <AlertDialogContent>
@@ -238,7 +238,7 @@ export default function Painting() {
               <div className="w-full lg:flex items-center space-x-4">
               <div className="w-full flex flex-col items-center justify-center text-txt text-center">
                 Today's Topic:{" "}
-                <span className="overflow-hidden whitespace-nowrap underline">
+                <span className="mt-2 text-xl sm:text-2xl overflow-hidden whitespace-normal break-all underline">
                   {topic}
                 </span>
               </div>

@@ -32,26 +32,47 @@ export default function Introduction() {
   }, []);
 
   return (
-    <main className="flex min-h-screen flex-col items-center bg-brand">
+    <main className="flex min-h-screen flex-col items-center bg-brand_2">
       <div className="flex w-full flex-wrap items-center justify-between p-4 px-8 pt-8"></div>
       <div className="flex w-full flex-wrap items-center justify-between p-4 px-8 pt-8"></div>
       <div
         id="firstSection"
-        className="m-4 flex w-full flex-wrap items-center justify-center gap-20 p-8"
+        className="m-4 mt-16 flex w-full flex-wrap justify-center gap-20 p-8"
       >
-        <Image
-          src="/souly.svg"
-          alt="Souly Logo"
-          className="mb-4 w-full rounded-2xl border-4 border-bdr md:mb-0 md:mr-4 md:w-2/5"
-          width={25}
-          height={25}
-        />
-        <div className="mx-4 flex flex-col items-center gap-4 md:w-2/5">
+        <div className="order-2 mx-4 flex flex-col gap-4 md:order-1 md:w-[40%]">
+          <h1 className="text-center text-4xl font-bold text-description">
+            Embark on a Journey
+          </h1>
+          <h1 className="mb-6 text-center text-3xl font-bold text-description">
+            Daily Creations with Souly
+          </h1>
+          <p
+            className={`${pattaya.className} mb-6 text-center text-2xl text-txt`}
+          >
+            Embark on a creative odyssey with Souly, a platform transcending the
+            ordinary. Seamlessly create an account, dive into daily art prompts,
+            and celebrate your journey in a personal showcase. Connect
+            effortlessly with friends, fostering a community. A dynamic news
+            feed awaits, revealing daily prompts and friends' expressions. Our
+            vision extends beyond features, promising an exhilarating journey of
+            creativity. Seeking partners who share our passion, bringing this
+            dream to life. We welcome fresh 
+            perspectives for an enriching creative
+            voyage. Join us in crafting a space that inspires and celebrates
+            daily creativity.
+          </p>
+          <p
+            className={`${pattaya.className} mb-4 text-center text-5xl text-txt`}
+          >
+            To Create Your Soul
+          </p>
+        </div>
+        <div className="mx-4 flex flex-col gap-4 md:w-[40%]">
           <h1 className="text-center text-4xl font-bold text-description">
             Inspiration Unveiled
           </h1>
-          <h1 className="mb-6 text-center text-4xl font-bold text-description">
-            Souly - Where Creativity Blossoms
+          <h1 className="mb-6 text-center text-3xl font-bold text-description">
+            Where Creativity Blossoms
           </h1>
           <p
             className={`${pattaya.className} mb-6 text-center text-2xl text-txt`}
@@ -72,77 +93,7 @@ export default function Introduction() {
           </p>
         </div>
       </div>
-      <div
-        id="secondSection"
-        className="m-4 flex w-full flex-wrap items-center justify-center gap-20 p-8"
-      >
-        <div className="order-2 mx-4 flex flex-col items-center gap-4 md:order-1 md:w-2/5">
-          <h1 className="mb-6 text-center text-4xl font-bold leading-relaxed text-description">
-            Embark on a Journey of Daily Creations with Souly
-          </h1>
-          <p
-            className={`${pattaya.className} mb-6 text-center text-2xl text-txt`}
-          >
-            Embark on a creative odyssey with Souly, a platform transcending the
-            ordinary. Seamlessly create an account, dive into daily art prompts,
-            and celebrate your journey in a personal showcase. Connect
-            effortlessly with friends, fostering a community. A dynamic news
-            feed awaits, revealing daily prompts and friends' expressions. Our
-            vision extends beyond features, promising an exhilarating journey of
-            creativity. Seeking partners who share our passion, bringing this
-            dream to life. With a foundation in UI/UX design and web game
-            development, we welcome fresh perspectives for an enriching creative
-            voyage. Join us in crafting a space that inspires and celebrates
-            daily creativity.
-          </p>
-          <p
-            className={`${pattaya.className} mb-4 text-center text-5xl text-txt`}
-          >
-            To Create Your Soul
-          </p>
-        </div>
-        <Image
-          src="/souly.svg"
-          alt="Another Image"
-          className="animate-fade-left order-1 mb-4 w-full rounded-2xl border-4 border-bdr md:order-2 md:mb-0 md:ml-4 md:w-2/5"
-          width={25}
-          height={25}
-        />
-      </div>
-      <div
-        id="thirdSection"
-        className={`m-4 flex w-full flex-wrap items-center justify-center gap-20 p-8 ${
-          isVisible ? "animate__animated animate__fadeIn" : "invisible"
-        }`}
-      >
-        <Image
-          src="/souly.svg"
-          alt="Souly Logo"
-          className="mb-4 w-full rounded-2xl border-4 border-bdr md:mb-0 md:mr-4 md:w-2/5"
-          width={25}
-          height={25}
-        />
-        <div className="mx-4 flex flex-col items-center gap-4 md:w-2/5">
-          <h1 className="mb-6 text-center text-4xl font-bold text-description">
-            A Canvas of Dreams: Join Us in Crafting Souly
-          </h1>
-          <p
-            className={`${pattaya.className} mb-6 text-center text-2xl text-txt`}
-          >
-            In the realm of Souly, each stroke of creativity paints a picture of
-            dreams, hopes, and aspirations. This platform isn't merely about
-            daily drawings; it's a sanctuary where imagination flourishes and
-            connections bloom. Join us on this extraordinary journey, where
-            every creation is a step toward self-discovery and a shared
-            narrative of artistic expression.
-          </p>
-          <p
-            className={`${pattaya.className} mb-4 text-center text-5xl text-txt`}
-          >
-            Let Paint Your Dreams
-          </p>
-        </div>
-      </div>
+    
       <div
         id="fourthSection"
         className="m-4 flex w-full flex-wrap items-center justify-center gap-20 p-8"
