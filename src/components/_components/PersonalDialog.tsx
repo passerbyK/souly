@@ -28,20 +28,21 @@ async function PersonalDialog() {
       </DialogTrigger>
       <DialogContent className="min-h-[120px]">
         <div className="divide-y-2 divide-slate-400/25 text-2xl text-txt_8">
-          <div>
-            <form
-              action={async () => {
-                "use server";
-                redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/settings`);
-              }}
+          <form
+            action={async () => {
+              "use server";
+              redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/settings`);
+            }}
+          >
+            <button
+              type="submit"
+              className="mr-6 flex items-center py-1 hover:bg-yellow-700/20"
             >
-              <button type="submit" className="mr-6 flex items-center py-1">
-                Settings
-              </button>
-            </form>
-            {/* <p className="mr-4 flex items-center py-1">Sign Out</p> */}
-            <SignOutButton />
-          </div>
+              Settings
+            </button>
+          </form>
+          {/* <p className="mr-4 flex items-center py-1">Sign Out</p> */}
+          <SignOutButton />
         </div>
       </DialogContent>
     </Dialog>

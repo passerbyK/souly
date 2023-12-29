@@ -1,7 +1,5 @@
-//import SearchFriend from "./SearchFriend";
 import { redirect } from "next/navigation";
 
-import { Input } from "@/components/ui/input";
 import { auth } from "@/lib/auth";
 import { publicEnv } from "@/lib/env/public";
 
@@ -10,6 +8,14 @@ import Friend from "./Friend";
 import RequestDialog from "./RequestDialog";
 import { getAddedFriends } from "./action";
 
+// import SearchFriend from "./SearchFriend";
+
+// type PageProps = {
+//   searchParams: {
+//     search?: string;
+//   };
+// };
+
 async function FriendList() {
   const session = await auth();
   console.log(session?.user);
@@ -17,8 +23,9 @@ async function FriendList() {
     redirect(publicEnv.NEXT_PUBLIC_BASE_URL);
   }
   const userId = session.user.id;
+  // const search = searchParams?.search;
 
-  const friends = await getAddedFriends(userId);
+  // const friends = (search) ? await getAddedFriends_search(userId, search) : await getAddedFriends(userId);
   // const friends = [
   //   { id: "1", display_id: "ffdvnjgmorivgjoim", name: "vivi", topic: "sun" },
   //   {
@@ -60,17 +67,13 @@ async function FriendList() {
   //     topic: "sky",
   //   },
   // ];
+  const friends = await getAddedFriends(userId);
 
   return (
     <div className="flex h-full bg-brand_2">
-      <div className="relative m-4 flex flex-col overflow-y-scroll rounded-2xl bg-nav p-4">
+      <div className="relative m-4 flex w-full flex-col overflow-y-scroll rounded-2xl bg-nav p-4">
         <p className="p-2 text-4xl text-txt_7">Your friends</p>
-        {/* <SearchFriend />  */}
-        <Input
-          placeholder="search"
-          name="searchFriend"
-          className="rounded-full border-4 border-txt_7 text-xl text-txt_7"
-        />
+        {/* <SearchFriend /> */}
         <section className="flex w-full flex-col divide-y-4 divide-slate-400/25 overflow-y-scroll pb-12">
           {friends &&
             friends.map(async (friend) => (
