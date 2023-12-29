@@ -146,12 +146,12 @@ async function NotificationDialog() {
             Notifications
           </DialogTitle>
         </DialogHeader>
-        {likes == undefined ? (
-          <p className="flex justify-center text-2xl text-txt_9">
+        {likes == undefined || likes.length == 0 ? (
+          <p className="flex h-5/6 items-center justify-center text-2xl text-txt_9">
             no notification
           </p>
         ) : (
-          <div className="flex items-start divide-y-2 divide-slate-400/25 overflow-y-auto text-txt_9">
+          <div className="flex flex-col items-start divide-y-2 divide-slate-400/25 overflow-y-auto text-txt_9">
             {likes.map(async (like) => {
               const postDate = await getPost(like.postId);
               const userName = await getUser(like.userId);
