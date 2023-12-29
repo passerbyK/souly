@@ -19,7 +19,7 @@ function DiaryBig({
   likes,
   likeslist,
 }: postProps) {
-  const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thr", "Fri", "Sat"];
+  const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const formattedDate = `
     ${createdAt.getFullYear()}-
     ${(createdAt.getMonth() + 1).toString().padStart(2, "0")}-
@@ -36,8 +36,8 @@ function DiaryBig({
             <Image
               src={image}
               alt="Logo"
-              width={100}
-              height={100}
+              width={1000}
+              height={1000}
               className="h-[90%] w-[70%] rounded-2xl"
             />
           </div>

@@ -1,4 +1,4 @@
-import { FaHeart } from "react-icons/fa";
+import { TfiMenuAlt } from "react-icons/tfi";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -125,8 +125,8 @@ async function Header() {
         <div className="lg:hidden">
           <Dialog>
             <DialogTrigger asChild>
-              <Button className="bg-null items-center rounded-full px-3 py-1 text-4xl text-bdr_3 hover:bg-btn_2">
-                <FaHeart className="text-3xl sm:text-4xl" />
+              <Button className="bg-null items-center rounded-full px-3 py-2 text-4xl text-bdr_3 hover:bg-btn_2">
+                <TfiMenuAlt className="pt-0.5 text-4xl sm:text-[40px]" />
               </Button>
             </DialogTrigger>
             <DialogContent>

@@ -19,7 +19,7 @@ export default function SignOutButton() {
   return (
     <button
       data-testid="sign-out-button"
-      className="mr-6 flex items-center bg-brand_4 py-1 text-2xl text-txt_8 hover:bg-yellow-700/20"
+      className="flex items-center bg-brand_4 p-1 text-2xl text-txt_8 hover:bg-yellow-700/20"
       onClick={SignOut}
     >
       Sign Out

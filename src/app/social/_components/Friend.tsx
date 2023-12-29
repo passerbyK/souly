@@ -1,4 +1,5 @@
 import { AiFillDelete } from "react-icons/ai";
+import { IoPersonCircleSharp } from "react-icons/io5";
 
 import { revalidatePath } from "next/cache";
 import Link from "next/link";
@@ -25,7 +26,8 @@ export default async function Friend({ displayId, name }: FriendProps) {
   return (
     <div className="group flex w-full cursor-pointer items-center justify-between hover:bg-yellow-100">
       <Link className="grow px-3 py-1" href={`/social/${displayId}`}>
-        <div className="items-center gap-2">
+        <div className="flex items-center gap-2">
+          <IoPersonCircleSharp size={28} />
           <p className="flex gap-2 text-2xl font-semibold text-black">{name}</p>
           {/*  <p className="flex gap-2 whitespace-normal break-words text-xl text-black">
             {topic} 

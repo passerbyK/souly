@@ -45,7 +45,7 @@ async function PersonalPage({ params: { diary } }: PostPageProps) {
         description={post.description}
         likes={likes.length ?? "0"}
         likeslist={likeslist}
-        image="/logo.png"
+        image={post.image}
       />
     </>
   );
