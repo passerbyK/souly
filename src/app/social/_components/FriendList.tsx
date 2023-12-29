@@ -71,10 +71,10 @@ async function FriendList() {
 
   return (
     <div className="flex h-full bg-brand_2">
-      <div className="relative m-4 flex w-full flex-col overflow-y-scroll rounded-2xl bg-nav p-4">
+      <div className="relative m-4 flex w-full flex-col overflow-y-auto rounded-2xl bg-nav p-4">
         <p className="p-2 text-4xl text-txt_7">Your friends</p>
         {/* <SearchFriend /> */}
-        <section className="flex w-full flex-col divide-y-4 divide-slate-400/25 overflow-y-scroll pb-12">
+        <section className="flex w-full flex-col divide-y-4 divide-slate-400/25 overflow-y-auto pb-12">
           {friends &&
             friends.map(async (friend) => (
               <Friend
