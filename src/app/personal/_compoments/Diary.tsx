@@ -12,7 +12,7 @@ type postProps = {
 };
 
 function Diary({ id, topic, image, createdAt, likes }: postProps) {
-  const daysOfWeek = ["日", "一", "二", "三", "四", "五", "六"];
+  const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thr", "Fri", "Sat"];
   const formattedDate = `
     ${createdAt.getFullYear()}-
     ${(createdAt.getMonth() + 1).toString().padStart(2, "0")}-
@@ -21,12 +21,12 @@ function Diary({ id, topic, image, createdAt, likes }: postProps) {
   return (
     <Link
       key={id}
-      className="aspect-w-5/3 w-[33%] rounded-2xl p-2 transition-colors hover:bg-white/50"
+      className="rounded-2xl p-2 transition-colors hover:bg-white/50"
       href={{
         pathname: `personal/${String(id)}`,
       }}
     >
-      <div className="h-full rounded-2xl border-2 border-solid border-[#7C5A16] bg-white">
+      <div className="relative aspect-[4/3] rounded-2xl border-2 border-solid border-[#7C5A16] bg-white">
         <div className="flex h-4/5 items-center justify-center">
           <Image
             src={image}
@@ -37,18 +37,12 @@ function Diary({ id, topic, image, createdAt, likes }: postProps) {
           />
         </div>
         <div className="flex h-1/5 items-center justify-center gap-4 rounded-b-2xl bg-[#F2D7A3] text-base font-bold">
-          <div>{formattedDate}</div>
+          <div className="ml-4">{formattedDate}</div>
           <div className="flex items-center">
             <div>
               <FaHeart />
             </div>
-            <div className="ml-1">{likes ?? "0"}</div>
-          </div>
-          <div className="flex items-center">
-            <div>
-              <FaComment />
-            </div>
-            <div className="ml-1">2</div>
+            <div className="ml-1 mr-4">{likes ?? "0"}</div>
           </div>
         </div>
       </div>
