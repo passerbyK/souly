@@ -74,11 +74,15 @@ async function RequestDialog() {
     <Dialog>
       <DialogTrigger asChild>
         <div className="relative">
-          <Button className="items-center w-full rounded-full border-4 border-bdr_3 bg-btn_2 px-3 py-1 text-xl text-bdr_3 hover:bg-description">
+          <Button className="w-full items-center rounded-full border-4 border-bdr_3 bg-btn_2 px-3 py-1 text-xl text-bdr_3 hover:bg-description">
             Request
           </Button>
-          <div 
-          className={(request_friends!=undefined) ? "visible absolute top-0 right-0 translate-x-1/4 -translate-y-1/4 text-xl rounded-full bg-txt_7 text-white flex items-center justify-center w-6 h-6" : "invisible"}
+          <div
+            className={
+              request_friends != undefined
+                ? "visible absolute right-0 top-0 flex h-6 w-6 -translate-y-1/4 translate-x-1/4 items-center justify-center rounded-full bg-txt_7 text-xl text-white"
+                : "invisible"
+            }
           >
             {request_friends?.length}
           </div>
