@@ -1,7 +1,15 @@
 import { redirect } from "next/navigation";
 
-import { eq, desc } from "drizzle-orm";
+import { eq, desc, gte, lte, and } from "drizzle-orm";
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { db } from "@/db";
 import { postsTable, subjectsTable, usersTable } from "@/db/schema";
 import { auth } from "@/lib/auth";
@@ -49,8 +57,82 @@ async function PersonalLayout({ children }: Props) {
     .execute();
   const successDays = posts.map((post) => new Date(post.createdAt));
 
+  const today = new Date();
+  const startTime = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate(),
+    0,
+    0,
+    0,
+    0,
+  );
+  const endTime = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate(),
+    23,
+    59,
+    59,
+    999,
+  );
+
+  const todayPost = await db
+    .select({
+      createdAt: postsTable.createdAt,
+    })
+    .from(postsTable)
+    .orderBy(desc(postsTable.createdAt))
+    .where(
+      and(
+        eq(postsTable.userId, id ?? " "),
+        gte(postsTable.createdAt, startTime),
+        lte(postsTable.createdAt, endTime),
+      ),
+    )
+    .execute();
+
+  if (!subject) {
+    redirect("/preference");
+  }
+
+  console.log(posts);
   return (
     <main className="h-screen min-h-screen w-full">
+      {posts.length === 0 && (
+        <AlertDialog defaultOpen>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle className="text-2xl">
+                You have't painted yet !
+              </AlertDialogTitle>
+              <AlertDialogTitle className="text-2xl">
+                We're waiting for you !
+              </AlertDialogTitle>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogAction>Let's paint !</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      )}
+      {posts.length !== 0 && todayPost.length === 0 && (
+        <AlertDialog defaultOpen>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle className="text-2xl">
+                You have't painted today !
+              </AlertDialogTitle>
+              <AlertDialogTitle className="text-2xl">
+                Let's paint !
+              </AlertDialogTitle>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogAction>Ok !</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      )}
       <div className="h-1/6 w-full"></div>
       <div className="relative h-5/6 w-full bg-brand_2 lg:flex">
         <div className=" flex w-full justify-center overflow-hidden p-4 text-xl font-bold lg:hidden lg:items-center lg:rounded-2xl">

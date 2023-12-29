@@ -1,10 +1,35 @@
+import { redirect } from "next/navigation";
+
+import { eq } from "drizzle-orm";
+
+import { db } from "@/db";
+import { subjectsTable } from "@/db/schema";
+import { auth } from "@/lib/auth";
+import { publicEnv } from "@/lib/env/public";
+
 import FriendList from "./_components/FriendList";
 
 type Props = {
   children: React.ReactNode;
 };
 
-function Social({ children }: Props) {
+async function Social({ children }: Props) {
+  const session = await auth();
+  if (!session) {
+    redirect(publicEnv.NEXT_PUBLIC_BASE_URL);
+  }
+
+  const id = session.user?.id;
+
+  const [subject] = await db
+    .select({ subject: subjectsTable.subject })
+    .from(subjectsTable)
+    .where(eq(subjectsTable.userId, id ?? " "));
+
+  if (!subject) {
+    redirect("/preference");
+  }
+
   return (
     // overflow-hidden for parent to hide scrollbar
     <main className="flex h-screen w-full flex-col overflow-hidden">
