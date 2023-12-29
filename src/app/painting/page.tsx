@@ -3,7 +3,6 @@
 import { useRef, useEffect, useState } from "react";
 import { ChromePicker } from "react-color";
 import type { ColorResult } from "react-color";
-
 import { BsEraser } from "react-icons/bs";
 
 // import { toPng } from "html-to-image";
@@ -260,7 +259,7 @@ export default function Painting() {
                 )}
               </div>
 
-              <BsEraser 
+              <BsEraser
                 className="z-10 h-[30px] w-[30px] cursor-pointer self-center rounded-full p-1 hover:bg-white"
                 onClick={() => setColor("#fff")}
               />
@@ -308,7 +307,7 @@ export default function Painting() {
                   <button
                     disabled={loading}
                     onClick={handleConfirmDialog}
-                    className="lg-justify-end mb-10 mt-2 flex rounded-2xl border-4 border-bdr bg-btn_2 px-4 py-2 text-xl text-txt lg:mb-4 hover:bg-description/30"
+                    className="lg-justify-end mb-10 mt-2 flex rounded-2xl border-4 border-bdr bg-btn_2 px-4 py-2 text-xl text-txt hover:bg-description/30 lg:mb-4"
                   >
                     POST
                   </button>
