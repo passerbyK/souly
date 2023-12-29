@@ -151,7 +151,7 @@ async function NotificationDialog() {
             no notification
           </p>
         ) : (
-          <div className="flex items-start divide-y-2 divide-slate-400/25 overflow-y-scroll text-txt_9">
+          <div className="flex items-start divide-y-2 divide-slate-400/25 overflow-y-auto text-txt_9">
             {likes.map(async (like) => {
               const postDate = await getPost(like.postId);
               const userName = await getUser(like.userId);
