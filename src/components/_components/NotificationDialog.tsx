@@ -128,7 +128,7 @@ async function NotificationDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="cursor-pointer p-2 px-4 text-3xl text-description transition-colors hover:rounded-full hover:bg-description/30">
+        <Button className="cursor-pointer p-2 px-4 text-4xl text-description transition-colors hover:rounded-full hover:bg-description/30">
           <IoNotifications />
         </Button>
       </DialogTrigger>
@@ -138,7 +138,7 @@ async function NotificationDialog() {
             Notifications
           </DialogTitle>
         </DialogHeader>
-        <div className="divide-y-2 divide-slate-400/25 overflow-y-scroll text-txt_9">
+        <div className="divide-y-2 divide-slate-400/25 overflow-y-auto text-txt_9">
           {likes.map(async (like) => {
             return (
               <form

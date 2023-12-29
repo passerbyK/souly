@@ -28,7 +28,7 @@ export default function RootLayout({
       <body className={`${poetsenOne.className}`}>
         <SessionProvider>
           <Header />
-          {children}
+          <div className="h-full">{children}</div>
         </SessionProvider>
       </body>
     </html>

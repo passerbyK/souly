@@ -50,7 +50,7 @@ async function PersonalPage() {
           id={post.displayId}
           createdAt={new Date(post.createdAt)}
           topic={post.topic}
-          image="/logo.png"
+          image={"/logo.png"}
           likes={post.likes}
         />
       ))}
