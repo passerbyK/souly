@@ -23,15 +23,11 @@ function SignUp() {
     e.preventDefault();
 
     try {
-      const result = await signIn("credentials", {
+      await signIn("credentials", {
         email,
         password,
         callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/personal`,
       });
-
-      if (!result || result.error) {
-        alert("Invalid email or password. Please try again.");
-      }
     } catch (e) {
       console.log(e);
       router.push("/auth/login");
