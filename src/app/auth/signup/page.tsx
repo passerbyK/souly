@@ -21,16 +21,25 @@ function SignUp() {
 
   const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
-      signIn("credentials", {
+      if (password !== confirmPassword) {
+        alert("Passwords do not match. Please try again.");
+        return;
+      }
+
+      const result = await signIn("credentials", {
         username,
         email,
         password,
         callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/preference`,
       });
+
+      if (!result || result.error) {
+        alert("Invalid email or password. Please try again.");
+      }
     } catch (e) {
       console.log(e);
       router.push("/auth/signup");
