@@ -2,11 +2,10 @@
 
 import { useState } from "react";
 import type { EventHandler, MouseEvent } from "react";
+import { GoHeartFill } from "react-icons/go";
 
 import useLike from "@/hooks/useLike";
 import { cn } from "@/lib/utils/shadcn";
-
-import { GoHeartFill } from "react-icons/go";
 
 type LikeButtonProps = {
   initialLikes: number;
@@ -21,8 +20,8 @@ export default function LikeButton({
   postId,
   userId,
 }: LikeButtonProps) {
-  const [ liked, setLiked ] = useState(initialLiked);
-  const [ likesCount, setLikesCount ] = useState(initialLikes);
+  const [liked, setLiked] = useState(initialLiked);
+  const [likesCount, setLikesCount] = useState(initialLikes);
   const { likePost, unlikePost, loading } = useLike();
 
   const handleClick: EventHandler<MouseEvent> = async () => {
@@ -45,9 +44,7 @@ export default function LikeButton({
 
   return (
     <button
-      className={cn(
-        "flex w-16 items-center gap-4",
-      )}
+      className={cn("flex w-16 items-center gap-4")}
       onClick={handleClick}
       disabled={loading}
     >

@@ -1,8 +1,10 @@
 "use client";
 
-import { Input } from "@/components/ui/input";
-import { useRouter } from "next/navigation";
 import { useRef } from "react";
+
+import { useRouter } from "next/navigation";
+
+import { Input } from "@/components/ui/input";
 
 export default function Search() {
   // const session = await auth();
@@ -13,16 +15,16 @@ export default function Search() {
 
   const textareaRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
-  
+
   const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       e.preventDefault(); // prevent line break
       const content = textareaRef.current?.value;
-      if(!content) return;
+      if (!content) return;
       router.push(`/social/?search=${content}`);
       textareaRef.current.value = "";
     }
-  }
+  };
 
   return (
     <Input

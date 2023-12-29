@@ -15,8 +15,7 @@ async function DocsPage() {
   const userId = session.user.id;
 
   const friends = await getAddedFriends(userId);
-  const newestFriendId =
-    friends == null ? null : friends[0].userId;
+  const newestFriendId = friends == null ? null : friends[0].userId;
   if (newestFriendId) {
     redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/social/${newestFriendId}`);
   }

@@ -1,7 +1,13 @@
 import { and, eq, ne, inArray, sql, desc } from "drizzle-orm";
 
 import { db } from "@/db";
-import { likesTable, postsTable, relationsTable, usersTable, usersToRelationsTable } from "@/db/schema";
+import {
+  likesTable,
+  postsTable,
+  relationsTable,
+  usersTable,
+  usersToRelationsTable,
+} from "@/db/schema";
 
 export const requestFriend = async (userId: string, otheruserEmail: string) => {
   "use server";
@@ -269,8 +275,8 @@ export const getFriendPost = async (userId: string) => {
   "use server";
 
   const post = await db.query.postsTable.findFirst({
-    where: eq(postsTable.userId, userId)
-  })
+    where: eq(postsTable.userId, userId),
+  });
 
   return post;
 };
@@ -296,7 +302,7 @@ export const getLiked = async (userId: string, postId: string) => {
     .where(and(eq(likesTable.postId, postId), eq(likesTable.userId, userId)))
     .execute();
 
-  return (liked.length==0)?false:true;
+  return liked.length == 0 ? false : true;
 };
 
 export const getNotifications = async (userId: string) => {
@@ -307,16 +313,20 @@ export const getNotifications = async (userId: string) => {
     .from(postsTable)
     .where(eq(postsTable.userId, userId))
     .execute();
-  
-  if (posts == null) { return; }
+
+  if (posts == null) {
+    return;
+  }
   const postsId = posts.map((post) => post.id);
-  if (postsId.length == 0) { return; }
+  if (postsId.length == 0) {
+    return;
+  }
 
   const likes = await db
-    .select({ 
+    .select({
       id: likesTable.id,
       postId: likesTable.postId,
-      userId: likesTable.userId
+      userId: likesTable.userId,
     })
     .from(likesTable)
     .where(inArray(likesTable.postId, postsId))
@@ -334,16 +344,16 @@ export const getPost = async (postId: string) => {
     .from(postsTable)
     .where(eq(postsTable.displayId, postId))
     .execute();
-  
-  if(post) {
-    const Date = post[0].date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric',
-      weekday: 'short',
+
+  if (post) {
+    const Date = post[0].date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "numeric",
+      day: "numeric",
+      weekday: "short",
     });
-    const [weekday, date] = Date.split(', ');
-    const [month, day, year] = date.split('/');
+    const [weekday, date] = Date.split(", ");
+    const [month, day, year] = date.split("/");
     const outputDate = `${year}/${month}/${day}(${weekday})`;
 
     return outputDate;

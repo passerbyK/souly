@@ -1,9 +1,12 @@
 import { IoNotifications } from "react-icons/io5";
 
-import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import { publicEnv } from "@/lib/env/public";
 
+import {
+  getNotifications,
+  getPost,
+  getUser,
+} from "@/app/social/_components/action";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,8 +15,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/up_dialog";
-
-import { getNotifications, getPost, getUser } from "@/app/social/_components/action";
+import { auth } from "@/lib/auth";
+import { publicEnv } from "@/lib/env/public";
 
 async function NotificationDialog() {
   const session = await auth();
@@ -144,7 +147,7 @@ async function NotificationDialog() {
           </DialogTitle>
         </DialogHeader>
         <div className="divide-y-2 divide-slate-400/25 overflow-y-scroll text-txt_9">
-        {(likes == undefined) ? (
+          {likes == undefined ? (
             <p className="flex justify-center text-2xl">no notification</p>
           ) : (
             likes.map(async (like) => {
@@ -156,15 +159,18 @@ async function NotificationDialog() {
                   className="mr-6 flex items-start py-1 text-xl hover:bg-yellow-700/20"
                   action={async () => {
                     "use server";
-                    redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/personal/${like.postId}`);
+                    redirect(
+                      `${publicEnv.NEXT_PUBLIC_BASE_URL}/personal/${like.postId}`,
+                    );
                   }}
                 >
-                  <button type="submit">{userName} likes your painting on {postDate}</button>
+                  <button type="submit">
+                    {userName} likes your painting on {postDate}
+                  </button>
                 </form>
               );
             })
-          )
-        }
+          )}
         </div>
       </DialogContent>
     </Dialog>

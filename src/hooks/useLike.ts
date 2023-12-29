@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function useLike() {
-  const [ loading, setLoading ] = useState(false);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const likePost = async ({

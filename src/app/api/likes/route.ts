@@ -59,12 +59,7 @@ export async function DELETE(request: NextRequest) {
   try {
     await db
       .delete(likesTable)
-      .where(
-        and(
-          eq(likesTable.postId, postId),
-          eq(likesTable.userId, userId),
-        ),
-      )
+      .where(and(eq(likesTable.postId, postId), eq(likesTable.userId, userId)))
       .execute();
   } catch (error) {
     return NextResponse.json(
