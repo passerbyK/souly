@@ -42,14 +42,14 @@ function SignUp() {
       <Card className="w-4/5 border-4 border-bdr bg-brand md:w-[600px] lg:w-[800px]">
         <CardHeader>
           <CardTitle className="flex items-center justify-between text-4xl">
-            <Link href="/" className="mr-6 flex items-center">
+            <Link href="/" className="mr-4 flex items-center">
               <div className="h-20 w-20">
                 <Image
                   src="/Logo_new.png"
                   alt="Souly Logo"
                   className="mr-2 w-full"
-                  width={20}
-                  height={20}
+                  width={100}
+                  height={100}
                 />
               </div>
             </Link>
@@ -62,8 +62,8 @@ function SignUp() {
               <p className="text-txt_2">Y</p>
               <p className="ml-2 text-description">!</p>
             </div>
-            <div className="flex-col items-center justify-center text-2xl md:hidden">
-              <div>
+            <div className="flex-col items-center justify-center text-xl md:hidden">
+              <div className="flex text-center">
                 <p className="mr-2 text-description">Welcome to</p>
               </div>
               <div className="flex items-center justify-center">
@@ -121,52 +121,6 @@ function SignUp() {
               Sign Up
             </Button>
           </form>
-          <div className="flex flex-wrap justify-center gap-2">
-            <Button
-              onClick={async () => {
-                try {
-                  await signIn("github", {
-                    callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/personal`,
-                  });
-                } catch (e) {
-                  console.log(e);
-                  router.push("/auth/signup");
-                }
-              }}
-              className="flex w-full rounded-2xl border-4 border-bdr bg-btn text-center text-xl text-txt"
-              variant={"outline"}
-            >
-              <Image
-                src="/github.png"
-                alt="github icon"
-                width={20}
-                height={20}
-              />
-              <span className="grow text-xl">Sign Up with Github</span>
-            </Button>
-            <Button
-              onClick={async () => {
-                try {
-                  await signIn("github", {
-                    callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/personal`,
-                  });
-                } catch (e) {
-                  console.log(e);
-                  router.push("/auth/signup");
-                }
-              }}
-              className="flex w-full rounded-2xl border-4 border-bdr bg-btn text-center text-xl text-txt"
-              variant={"outline"}
-            >
-              <Image
-                src="/github.png"
-                alt="github icon"
-                width={20}
-                height={20}
-              />
-              <span className="grow text-xl">Sign Up with Github</span>
-            </Button>
-          </div>
         </CardContent>
       </Card>
     </div>
