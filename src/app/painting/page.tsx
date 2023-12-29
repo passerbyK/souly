@@ -197,9 +197,9 @@ export default function Painting() {
     router.push("/auth/login");
   } else {
     return (
-      <div id="main-element" className="blur-lg">
+      <div id="main-element" className="overflow-y-auto blur-lg">
         <main
-          className={`flex h-screen min-h-screen flex-col items-center bg-brand`}
+          className={`flex h-screen min-h-screen flex-col items-center bg-brand_2`}
         >
           <AlertDialog open={isPostDialog}>
             <AlertDialogContent>
@@ -233,69 +233,80 @@ export default function Painting() {
             </AlertDialogContent>
           </AlertDialog>
           <div className="h-1/6 w-full"></div>
-          <div className="h-full w-full flex-col items-center justify-center bg-brand_2 px-4 md:px-12">
-            <div className="mt-4 flex w-full items-center gap-4 px-4 text-4xl ">
-              <div className="my-4 w-3/4 grow flex-wrap text-center text-txt_4 md:w-1/2">
-                Today's Topic:{" "}
-                <span className="max-w-full overflow-hidden whitespace-nowrap underline">
-                  {topic}
-                </span>
+          <div className="flex h-full w-full flex-col justify-center px-6 lg:mt-0 lg:px-12">
+            <div className="py-auto mt-4 w-full items-center gap-4 px-4 text-3xl lg:flex ">
+              <div className="w-full items-center space-x-4 lg:flex">
+                <div className="flex w-full flex-col items-center justify-center text-center text-txt">
+                  Today's Topic:{" "}
+                  <span className="mt-2 overflow-hidden whitespace-normal break-all text-xl underline sm:text-2xl">
+                    {topic}
+                  </span>
+                </div>
               </div>
-              <div className="w-1/4 flex-wrap text-gray-500">
+            </div>
+            <div className="flex w-full justify-center gap-4 lg:justify-start">
+              <div
+                className="z-10 h-[25px] w-[25px] cursor-pointer self-center rounded-full p-2"
+                onClick={handleColorIconClick}
+                style={{ backgroundColor: color }}
+              >
+                {showPicker && (
+                  <ChromePicker
+                    color={color}
+                    onChange={(e: ColorResult) => setColor(e.hex)}
+                  />
+                )}
+              </div>
+
+              <button
+                type="button"
+                className="my-4 flex items-end rounded-lg border-2 border-black px-2 text-base text-black"
+                onClick={clear}
+              >
+                Clear
+              </button>
+
+              <div className="grow"></div>
+              <div className="ml-auto mt-auto flex hidden text-xl text-gray-500 lg:block">
                 2023/12/09 {"(Sat.)"}
               </div>
             </div>
-            <div className="mb-4 flex gap-4">
-              <div className="relative h-[400px] w-[1000px] items-center rounded-2xl border-4 border-bdr_2">
-                <div ref={elementRef} className="rounded-2xl bg-white">
+            <div className="mb-4 gap-4 lg:flex">
+              <div className="relative aspect-[5/3] rounded-2xl border-4 border-bdr_2 lg:w-[55%]">
+                <div
+                  ref={elementRef}
+                  className="flex h-full w-full justify-center rounded-2xl bg-white"
+                >
                   <canvas
                     ref={canvasRef}
                     onMouseDown={onMouseDown}
-                    className="h-full w-full rounded-2xl bg-white"
+                    className="h-full w-full rounded-2xl"
                   />
                 </div>
               </div>
-              <div className="flex flex w-1/3 flex-col gap-4">
-                <input
-                  type="text"
+              <div className="mt-2 flex flex-col lg:mb-0 lg:grow">
+                <p className="text-md mb-2 ml-2 mt-2 flex w-5/6 w-full justify-center text-center text-start text-gray-500 lg:hidden">
+                  type something, do not exceed 50 words
+                </p>
+                <textarea
                   onChange={(e) => setDescription(e.target.value)}
-                  className="flex w-full grow rounded-2xl border-4 border-bdr_2 bg-brand p-2 text-xl"
+                  className="h-full w-full resize-none items-start rounded-2xl border-4 border-bdr_2 bg-brand p-2 p-4 text-lg"
                   placeholder="Type something..."
                 />
-                <p className="text-md mt-2 text-center text-gray-500">
-                  View others’ painting after you accomplish your mission.
-                </p>
-              </div>
-            </div>
-            <div className="flex">
-              <div className="flex grow gap-10 pr-10">
-                <button
-                  type="button"
-                  className="rounded-md border border-black p-2"
-                  onClick={clear}
-                >
-                  Clear canvas
-                </button>
-                <div
-                  className="h-[50px] w-[50px] cursor-pointer self-center rounded-full border-2 border-black p-2"
-                  onClick={handleColorIconClick}
-                  style={{ backgroundColor: color }}
-                >
-                  {showPicker && (
-                    <ChromePicker
-                      color={color}
-                      onChange={(e: ColorResult) => setColor(e.hex)}
-                    />
-                  )}
+                <div className="flex justify-center">
+                  <p className="text-md ml-2 mt-2 hidden w-5/6 text-start text-gray-500 lg:block">
+                    type something to further deliver your thought, do not
+                    exceed 50 words
+                  </p>
+                  <button
+                    disabled={loading}
+                    onClick={handleConfirmDialog}
+                    className="lg-justify-end mb-10 mt-2 flex rounded-2xl border-4 border-bdr bg-btn_2 px-4 py-2 text-xl text-txt lg:mb-4"
+                  >
+                    POST
+                  </button>
                 </div>
               </div>
-              <button
-                disabled={loading}
-                onClick={handleConfirmDialog}
-                className="rounded-2xl border-4 border-bdr bg-btn_2 px-4 py-2 text-center text-3xl text-txt"
-              >
-                POST
-              </button>
             </div>
           </div>
         </main>

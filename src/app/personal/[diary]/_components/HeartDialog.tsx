@@ -23,7 +23,7 @@ async function HeartDialog({ likeslist }: HeartProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="bg-null items-center rounded-full px-3 py-1 text-3xl text-bdr_3 hover:bg-btn_2">
+        <Button className="bg-null items-center rounded-full px-3 py-1 text-base text-bdr_3 hover:bg-btn_2 md:text-2xl lg:text-3xl">
           <FaHeart />
         </Button>
       </DialogTrigger>

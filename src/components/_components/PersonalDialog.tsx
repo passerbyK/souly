@@ -26,7 +26,7 @@ async function PersonalDialog() {
           <IoPersonCircleSharp />
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="min-h-[120px]">
         <div className="divide-y-2 divide-slate-400/25 text-2xl text-txt_8">
           <form
             action={async () => {

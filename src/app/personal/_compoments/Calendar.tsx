@@ -31,14 +31,12 @@ function Calendar({ startDay, endDay, successDays }: CalendarProps) {
   });
 
   const today = new Date();
-  today.setUTCHours(0, 0, 0, 0);
   const failsDays = [];
   for (
     let currentDay = new Date(startDay);
     currentDay <= endDay;
     currentDay.setDate(currentDay.getDate() + 1)
   ) {
-    console.log(currentDay);
     const isInSuccessDays = successDay.some(
       (successDay) => successDay.getDate() === currentDay.getDate(),
     );
@@ -52,14 +50,11 @@ function Calendar({ startDay, endDay, successDays }: CalendarProps) {
       <style>
         {`
           .rdp {
-            --rdp-cell-size: 40px;
+            --rdp-cell-size: 20px;
           }
           .rdp-day {
             margin: 3px;
             margin-top: 6px;
-          }
-          .rdp-day span {
-            font-size: 20px; /* Adjust the font size as needed */
           }
 
         `}
