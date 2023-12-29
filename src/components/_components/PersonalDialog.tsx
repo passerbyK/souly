@@ -26,8 +26,9 @@ async function PersonalDialog() {
           <IoPersonCircleSharp />
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="min-h-[120px]">
         <div className="divide-y-2 divide-slate-400/25 text-2xl text-txt_8">
+          <div>
           <form
             action={async () => {
               "use server";
@@ -40,6 +41,7 @@ async function PersonalDialog() {
           </form>
           {/* <p className="mr-4 flex items-center py-1">Sign Out</p> */}
           <SignOutButton />
+          </div>
         </div>
       </DialogContent>
     </Dialog>
