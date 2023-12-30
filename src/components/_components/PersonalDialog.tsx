@@ -43,6 +43,17 @@ async function PersonalDialog() {
           </form>
           {/* <p className="mr-4 flex items-center py-1">Sign Out</p> */}
           <SignOutButton />
+          <form
+            action="https://docs.google.com/forms/d/e/1FAIpQLSfurYvxAARoDAkmLUb77NwWdfJW63O5-Vzukr7vNwMpvUlQuw/viewform" 
+            target="_blank"
+          >
+            <button
+              type="submit"
+              className="flex items-center p-1 hover:bg-yellow-700/20"
+            >
+              FeedBack
+            </button>
+          </form>
         </div>
       </DialogContent>
     </Dialog>

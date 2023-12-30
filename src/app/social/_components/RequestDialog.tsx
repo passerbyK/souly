@@ -27,49 +27,6 @@ async function RequestDialog() {
 
   const request_friends = await getRequestedUser(userId);
 
-  // const request_friends = [
-  //   { id: "4", display_id: "svrkinhlcgmoidrngkdh", name: "aaa", topic: "sun" },
-  //   {
-  //     id: "5",
-  //     display_id: "vgsjclimjeihmgshmrgi",
-  //     name: "bbb",
-  //     topic: "flower",
-  //   },
-  //   { id: "6", display_id: "nchmunhmgkisnsxmiafl", name: "ccc", topic: "sky" },
-  //   { id: "7", display_id: "ckngjhmsxiuhmghmigmg", name: "ddd", topic: "sun" },
-  //   {
-  //     id: "8",
-  //     display_id: "cdnhnkunhcgmsurvsiem",
-  //     name: "eee",
-  //     topic: "flower",
-  //   },
-  //   { id: "9", display_id: "cnxsuchminmghkikiedr", name: "fff", topic: "sky" },
-  //   { id: "10", display_id: "fhgtubgvcrexthybjjtv", name: "ggg", topic: "sun" },
-  //   {
-  //     id: "11",
-  //     display_id: "gcrgyjvvrybjnukikbyv",
-  //     name: "hhh",
-  //     topic: "flower",
-  //   },
-  //   { id: "12", display_id: "bgjvmfhcthnbhjknnvhh", name: "iii", topic: "sky" },
-  //   { id: "13", display_id: "bvthbyjynkmuibvctfvv", name: "jjj", topic: "sun" },
-  //   {
-  //     id: "14",
-  //     display_id: "bjvryjbvcdrtvygugbvv",
-  //     name: "kkk",
-  //     topic: "flower",
-  //   },
-  //   { id: "15", display_id: "bugkjtyffftrgjyjhbbj", name: "lll", topic: "sky" },
-  //   { id: "16", display_id: "uji8uigyftyfdefrygtj", name: "mmm", topic: "sun" },
-  //   {
-  //     id: "17",
-  //     display_id: "kikoujihgytgyfgrftde",
-  //     name: "nnn",
-  //     topic: "flower",
-  //   },
-  //   { id: "18", display_id: "vhtburvdrtgjhujujhrf", name: "ooo", topic: "sky" },
-  // ];
-
   return (
     <Dialog>
       <DialogTrigger asChild>
