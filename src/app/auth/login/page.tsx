@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { publicEnv } from "@/lib/env/public";
 
-function SignUp() {
+function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
@@ -112,4 +112,4 @@ function SignUp() {
   );
 }
 
-export default SignUp;
+export default Login;
