@@ -54,6 +54,9 @@ export const useDraw = (
 
     const touchHandler = (e: TouchEvent) => {
       if (!touchDown) return;
+
+      e.preventDefault();
+
       const touch = e.touches[0];
       const currentPoint = computePointInCanvas(touch);
 
