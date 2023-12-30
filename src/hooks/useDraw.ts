@@ -6,11 +6,13 @@ export const useDraw = (
   onDraw: ({ ctx, currentPoint, prevPoint }: Draw) => void,
 ) => {
   const [mouseDown, setMouseDown] = useState(false);
+  const [touchDown, setTouchDown] = useState(false);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const prevPoint = useRef<null | Point>(null);
 
   const onMouseDown = () => setMouseDown(true);
+  const onTouchStart = () => setTouchDown(true);
 
   const clear = () => {
     const canvas = canvasRef.current;
@@ -34,7 +36,7 @@ export const useDraw = (
       prevPoint.current = currentPoint;
     };
 
-    const computePointInCanvas = (e: MouseEvent) => {
+    const computePointInCanvas = (e: MouseEvent | Touch) => {
       const canvas = canvasRef.current;
       if (!canvas) return;
 
@@ -50,21 +52,42 @@ export const useDraw = (
       prevPoint.current = null;
     };
 
+    const touchHandler = (e: TouchEvent) => {
+      if (!touchDown) return;
+      const touch = e.touches[0];
+      const currentPoint = computePointInCanvas(touch);
+
+      const ctx = canvasRef.current?.getContext("2d");
+      if (!ctx || !currentPoint) return;
+
+      onDraw({ ctx, currentPoint, prevPoint: prevPoint.current });
+      prevPoint.current = currentPoint;
+    };
+
+    const touchUpHandler = () => {
+      setTouchDown(false);
+      prevPoint.current = null;
+    };
+
     // Add event listeners
     const canvas = canvasRef.current;
     if (canvas) {
       canvas.addEventListener("mousemove", handler);
+      canvas.addEventListener("touchmove", touchHandler);
       window.addEventListener("mouseup", mouseUpHandler);
+      window.addEventListener("touchend", touchUpHandler);
     }
 
     // Remove event listeners
     return () => {
       if (canvas) {
         canvas.removeEventListener("mousemove", handler);
+        canvas.removeEventListener("touchmove", touchHandler);
         window.removeEventListener("mouseup", mouseUpHandler);
+        window.removeEventListener("touchend", touchUpHandler);
       }
     };
-  }, [onDraw, mouseDown]);
+  }, [onDraw, mouseDown, touchDown]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -74,5 +97,5 @@ export const useDraw = (
     }
   }, []);
 
-  return { canvasRef, onMouseDown, clear };
+  return { canvasRef, onMouseDown, onTouchStart, clear };
 };
