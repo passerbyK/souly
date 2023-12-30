@@ -41,7 +41,7 @@ function DiaryBig({
               className="h-[90%] w-[70%] rounded-2xl lg:h-[80%]"
             />
           </div>
-          <div className="hidden w-full items-center justify-center text-base text-[#998D73] sm:text-2xl lg:flex lg:pb-2">
+          <div className="hidden w-full items-center justify-center pb-2 text-center text-base text-[#998D73] sm:text-2xl lg:flex lg:pb-2">
             {description}
           </div>
         </div>
