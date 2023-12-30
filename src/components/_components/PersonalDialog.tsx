@@ -44,7 +44,7 @@ async function PersonalDialog() {
           {/* <p className="mr-4 flex items-center py-1">Sign Out</p> */}
           <SignOutButton />
           <form
-            action="https://docs.google.com/forms/d/e/1FAIpQLSfurYvxAARoDAkmLUb77NwWdfJW63O5-Vzukr7vNwMpvUlQuw/viewform" 
+            action="https://docs.google.com/forms/d/e/1FAIpQLSfurYvxAARoDAkmLUb77NwWdfJW63O5-Vzukr7vNwMpvUlQuw/viewform"
             target="_blank"
           >
             <button

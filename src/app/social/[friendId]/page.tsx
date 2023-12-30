@@ -43,7 +43,7 @@ async function FriendPage(props: Props) {
     const liked = await getLiked(userId, friendPost.displayId);
 
     return (
-      <div className="h-full w-full bg-brand_2 p-2 lg:flex lg:items-center overflow-y-auto">
+      <div className="h-full w-full overflow-y-auto bg-brand_2 p-2 lg:flex lg:items-center">
         <div className="flex w-full flex-col items-center lg:w-1/2 lg:items-start">
           <h1 className="pt-6 text-3xl text-txt_5 md:text-5xl lg:pl-6">
             {friend[0].name}
