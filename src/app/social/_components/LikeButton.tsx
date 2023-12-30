@@ -54,7 +54,7 @@ export default function LikeButton({
           liked && "text-red-700",
         )}
       >
-        <GoHeartFill size={48} />
+        <GoHeartFill />
       </div>
       {likesCount >= 0 && likesCount}
     </button>

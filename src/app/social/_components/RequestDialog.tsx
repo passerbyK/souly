@@ -74,7 +74,7 @@ async function RequestDialog() {
     <Dialog>
       <DialogTrigger asChild>
         <div className="relative">
-          <Button className="w-full items-center rounded-full border-4 border-bdr_3 bg-btn_2 px-3 py-1 text-xl text-bdr_3 hover:bg-description">
+          <Button className="w-full items-center rounded-full border-2 border-bdr_3 bg-btn_2 px-2 text-base text-bdr_3 hover:bg-description md:border-4 md:px-3 md:py-1 md:text-xl">
             Request
           </Button>
           <div
