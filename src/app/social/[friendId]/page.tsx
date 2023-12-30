@@ -43,8 +43,9 @@ async function FriendPage(props: Props) {
     const liked = await getLiked(userId, friendPost.displayId);
 
     return (
-      <div className="lg:flex h-full w-full bg-brand_2 p-2">
-        <div className="w-full flex flex-col items-center lg:items-start">
+      <div className="lg:flex lg:items-center lg:overflow-y-auto h-full w-full bg-brand_2 p-2">
+        
+        <div className="w-full flex flex-col items-center lg:items-start ">
           <h1 className="lg:pl-6 pt-6 text-3xl md:text-5xl text-txt_5">{friend[0].name}</h1>
           <h2 className="mx-8 text-center lg:text-start lg:ml-auto lg:pl-6 pt-4 text-xl md:text-3xl text-txt_6">
           {friendPost.topic}
@@ -79,6 +80,7 @@ async function FriendPage(props: Props) {
             </div>
           </div>
         </div>
+        
       </div>
     );
   } else {
