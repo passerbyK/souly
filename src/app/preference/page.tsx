@@ -20,7 +20,6 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -38,8 +37,6 @@ function Preference() {
 
   const [subject, setSubject] = useState<string>("");
   const [lastingDays, setLastingDays] = useState<number>(21); // Default value is 21
-  const [notification, setNotification] = useState<boolean>(false);
-  const [paintingTime, setPaintingTime] = useState<string>("");
   const [showSubjectAlert, setShowSubjectAlert] = useState<boolean>(false);
   const [isConfirmed, setIsConfirmed] = useState<boolean>(false);
   const alertDialogTriggerRef = useRef<HTMLButtonElement>(null);
@@ -84,20 +81,12 @@ function Preference() {
 
   const handleClick = async () => {
     try {
-      const now = new Date();
-      const hours = now.getHours().toString().padStart(2, "0");
-      const minutes = now.getMinutes().toString().padStart(2, "0");
-      const currentTime = `${hours}:${minutes}`;
-
       await postSettings({
         userId: userId,
         subject: subject,
         lastingDays: lastingDays,
-        isNotified: notification,
-        paintingTime:
-          notification === true && paintingTime === ""
-            ? currentTime
-            : paintingTime,
+        isNotified: false,
+        paintingTime: "",
       });
 
       router.push(`/painting`);
@@ -227,36 +216,6 @@ function Preference() {
                 className="w-2/3 border-4 border-txt_4 bg-btn_3 text-xl"
               />
             </div>
-            <div className="mb-2 flex w-full flex-col items-center gap-4 text-center md:flex-row md:items-center">
-              <Label className="w-[200px] text-center text-xl md:justify-center">
-                Turn on Notification
-              </Label>
-              <Checkbox
-                className="h-8 w-8 border-4 border-txt_4 bg-btn_3"
-                checked={notification}
-                onCheckedChange={() => setNotification(!notification)}
-              />
-              <p className="text-sm text-muted-foreground">
-                We will remind you to paint every day !
-              </p>
-            </div>
-            {notification && (
-              <div className="mb-2 flex w-full flex-col items-center gap-4 text-center md:flex-row md:items-center">
-                <Label className="w-[200px] text-center text-xl md:justify-center">
-                  Prefered Painting Time
-                </Label>
-                <Input
-                  type="time"
-                  value={paintingTime}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    setPaintingTime(e.target.value);
-                  }}
-                  placeholder=""
-                  lang="en" // not every browser support this attribute
-                  className="w-2/3 border-4 border-txt_4 bg-btn_3 text-xl"
-                />
-              </div>
-            )}
             <Button
               type="submit"
               className="mt-2 w-1/2 rounded-2xl border-4 border-bdr bg-btn_2 text-center text-xl text-txt"

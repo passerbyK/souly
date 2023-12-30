@@ -18,7 +18,6 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -36,8 +35,6 @@ function Settings() {
 
   const [subject, setSubject] = useState<string>("");
   const [lastingDays, setLastingDays] = useState<number>(21); // Default value is 21
-  const [notification, setNotification] = useState<boolean>(false);
-  const [paintingTime, setPaintingTime] = useState<string>("");
 
   const { updateSettings, isSettings, fetchSettings } = useSettings();
 
@@ -65,8 +62,6 @@ function Settings() {
         const settings = await fetchSettings(userId);
         setSubject(settings.subject);
         setLastingDays(settings.lastingDays);
-        setNotification(settings.isNotified);
-        setPaintingTime(settings.paintingTime);
       } catch (error) {
         console.error("Error fetching the settings:", error);
       }
@@ -91,20 +86,12 @@ function Settings() {
 
   const handleClick = async () => {
     try {
-      const now = new Date();
-      const hours = now.getHours().toString().padStart(2, "0");
-      const minutes = now.getMinutes().toString().padStart(2, "0");
-      const currentTime = `${hours}:${minutes}`;
-
       await updateSettings({
         userId: userId,
         subject: subject,
         lastingDays: lastingDays,
-        isNotified: notification,
-        paintingTime:
-          notification === true && paintingTime === ""
-            ? currentTime
-            : paintingTime,
+        isNotified: false,
+        paintingTime: "",
       });
 
       setIsEditing(false);
@@ -229,38 +216,6 @@ function Settings() {
                 className="w-2/3 border-4 border-txt_4 bg-btn_3 text-xl"
               />
             </div>
-            <div className="mb-2 flex w-full flex-col items-center gap-4 text-center md:flex-row md:items-center">
-              <Label className="w-[200px] text-center text-xl md:justify-center">
-                Turn on Notification
-              </Label>
-              <Checkbox
-                disabled={!isEditing}
-                className="h-8 w-8 border-4 border-txt_4 bg-btn_3"
-                checked={notification}
-                onCheckedChange={() => setNotification(!notification)}
-              />
-              <p className="text-sm text-muted-foreground">
-                We will remind you to paint every day !
-              </p>
-            </div>
-            {notification && (
-              <div className="mb-2 flex w-full flex-col items-center gap-4 text-center md:flex-row md:items-center">
-                <Label className="w-[200px] text-center text-xl md:justify-center">
-                  Prefered Painting Time
-                </Label>
-                <Input
-                  type="time"
-                  disabled={!isEditing}
-                  value={paintingTime}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    setPaintingTime(e.target.value);
-                  }}
-                  placeholder=""
-                  lang="en" // not every browser support this attribute
-                  className="w-2/3 border-4 border-txt_4 bg-btn_3 text-xl"
-                />
-              </div>
-            )}
             <div className="flex w-full justify-center gap-4">
               <Button
                 type="submit"
