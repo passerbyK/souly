@@ -9,11 +9,12 @@ type CalendarProps = {
   successDays: Date[];
 };
 
-const todayStyle = { 
-border: "2px solid black", 
-'@media (max-width: 430px)': {
-  border: "1px solid black", 
-},};
+const todayStyle = {
+  border: "2px solid black",
+  "@media (max-width: 430px)": {
+    border: "1px solid black",
+  },
+};
 const successStyle = {
   backgroundColor: "#FBEFDF",
 };

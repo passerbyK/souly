@@ -8,11 +8,6 @@ import { auth } from "@/lib/auth";
 import { publicEnv } from "@/lib/env/public";
 
 import Diary from "./_compoments/Diary";
-import { hi } from "date-fns/locale";
-
-type PageProps = {
-  name: string
-}
 
 async function PersonalPage() {
   const session = await auth();
@@ -23,7 +18,7 @@ async function PersonalPage() {
 
   const [user] = await db
     .select({
-      name: usersTable.username
+      name: usersTable.username,
     })
     .from(usersTable)
     .where(eq(usersTable.displayId, id ?? " "));
@@ -56,12 +51,14 @@ async function PersonalPage() {
 
   return (
     <>
-      <div className="w-full flex justify-center">
-      <div className="mb-2 flex justify-center p-2 px-4 md:text-2xl rounded-2xl">hi {user.name}</div>
+      <div className="flex w-full justify-center">
+        <div className="mb-2 flex justify-center rounded-2xl p-2 px-4 md:text-2xl">
+          hi {user.name}
+        </div>
       </div>
-      <hr className="h-1 bg-black border-1 border-black" />
+      <hr className="border-1 h-1 border-black bg-black" />
       {posts.length === 0 ? (
-        <div className="w-full flex items-center justify-center">
+        <div className="flex w-full items-center justify-center">
           <p className="pt-6 text-center text-2xl font-semibold text-bdr_3">
             hasn't painted yet, go paint one!
           </p>

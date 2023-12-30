@@ -43,17 +43,18 @@ async function FriendPage(props: Props) {
     const liked = await getLiked(userId, friendPost.displayId);
 
     return (
-      <div className="lg:flex lg:items-center lg:overflow-y-auto h-full w-full bg-brand_2 p-2">
-        
-        <div className="w-full flex flex-col items-center lg:items-start ">
-          <h1 className="lg:pl-6 pt-6 text-3xl md:text-5xl text-txt_5">{friend[0].name}</h1>
-          <h2 className="mx-8 text-center lg:text-start lg:ml-auto lg:pl-6 pt-4 text-xl md:text-3xl text-txt_6">
-          {friendPost.topic}
+      <div className="h-full w-full bg-brand_2 p-2 lg:flex lg:items-center lg:overflow-y-auto">
+        <div className="flex w-full flex-col items-center lg:items-start ">
+          <h1 className="pt-6 text-3xl text-txt_5 md:text-5xl lg:pl-6">
+            {friend[0].name}
+          </h1>
+          <h2 className="mx-8 pt-4 text-center text-xl text-txt_6 md:text-3xl lg:ml-auto lg:pl-6 lg:text-start">
+            {friendPost.topic}
           </h2>
         </div>
-        <div className="mx-6 md:mx-10 w-5/6 lg:mx-0 lg:w-full h-11/12 lg:mr-6 my-8 aspect-[4/3] flex flex-col items-center rounded-2xl border-2 border-[#7C5A16] bg-white">
-          <div className="w-full h-4/5 flex flex-col items-center justify-center">
-            <div className="w-full flex h-full items-center justify-center h-[80%]">
+        <div className="h-11/12 mx-6 my-8 flex aspect-[4/3] w-5/6 flex-col items-center rounded-2xl border-2 border-[#7C5A16] bg-white md:mx-10 lg:mx-0 lg:mr-6 lg:w-full">
+          <div className="flex h-4/5 w-full flex-col items-center justify-center">
+            <div className="flex h-[80%] h-full w-full items-center justify-center">
               <Image
                 src={friendPost.image}
                 alt="Logo"
@@ -62,7 +63,7 @@ async function FriendPage(props: Props) {
                 className="w-[80%] rounded-2xl"
               />
             </div>
-            <div className="z-10 w-full h-[30%] flex items-center justify-center text-base text-[#998D73] sm:text-2xl lg:flex">
+            <div className="z-10 flex h-[30%] w-full items-center justify-center text-base text-[#998D73] sm:text-2xl lg:flex">
               {friendPost.description}
             </div>
           </div>
@@ -80,7 +81,6 @@ async function FriendPage(props: Props) {
             </div>
           </div>
         </div>
-        
       </div>
     );
   } else {
