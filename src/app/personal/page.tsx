@@ -66,7 +66,7 @@ async function PersonalPage() {
       ) : (
         <></>
       )}
-      <div className="flex flex-wrap justify-center gap-4 md:w-full md:justify-start ">
+      <div className="flex flex-wrap justify-center gap-2 md:w-full md:justify-start ">
         {posts.map((post) => (
           <Diary
             key={post.id}
