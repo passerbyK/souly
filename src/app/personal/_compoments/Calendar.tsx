@@ -13,7 +13,7 @@ const todayStyle = {
   border: "2px solid black",
   "@media (max-width: 430px)": {
     border: "1px solid black",
-    padding: "2px"
+    padding: "2px",
   },
 };
 const successStyle = {
