@@ -1,4 +1,4 @@
-# [121-1] Web Programming Final: (Group 5) SOULY 每日一筆畫
+# [121-1] Web Programming Final: (Group 5) SOULY
 
 <p align="center">
   <a href="https://wp1121-final-sooty.vercel.app/">
@@ -18,9 +18,10 @@ At Souly, we are an online drawing platform where you can express your creativit
 ### Project Description
 
 [121-1] Web Programming Final:
+<br/>
 (Group 5) SOULY - A Painting Website To Paint Your Dreams
 
----
+<br/>
 
 組長：黃翔易 經濟五 B08303047
 組員：黃韻文 生傳四 B09610020, 鄭瑋凡 工海四 B09505031
