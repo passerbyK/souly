@@ -30,7 +30,7 @@ async function FriendList() {
       <div className="relative m-4 flex w-full flex-col overflow-y-auto rounded-2xl bg-nav p-4">
         <div className="flex w-full items-center gap-2 lg:hidden">
           <p className="p-2 text-2xl text-txt_7 md:text-3xl">Your friends</p>
-          <div className="flex gap-2 lg:flex-row xl:gap-6">
+          <div className="flex gap-2 xl:flex-row xl:gap-4">
             <AddDialog />
             <RequestDialog />
           </div>

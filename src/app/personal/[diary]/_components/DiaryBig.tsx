@@ -26,22 +26,22 @@ function DiaryBig({
     ${createdAt.getDate().toString().padStart(2, "0")} 
     (${daysOfWeek[createdAt.getDay()]})`;
   return (
-    <div className="w-full gap-2 lg:flex">
-      <div className="mb-4 flex justify-center rounded-2xl bg-description/60 p-2 text-center text-xl sm:text-3xl lg:hidden">
+    <div className="w-full gap-2 lg:flex-col">
+      <div className="mb-4 flex justify-center rounded-2xl bg-description/60 p-2 text-center text-xl sm:text-2xl lg:bg-description/0">
         {topic}
       </div>
-      <div className="relative aspect-[4/3] w-full rounded-2xl border-2 border-solid border-[#7C5A16] bg-white">
+      <div className="relative aspect-[4/3] w-full rounded-2xl border-2 border-solid border-[#7C5A16] bg-white lg:mx-auto lg:w-[70%]">
         <div className="h-4/5">
-          <div className="flex h-full items-center justify-center lg:h-[90%]">
+          <div className="flex h-full items-center justify-center lg:h-[88%]">
             <Image
               src={image}
               alt="Logo"
               width={1000}
               height={1000}
-              className="h-[90%] w-[70%] rounded-2xl"
+              className="h-[90%] w-[70%] rounded-2xl lg:h-[80%]"
             />
           </div>
-          <div className="hidden w-full items-center justify-center text-base text-[#998D73] sm:text-2xl lg:flex">
+          <div className="hidden w-full items-center justify-center text-base text-[#998D73] sm:text-2xl lg:flex lg:pb-2">
             {description}
           </div>
         </div>

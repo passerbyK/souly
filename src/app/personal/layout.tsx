@@ -151,7 +151,7 @@ async function PersonalLayout({ children }: Props) {
 
           <div className="mx-2 my-4 flex w-[60%] flex-col md:w-[40%] lg:items-center">
             <div className="text-center md:mb-5">Daily Record</div>
-            <div className="mx-4 my-4 flex w-full items-center justify-center rounded-2xl bg-[#B7AD97] p-1 text-base text-black md:my-0 lg:h-[54%]">
+            <div className="mx-4 my-4 flex w-full items-center justify-center rounded-2xl bg-[#B7AD97] p-1 text-sm text-black sm:text-base md:my-0 lg:h-[54%]">
               <Calendar
                 startDay={startDay}
                 endDay={endDay}

@@ -13,6 +13,7 @@ const todayStyle = {
   border: "2px solid black",
   "@media (max-width: 430px)": {
     border: "1px solid black",
+    padding: "2px",
   },
 };
 const successStyle = {
@@ -63,7 +64,7 @@ function Calendar({ startDay, endDay, successDays }: CalendarProps) {
           }
           @media (max-width: 430px) {
             .rdp {
-              --rdp-cell-size: 16px;
+              --rdp-cell-size: 18px;
             }
           }
         `}

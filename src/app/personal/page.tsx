@@ -53,7 +53,7 @@ async function PersonalPage() {
     <>
       <div className="flex w-full justify-center">
         <div className="mb-2 flex justify-center rounded-2xl bg-description/40 p-2 px-4 md:text-2xl">
-          hi {user.name}
+          Hi {user.name} !
         </div>
       </div>
       <hr />
@@ -66,7 +66,7 @@ async function PersonalPage() {
       ) : (
         <></>
       )}
-      <div className="flex w-full flex-wrap gap-4 ">
+      <div className="flex flex-wrap justify-center gap-4 md:w-full md:justify-start ">
         {posts.map((post) => (
           <Diary
             key={post.id}
