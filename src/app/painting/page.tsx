@@ -29,7 +29,7 @@ export default function Painting() {
 
   const [color, setColor] = useState<string>("#000");
   const [showPicker, setShowPicker] = useState(false);
-  const { canvasRef, onMouseDown, clear } = useDraw(drawLine);
+  const { canvasRef, onMouseDown, onTouchStart, clear } = useDraw(drawLine);
   const elementRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [isPost, setIsPost] = useState<boolean>(false);
@@ -318,6 +318,7 @@ export default function Painting() {
                   <canvas
                     ref={canvasRef}
                     onMouseDown={onMouseDown}
+                    onTouchMove={onTouchStart}
                     className="h-full w-full rounded-2xl"
                   />
                 </div>
