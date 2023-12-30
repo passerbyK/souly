@@ -2,6 +2,10 @@ import { IoLogoSnapchat } from "react-icons/io";
 
 import { redirect } from "next/navigation";
 
+import { eq } from "drizzle-orm";
+
+import { db } from "@/db";
+import { subjectsTable } from "@/db/schema";
 import { auth } from "@/lib/auth";
 import { publicEnv } from "@/lib/env/public";
 
@@ -18,6 +22,15 @@ async function DocsPage() {
   const newestFriendId = friends == null ? null : friends[0].userId;
   if (newestFriendId) {
     redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/social/${newestFriendId}`);
+  }
+
+  const [subject] = await db
+    .select({ subject: subjectsTable.subject })
+    .from(subjectsTable)
+    .where(eq(subjectsTable.userId, userId ?? " "));
+
+  if (!subject) {
+    redirect("/preference");
   }
 
   return (
