@@ -205,10 +205,8 @@ export default function Painting() {
     router.push("/auth/login");
   } else {
     return (
-      <div id="main-element" className="overflow-y-auto blur-lg">
-        <main
-          className={`flex h-screen min-h-screen flex-col items-center bg-brand_2`}
-        >
+      <div id="main-element" className="h-full blur-lg">
+        <main className={`flex flex-col items-center bg-brand_2`}>
           <AlertDialog open={isPostDialog}>
             <AlertDialogContent>
               <AlertDialogHeader>
@@ -263,8 +261,7 @@ export default function Painting() {
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
-          <div className="h-1/6 w-full"></div>
-          <div className="flex h-full w-full flex-col justify-center px-6 lg:mt-0 lg:px-12">
+          <div className="flex w-full flex-col justify-center overflow-y-auto px-6 lg:mt-0 lg:px-12">
             <div className="py-auto mt-4 w-full items-center gap-4 px-4 text-3xl lg:flex ">
               <div className="w-full items-center space-x-4 lg:flex">
                 <div className="flex w-full flex-col items-center justify-center text-center text-txt">

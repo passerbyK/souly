@@ -52,11 +52,11 @@ async function PersonalPage() {
   return (
     <>
       <div className="flex w-full justify-center">
-        <div className="mb-2 flex justify-center rounded-2xl p-2 px-4 md:text-2xl">
+        <div className="mb-2 flex justify-center rounded-2xl bg-description/40 p-2 px-4 md:text-2xl">
           hi {user.name}
         </div>
       </div>
-      <hr className="border-1 h-1 border-black bg-black" />
+      <hr />
       {posts.length === 0 ? (
         <div className="flex w-full items-center justify-center">
           <p className="pt-6 text-center text-2xl font-semibold text-bdr_3">
