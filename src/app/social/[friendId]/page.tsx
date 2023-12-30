@@ -43,31 +43,31 @@ async function FriendPage(props: Props) {
     const liked = await getLiked(userId, friendPost.displayId);
 
     return (
-      <div className="flex h-full w-full bg-brand_2">
-        <div className="flex-col">
-          <h1 className="pl-6 pt-6 text-6xl text-txt_5">{friend[0].name}</h1>
-          <h2 className="ml-auto pl-6 pt-4 text-4xl text-txt_6">
-            {outputDate}
+      <div className="lg:flex h-full w-full bg-brand_2 p-2">
+        <div className="w-full flex flex-col items-center lg:items-start">
+          <h1 className="lg:pl-6 pt-6 text-3xl md:text-5xl text-txt_5">{friend[0].name}</h1>
+          <h2 className="mx-8 text-center lg:text-start lg:ml-auto lg:pl-6 pt-4 text-xl md:text-3xl text-txt_6">
+          {friendPost.topic}
           </h2>
         </div>
-        <div className="h-11/12 mx-8 my-4 flex aspect-[4/3] flex-col items-end rounded-2xl border-2 border-[#7C5A16] bg-white">
-          <div className="h-4/5 items-center justify-center">
-            <div className="flex h-full items-center justify-center lg:h-[90%]">
+        <div className="mx-6 md:mx-10 w-5/6 lg:mx-0 lg:w-full h-11/12 lg:mr-6 my-8 aspect-[4/3] flex flex-col items-center rounded-2xl border-2 border-[#7C5A16] bg-white">
+          <div className="w-full h-4/5 flex flex-col items-center justify-center">
+            <div className="w-full flex h-full items-center justify-center h-[80%]">
               <Image
                 src={friendPost.image}
                 alt="Logo"
                 width={1000}
                 height={1000}
-                className="h-[90%] w-[70%] rounded-2xl"
+                className="w-[80%] rounded-2xl"
               />
             </div>
-            <div className="hidden w-full items-center justify-center text-base text-[#998D73] sm:text-2xl lg:flex">
+            <div className="z-10 w-full h-[30%] flex items-center justify-center text-base text-[#998D73] sm:text-2xl lg:flex">
               {friendPost.description}
             </div>
           </div>
           <div className="flex h-1/5 w-full items-center justify-center gap-6 rounded-b-2xl bg-[#F2D7A3] text-base font-bold md:text-2xl">
-            <div className="p-1/2 ml-4 rounded-2xl bg-description/60 px-4 md:p-2">
-              {friendPost.topic}
+            <div className="p-1/2 ml-4 rounded-2xl px-4 md:p-2">
+              {outputDate}
             </div>
             <div className="flex items-center px-4">
               <LikeButton

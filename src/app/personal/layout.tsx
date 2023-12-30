@@ -29,7 +29,7 @@ async function PersonalLayout({ children }: Props) {
   }
 
   const id = session.user?.id;
-  console.log(id);
+
   const [user] = await db
     .select({
       lastingDay: usersTable.lastingDays,
@@ -138,20 +138,20 @@ async function PersonalLayout({ children }: Props) {
         <div className=" flex w-full justify-center overflow-hidden p-4 text-xl font-bold lg:hidden lg:items-center lg:rounded-2xl">
           <div className="m-2 flex w-[20%] flex-col justify-center md:w-[30%] ">
             <div className="mb-3 text-center md:mb-5"> Topic </div>
-            <div className="mb-3 flex h-[30%] w-full items-center justify-center rounded-2xl bg-[#B7AD97] md:mb-5 lg:h-[50%] ">
+            <div className="text-center text-base sm:text-xl mb-3 flex h-[30%] w-full items-center justify-center rounded-2xl bg-[#B7AD97] md:mb-5 lg:h-[50%] ">
               {" "}
               {subject.subject}{" "}
             </div>
             <div className="mb-3 text-center md:mb-5"> Complete </div>
-            <div className="flex h-[30%] w-full items-center justify-center rounded-2xl bg-[#B7AD97] lg:h-[50%]">
+            <div className="text-center h-[30%] flex items-center justify-center rounded-2xl bg-[#B7AD97] lg:h-[50%]">
               {" "}
               {posts.length}/{user.lastingDay} days{" "}
             </div>
           </div>
 
-          <div className="m-4 flex w-[60%] flex-col md:w-[40%] lg:items-center">
-            <div className="mb-5 text-center">Daily Record</div>
-            <div className="mx-4 flex items-center justify-center rounded-2xl bg-[#B7AD97] p-1 text-base text-black lg:h-[54%]">
+          <div className="my-4 mx-2 flex w-[60%] flex-col md:w-[40%] lg:items-center">
+            <div className="md:mb-5 text-center">Daily Record</div>
+            <div className="w-full my-4 md:my-0 mx-4 flex items-center justify-center rounded-2xl bg-[#B7AD97] p-1 text-base text-black lg:h-[54%]">
               <Calendar
                 startDay={startDay}
                 endDay={endDay}
@@ -160,7 +160,7 @@ async function PersonalLayout({ children }: Props) {
             </div>
           </div>
         </div>
-        <div className="flex w-full flex-wrap gap-4  overflow-y-auto bg-brand_2 px-24 py-6 md:px-36 lg:w-3/4 lg:px-8">
+        <div className="overflow-y-auto bg-brand_2 px-12 py-6 md:px-36 lg:w-3/4 lg:px-8">
           {children}
         </div>
         <div className="mx-6 my-6 hidden w-1/4 flex-col items-center justify-center overflow-hidden rounded-2xl bg-header text-xl font-bold text-[#998D73] lg:flex">

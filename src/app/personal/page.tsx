@@ -3,11 +3,16 @@ import { redirect } from "next/navigation";
 import { eq, desc, sql } from "drizzle-orm";
 
 import { db } from "@/db";
-import { postsTable, likesTable } from "@/db/schema";
+import { postsTable, likesTable, usersTable } from "@/db/schema";
 import { auth } from "@/lib/auth";
 import { publicEnv } from "@/lib/env/public";
 
 import Diary from "./_compoments/Diary";
+import { hi } from "date-fns/locale";
+
+type PageProps = {
+  name: string
+}
 
 async function PersonalPage() {
   const session = await auth();
@@ -15,6 +20,13 @@ async function PersonalPage() {
     redirect(publicEnv.NEXT_PUBLIC_BASE_URL);
   }
   const id = session.user?.id;
+
+  const [user] = await db
+    .select({
+      name: usersTable.username
+    })
+    .from(usersTable)
+    .where(eq(usersTable.displayId, id ?? " "));
 
   const likesSubquery = db.$with("likes_count").as(
     db
@@ -44,16 +56,31 @@ async function PersonalPage() {
 
   return (
     <>
-      {posts.map((post) => (
-        <Diary
-          key={post.id}
-          id={post.displayId}
-          createdAt={new Date(post.createdAt)}
-          topic={post.topic}
-          image={post.image}
-          likes={post.likes}
-        />
-      ))}
+      <div className="w-full flex justify-center">
+      <div className="mb-2 flex justify-center p-2 px-4 md:text-2xl rounded-2xl bg-description/40">hi {user.name}</div>
+      </div>
+      <hr className="color-black"/>
+      {posts.length === 0 ? (
+        <div className="w-full flex items-center justify-center">
+          <p className="pt-6 text-center text-2xl font-semibold text-bdr_3">
+            hasn't painted yet, go paint one!
+          </p>
+        </div>
+      ) : (
+        <></>
+      )}
+      <div className="flex w-full flex-wrap gap-4 ">
+        {posts.map((post) => (
+          <Diary
+            key={post.id}
+            id={post.displayId}
+            createdAt={new Date(post.createdAt)}
+            topic={post.topic}
+            image={post.image}
+            likes={post.likes}
+          />
+        ))}
+      </div>
     </>
   );
 }

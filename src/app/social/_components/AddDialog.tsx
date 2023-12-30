@@ -25,7 +25,7 @@ async function AddDialog() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="items-center rounded-full border-4 border-bdr_3 bg-btn_2 px-3 py-1 text-xl text-bdr_3 hover:bg-description">
+        <Button className="items-center rounded-full border-2 md:border-4 border-bdr_3 bg-btn_2 px-2 md:px-3 py-1 text-base md:text-xl text-bdr_3 hover:bg-description">
           Add
         </Button>
       </DialogTrigger>

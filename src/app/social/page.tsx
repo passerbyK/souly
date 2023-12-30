@@ -21,7 +21,7 @@ async function DocsPage() {
   }
 
   return (
-    <div className="flex h-full w-full items-center justify-center bg-brand_2">
+    <div className="flex mt-0 md:mt-20 lg:mt-0 h-full w-full items-center justify-center bg-brand_2">
       <div className="flex flex-col items-center justify-center">
         <IoLogoSnapchat size={100} className="text-bdr_3" />
         <p className="pt-6 text-center text-2xl font-semibold text-bdr_3">

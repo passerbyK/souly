@@ -27,10 +27,10 @@ function DiaryBig({
     (${daysOfWeek[createdAt.getDay()]})`;
   return (
     <div className="w-full gap-2 lg:flex">
-      <div className="mb-4 flex justify-center text-xl sm:text-3xl lg:hidden">
-        {formattedDate}
+      <div className="p-2 rounded-2xl mb-4 flex justify-center bg-description/60 text-center text-xl sm:text-3xl lg:hidden">
+        {topic}
       </div>
-      <div className="relative aspect-[4/3] rounded-2xl border-2 border-solid border-[#7C5A16] bg-white">
+      <div className="relative aspect-[4/3] w-full rounded-2xl border-2 border-solid border-[#7C5A16] bg-white">
         <div className="h-4/5">
           <div className="flex h-full items-center justify-center lg:h-[90%]">
             <Image
@@ -45,16 +45,16 @@ function DiaryBig({
             {description}
           </div>
         </div>
-        <div className="flex h-1/5 items-center justify-center gap-8 rounded-b-2xl bg-[#F2D7A3] text-base font-bold md:text-2xl">
-          <div className="p-1/2 ml-4 rounded-2xl bg-description/60 px-4 md:p-2">
-            {topic}
+        <div className="flex h-1/5 items-center justify-center md:gap-8 rounded-b-2xl bg-[#F2D7A3] text-base font-bold md:text-2xl">
+          <div className="ml-2 md:ml-4 rounded-2xl md:p-2 lg:hidden">
+            {formattedDate}
           </div>
           <div className="hidden lg:block">{formattedDate}</div>
           <div className="flex items-center">
             <div>
               <HeartDialog likeslist={likeslist} />
             </div>
-            <div className="ml-1 mr-4">{likes}</div>
+            <div className="ml-1 mr-2">{likes}</div>
           </div>
         </div>
       </div>

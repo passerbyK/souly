@@ -20,8 +20,8 @@ const failStyle = {
 
 function Calendar({ startDay, endDay, successDays }: CalendarProps) {
   // 將時間部分設置為零
-  startDay.setUTCHours(0, 0, 0, 0);
-  endDay.setUTCHours(0, 0, 0, 0);
+  //startDay.setUTCHours(0, 0, 0, 0);
+  //endDay.setUTCHours(0, 0, 0, 0);
 
   // 將 successDays 陣列中每個日期的時間部分設置為零
   const successDay = successDays.map((date) => {
@@ -56,7 +56,11 @@ function Calendar({ startDay, endDay, successDays }: CalendarProps) {
             margin: 3px;
             margin-top: 6px;
           }
-
+          @media (max-width: 430px) {
+            .rdp {
+              --rdp-cell-size: 16px;
+            }
+          }
         `}
       </style>
       <DayPicker
