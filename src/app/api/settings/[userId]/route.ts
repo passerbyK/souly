@@ -9,6 +9,12 @@ import topicsInfo from "@/lib/topics/topic.json";
 import type { Settings } from "@/lib/types/db";
 import { settingsSchema } from "@/validators/settings";
 
+import OpenAI from "openai";
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+  });
+
 // POST /api/settings/:userId
 export async function POST(
   req: NextRequest,
@@ -36,11 +42,37 @@ export async function POST(
       return NextResponse.json({ error: "Bad Request" }, { status: 400 });
     }
 
-    // Get topics from topic.json
-    const topics: string[] = topicsInfo[
-      validatedReqBody.subject as keyof typeof topicsInfo
-    ].slice(0, validatedReqBody.lastingDays);
+    let topics: string[] = [];
+    const subjects = Object.keys(topicsInfo);
 
+    // Get topics from topic.json
+    if (subjects.includes(validatedReqBody.subject)) {
+      topics = topicsInfo[
+        validatedReqBody.subject as keyof typeof topicsInfo
+      ].slice(0, validatedReqBody.lastingDays) ?? [];
+    } else {
+      // Customize topics by using OpenAI
+      const prompt = `
+      You're now tasked with inspiring creative artwork for our platform. 
+      Craft prompts that ignite imagination while adhering to user themes. 
+      Keep it simple, yet stimulating. 
+      Each prompt should comprise a verb, adjective, adverb, and noun, leading with "A/An...". 
+      For example, "A bird singing softly in a garden". 
+      Ensure the prompts resonate with users and foster artistic exploration. 
+      Create ${validatedReqBody.lastingDays} topics for: ${validatedReqBody.subject}.
+      Remember to use JSON format, separate prompts with commas and enclose each prompt in double quotation marks.
+      Please ensure the generated format looks like this: ["An eerie, pulsating form in shadows.","A mysterious, glowing figure in solitude." ......].
+      This is crucial to me, and if you provide a good response, I'll give you a tip of 200.
+      `;
+
+      const completion = await openai.chat.completions.create({
+        messages: [{ role: "system", content: prompt }],
+        model: "gpt-3.5-turbo",
+      });
+
+      topics = JSON.parse(completion.choices[0]?.message.content ?? "") ?? [];
+    }
+    
     // Post subject
     await db
       .insert(subjectsTable)
