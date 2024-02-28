@@ -45,15 +45,6 @@ function Settings() {
 
   const router = useRouter();
 
-  const validOptions = [
-    "Animal Party",
-    "Strange Patterns",
-    "Nonsense Words",
-    "Self-Growth Time",
-    "Colorful Relationships",
-    "Ghost Stories"
-  ];
-
   useEffect(() => {
     const checkSettings = async () => {
       try {
@@ -70,6 +61,15 @@ function Settings() {
 
     const fetchSettingsInfo = async () => {
       try {
+        const validOptions = [
+          "Animal Party",
+          "Strange Patterns",
+          "Nonsense Words",
+          "Self-Growth Time",
+          "Colorful Relationships",
+          "Ghost Stories",
+        ];
+
         const settings = await fetchSettings(userId);
         if (!validOptions.includes(settings.subject)) {
           setShowCustomInput(true);
@@ -206,7 +206,9 @@ function Settings() {
                   <SelectValue placeholder={subject} />
                 </SelectTrigger>
                 <SelectContent className="w-2/3 border-4 border-txt_4 bg-btn_3 text-xl">
-                  <SelectItem value="Customize On Your Own">Customize On Your Own</SelectItem>
+                  <SelectItem value="Customize On Your Own">
+                    Customize On Your Own
+                  </SelectItem>
                   <SelectItem value="Animal Party">Animal Party</SelectItem>
                   <SelectItem value="Strange Patterns">
                     Strange Patterns
