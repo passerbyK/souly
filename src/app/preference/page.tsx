@@ -192,7 +192,7 @@ function Preference() {
                   <SelectValue placeholder="Select your prefered subjects" />
                 </SelectTrigger>
                 <SelectContent className="w-2/3 border-4 border-txt_4 bg-btn_3 text-xl">
-                  <SelectItem value="Custom">Customize On Your Own</SelectItem>
+                  <SelectItem value="Customize On Your Own">Customize On Your Own</SelectItem>
                   <SelectItem value="Animal Party">Animal Party</SelectItem>
                   <SelectItem value="Strange Patterns">
                     Strange Patterns
