@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 import { and, eq, desc } from "drizzle-orm";
+import OpenAI from "openai";
 
 import { db } from "@/db";
 import { usersTable, subjectsTable } from "@/db/schema";
@@ -9,11 +10,9 @@ import topicsInfo from "@/lib/topics/topic.json";
 import type { Settings } from "@/lib/types/db";
 import { settingsSchema } from "@/validators/settings";
 
-import OpenAI from "openai";
-
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
-  });
+});
 
 // POST /api/settings/:userId
 export async function POST(
@@ -47,9 +46,11 @@ export async function POST(
 
     // Get topics from topic.json
     if (subjects.includes(validatedReqBody.subject)) {
-      topics = topicsInfo[
-        validatedReqBody.subject as keyof typeof topicsInfo
-      ].slice(0, validatedReqBody.lastingDays) ?? [];
+      topics =
+        topicsInfo[validatedReqBody.subject as keyof typeof topicsInfo].slice(
+          0,
+          validatedReqBody.lastingDays,
+        ) ?? [];
     } else {
       // Customize topics by using OpenAI
       const prompt = `
@@ -72,7 +73,7 @@ export async function POST(
 
       topics = JSON.parse(completion.choices[0]?.message.content ?? "") ?? [];
     }
-    
+
     // Post subject
     await db
       .insert(subjectsTable)

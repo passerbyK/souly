@@ -180,10 +180,14 @@ function Preference() {
               <Label className="w-[200px] text-center text-xl md:justify-center">
                 Painting Subject
               </Label>
-              <Select onValueChange={(value) => {
-                setSubject(value);
-                (value === 'Custom' ? setShowCustomInput(true) : setShowCustomInput(false))
-                }}>
+              <Select
+                onValueChange={(value) => {
+                  setSubject(value);
+                  value === "Custom"
+                    ? setShowCustomInput(true)
+                    : setShowCustomInput(false);
+                }}
+              >
                 <SelectTrigger className="w-2/3 border-4 border-txt_4 bg-btn_3 text-xl">
                   <SelectValue placeholder="Select your prefered subjects" />
                 </SelectTrigger>
@@ -212,7 +216,9 @@ function Preference() {
                 <Input
                   type="text"
                   value={subject}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSubject(e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setSubject(e.target.value)
+                  }
                   placeholder="Enter custom subject"
                   className="w-2/3 border-4 border-txt_4 bg-btn_3 text-xl"
                 />
