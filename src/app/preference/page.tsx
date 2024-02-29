@@ -22,13 +22,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useSettings } from "@/hooks/useSettings";
 
 function Preference() {
@@ -38,7 +31,6 @@ function Preference() {
   const [subject, setSubject] = useState<string>("");
   const [lastingDays, setLastingDays] = useState<number>(21); // Default value is 21
   const [showSubjectAlert, setShowSubjectAlert] = useState<boolean>(false);
-  const [showCustomInput, setShowCustomInput] = useState<boolean>(false);
   const [isConfirmed, setIsConfirmed] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const alertDialogTriggerRef = useRef<HTMLButtonElement>(null);
@@ -180,52 +172,16 @@ function Preference() {
               <Label className="w-[200px] text-center text-xl md:justify-center">
                 Painting Subject
               </Label>
-              <Select
-                onValueChange={(value) => {
-                  setSubject(value);
-                  value === "Custom"
-                    ? setShowCustomInput(true)
-                    : setShowCustomInput(false);
-                }}
-              >
-                <SelectTrigger className="w-2/3 border-4 border-txt_4 bg-btn_3 text-xl">
-                  <SelectValue placeholder="Select your prefered subjects" />
-                </SelectTrigger>
-                <SelectContent className="w-2/3 border-4 border-txt_4 bg-btn_3 text-xl">
-                  <SelectItem value="Customize On Your Own">
-                    Customize On Your Own
-                  </SelectItem>
-                  <SelectItem value="Animal Party">Animal Party</SelectItem>
-                  <SelectItem value="Strange Patterns">
-                    Strange Patterns
-                  </SelectItem>
-                  <SelectItem value="Nonsense Words">Nonsense Words</SelectItem>
-                  <SelectItem value="Self-Growth Time">
-                    Self-Growth Time
-                  </SelectItem>
-                  <SelectItem value="Colorful Relationships">
-                    Colorful Relationships
-                  </SelectItem>
-                  <SelectItem value="Ghost Stories">Ghost Stories</SelectItem>
-                </SelectContent>
-              </Select>
+              <Input
+                type="text"
+                value={subject}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setSubject(e.target.value)
+                }
+                placeholder="e.g. Animal Party"
+                className="w-2/3 border-4 border-txt_4 bg-btn_3 text-xl"
+              />
             </div>
-            {showCustomInput && (
-              <div className="mb-2 flex w-full flex-col items-center gap-4 text-center md:flex-row md:items-center">
-                <Label className="w-[200px] text-center text-xl md:justify-center">
-                  Your Custom Subject
-                </Label>
-                <Input
-                  type="text"
-                  value={subject}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setSubject(e.target.value)
-                  }
-                  placeholder="Enter custom subject"
-                  className="w-2/3 border-4 border-txt_4 bg-btn_3 text-xl"
-                />
-              </div>
-            )}
             <div className="mb-2 flex w-full flex-col items-center gap-4 text-center md:flex-row md:items-center">
               <Label className="w-[200px] text-center text-xl md:justify-center">
                 Target Days
@@ -258,7 +214,7 @@ function Preference() {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle className="text-2xl">
-              Are you sure you want to post?
+              Are you sure to confirm the settings?
             </AlertDialogTitle>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -298,7 +254,7 @@ function Preference() {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle className="text-2xl">
-              Please select a painting subject.
+              Please enter a painting subject.
             </AlertDialogTitle>
           </AlertDialogHeader>
           <AlertDialogFooter>

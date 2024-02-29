@@ -20,13 +20,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useSettings } from "@/hooks/useSettings";
 
 function Settings() {
@@ -34,7 +27,7 @@ function Settings() {
   const userId = session?.user?.id ?? "";
 
   const [subject, setSubject] = useState<string>("");
-  const [showCustomInput, setShowCustomInput] = useState<boolean>(false);
+  const [originSubject, setOriginSubject] = useState<string>("");
   const [lastingDays, setLastingDays] = useState<number>(21); // Default value is 21
 
   const { updateSettings, isSettings, fetchSettings } = useSettings();
@@ -61,20 +54,10 @@ function Settings() {
 
     const fetchSettingsInfo = async () => {
       try {
-        const validOptions = [
-          "Animal Party",
-          "Strange Patterns",
-          "Nonsense Words",
-          "Self-Growth Time",
-          "Colorful Relationships",
-          "Ghost Stories",
-        ];
-
         const settings = await fetchSettings(userId);
-        if (!validOptions.includes(settings.subject)) {
-          setShowCustomInput(true);
-        }
+
         setSubject(settings.subject);
+        setOriginSubject(settings.subject);
         setLastingDays(settings.lastingDays);
       } catch (error) {
         console.error("Error fetching the settings:", error);
@@ -101,18 +84,22 @@ function Settings() {
   const handleClick = async () => {
     setLoading(true);
     try {
-      await updateSettings({
-        userId: userId,
-        subject: subject,
-        lastingDays: lastingDays,
-        isNotified: false,
-        paintingTime: "",
-      });
+      if (subject !== originSubject) {
+        await updateSettings({
+          userId: userId,
+          subject: subject,
+          lastingDays: lastingDays,
+          isNotified: false,
+          paintingTime: "",
+        });
+
+        setOriginSubject(subject);
+
+        await new Promise((resolve) => setTimeout(resolve, 3000));
+      }
 
       setIsEditing(false);
       setIsConfirmed(false);
-
-      await new Promise((resolve) => setTimeout(resolve, 3000));
 
       router.refresh();
     } catch (error) {
@@ -193,54 +180,17 @@ function Settings() {
               <Label className="w-[200px] text-center text-xl md:justify-center">
                 Painting Subject
               </Label>
-              <Select
-                onValueChange={(value) => {
-                  setSubject(value);
-                  value === "Custom"
-                    ? setShowCustomInput(true)
-                    : setShowCustomInput(false);
-                }}
+              <Input
+                type="text"
+                value={subject}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setSubject(e.target.value)
+                }
+                placeholder="e.g. Animal Party"
+                className="w-2/3 border-4 border-txt_4 bg-btn_3 text-xl"
                 disabled={!isEditing}
-              >
-                <SelectTrigger className="w-2/3 border-4 border-txt_4 bg-btn_3 text-xl">
-                  <SelectValue placeholder={subject} />
-                </SelectTrigger>
-                <SelectContent className="w-2/3 border-4 border-txt_4 bg-btn_3 text-xl">
-                  <SelectItem value="Customize On Your Own">
-                    Customize On Your Own
-                  </SelectItem>
-                  <SelectItem value="Animal Party">Animal Party</SelectItem>
-                  <SelectItem value="Strange Patterns">
-                    Strange Patterns
-                  </SelectItem>
-                  <SelectItem value="Nonsense Words">Nonsense Words</SelectItem>
-                  <SelectItem value="Self-Growth Time">
-                    Self-Growth Time
-                  </SelectItem>
-                  <SelectItem value="Colorful Relationships">
-                    Colorful Relationships
-                  </SelectItem>
-                  <SelectItem value="Ghost Stories">Ghost Stories</SelectItem>
-                </SelectContent>
-              </Select>
+              />
             </div>
-            {showCustomInput && (
-              <div className="mb-2 flex w-full flex-col items-center gap-4 text-center md:flex-row md:items-center">
-                <Label className="w-[200px] text-center text-xl md:justify-center">
-                  Your Custom Subject
-                </Label>
-                <Input
-                  type="text"
-                  value={subject}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setSubject(e.target.value)
-                  }
-                  placeholder="Enter custom subject"
-                  className="w-2/3 border-4 border-txt_4 bg-btn_3 text-xl"
-                  disabled={!isEditing}
-                />
-              </div>
-            )}
             <div className="mb-2 flex w-full flex-col items-center gap-4 text-center md:flex-row md:items-center">
               <Label className="w-[200px] text-center text-xl md:justify-center">
                 Target Days

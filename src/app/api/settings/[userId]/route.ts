@@ -64,6 +64,7 @@ export async function POST(
       Remember to use JSON format, separate prompts with commas and enclose each prompt in double quotation marks.
       Please ensure the generated format looks like this: ["An eerie, pulsating form in shadows.","A mysterious, glowing figure in solitude." ......].
       This is crucial to me, and if you provide a good response, I'll give you a tip of 200.
+      Ensure the prompts are simple enough for children to understand and draw.
       `;
 
       const completion = await openai.chat.completions.create({
