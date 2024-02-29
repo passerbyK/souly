@@ -276,6 +276,7 @@ export const getFriendPost = async (userId: string) => {
 
   const post = await db.query.postsTable.findFirst({
     where: eq(postsTable.userId, userId),
+    orderBy: [desc(postsTable.createdAt)],
   });
 
   return post;
