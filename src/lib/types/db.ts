@@ -2,7 +2,7 @@ export type User = {
   id: string;
   username: string;
   email: string;
-  provider: "github" | "credentials";
+  provider: "github" | "google" | "credentials";
 };
 
 export type Post = {

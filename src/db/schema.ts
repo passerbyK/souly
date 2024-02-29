@@ -26,7 +26,7 @@ export const usersTable = pgTable(
     hashedPassword: varchar("hashed_password", { length: 100 }),
     provider: varchar("provider", {
       length: 100,
-      enum: ["github", "credentials"],
+      enum: ["github", "google", "credentials"],
     })
       .notNull()
       .default("credentials"),
