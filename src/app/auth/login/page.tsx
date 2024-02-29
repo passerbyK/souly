@@ -105,6 +105,24 @@ function Login() {
             >
               Sign In
             </Button>
+            <Button
+              onClick={async () => {
+                signIn("google", {
+                  callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/personal`,
+                });
+              }}
+              className="mt-4 w-full rounded-2xl border-4 border-bdr bg-btn text-center text-xl text-txt"
+            >
+              <Image
+                src="/google.png"
+                alt="google icon"
+                width={25}
+                height={25}
+                className="mx-2 rounded-2xl border-2"
+              />
+              <span className="hidden sm:inline">Sign In with Google</span>
+              <span className="sm:hidden">Google</span>
+            </Button>
           </form>
         </CardContent>
       </Card>
