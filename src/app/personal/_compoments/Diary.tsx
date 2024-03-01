@@ -12,7 +12,7 @@ type postProps = {
 };
 
 function Diary({ id, topic, image, createdAt, likes }: postProps) {
-  const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thr", "Fri", "Sat"];
+  const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const formattedDate = `
     ${createdAt.getFullYear()}-
     ${(createdAt.getMonth() + 1).toString().padStart(2, "0")}-

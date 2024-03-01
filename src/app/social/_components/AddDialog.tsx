@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation";
+import { redirect, useParams } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -45,9 +45,9 @@ async function AddDialog() {
             if (!otherUser) return;
             if (typeof otherUser !== "string") return;
             const result = await requestFriend(userId, otherUser);
-            // console.log(result);
-            if (!result) {
-              // final TODO: tell user no this specific user or chat already exist!!!
+            console.log(result);
+            if (result == "nothing" || result == "done before") {
+              redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/social?error=${result}`);
             } else {
               redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/social`);
             }
