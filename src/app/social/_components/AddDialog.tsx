@@ -1,4 +1,4 @@
-import { redirect, useParams } from "next/navigation";
+import { redirect } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -47,7 +47,9 @@ async function AddDialog() {
             const result = await requestFriend(userId, otherUser);
             console.log(result);
             if (result == "nothing" || result == "done before") {
-              redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/social?error=${result}`);
+              redirect(
+                `${publicEnv.NEXT_PUBLIC_BASE_URL}/social?error=${result}`,
+              );
             } else {
               redirect(`${publicEnv.NEXT_PUBLIC_BASE_URL}/social`);
             }

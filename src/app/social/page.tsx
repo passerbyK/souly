@@ -1,5 +1,5 @@
-import { IoLogoSnapchat } from "react-icons/io";
 import { FaUserClock, FaUserTimes } from "react-icons/fa";
+import { IoLogoSnapchat } from "react-icons/io";
 
 import { redirect } from "next/navigation";
 
@@ -13,7 +13,7 @@ import { publicEnv } from "@/lib/env/public";
 import { getAddedFriends } from "./_components/action";
 
 async function SocialPage({
-  searchParams
+  searchParams,
 }: {
   searchParams?: { [key: string]: string | string[] | undefined };
 }) {
@@ -41,28 +41,30 @@ async function SocialPage({
   return (
     <div className="mt-0 flex h-full w-full items-center justify-center bg-brand_2 md:mt-20 lg:mt-0">
       <div className="flex flex-col items-center justify-center">
-        {(!searchParams?.error) ? (
+        {!searchParams?.error ? (
           <>
             <IoLogoSnapchat size={100} className="text-bdr_3" />
             <p className="pt-6 text-center text-2xl font-semibold text-bdr_3">
               Invite your friends to paint with you.
             </p>
-          </>) : ( (searchParams?.error == "nothing") ? (
-            <>
-              <FaUserTimes size={100} className="text-bdr_3" />
-              <p className="pt-6 text-center text-2xl font-semibold text-bdr_3">
-                This account does not exist. <br />
-                Invite your friend to join Souly.
-              </p>
-            </>): (
-            <>
-              <FaUserClock size={100} className="text-bdr_3" />
-              <p className="pt-6 text-center text-2xl font-semibold text-bdr_3">
-                You have already sent a request to the user. <br />
-                Wait for his/her response.
-              </p>
           </>
-        ))}
+        ) : searchParams?.error == "nothing" ? (
+          <>
+            <FaUserTimes size={100} className="text-bdr_3" />
+            <p className="pt-6 text-center text-2xl font-semibold text-bdr_3">
+              This account does not exist. <br />
+              Invite your friend to join Souly.
+            </p>
+          </>
+        ) : (
+          <>
+            <FaUserClock size={100} className="text-bdr_3" />
+            <p className="pt-6 text-center text-2xl font-semibold text-bdr_3">
+              You have already sent a request to the user. <br />
+              Wait for his/her response.
+            </p>
+          </>
+        )}
       </div>
     </div>
   );
