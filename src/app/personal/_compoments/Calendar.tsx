@@ -56,7 +56,7 @@ function Calendar({ startDay, endDay, successDays }: CalendarProps) {
       <style>
         {`
           .rdp {
-            --rdp-cell-size: 20px;
+            --rdp-cell-size: 28px;
           }
           .rdp-day {
             margin: 3px;
