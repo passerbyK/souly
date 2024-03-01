@@ -12,6 +12,7 @@ import {
 export const requestFriend = async (userId: string, otheruserEmail: string) => {
   "use server";
   console.log("[requestFriend]");
+  let e = "";
 
   // get userId of other user
   const otheruser = await db
@@ -19,13 +20,17 @@ export const requestFriend = async (userId: string, otheruserEmail: string) => {
     .from(usersTable)
     .where(eq(usersTable.email, otheruserEmail))
     .execute();
-  if (otheruser.length == 0) return null;
+  if (otheruser.length == 0) {
+    e = "nothing";
+    return e;
+  }
   const otheruserId = otheruser[0].id;
 
   // check if the two user have existed relationship
   const existedRelation = await findExistedRelation(userId, otheruserId);
   if (existedRelation) {
-    return null;
+    e = "done before";
+    return e;
   }
 
   const newRelationId = await db.transaction(async (tx) => {
