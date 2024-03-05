@@ -66,10 +66,15 @@ export default CredentialsProvider({
       };
     }
 
+    if (existedUser && username) {
+      console.log("Email already existed");
+      throw new Error("duplicate signUp");
+    }
+
     // Sign in
     if (existedUser.provider !== "credentials") {
       console.log(`The email has registered with ${existedUser.provider}.`);
-      return null;
+      throw new Error("please sign in with google");
     }
     if (!existedUser.hashedPassword) {
       console.log("The email has registered with social account.");
@@ -79,8 +84,9 @@ export default CredentialsProvider({
     const isValid = await bcrypt.compare(password, existedUser.hashedPassword);
     if (!isValid) {
       console.log("Wrong password. Try again.");
-      return null;
+      throw new Error("wrong password");
     }
+
     return {
       email: existedUser.email,
       name: existedUser.username,

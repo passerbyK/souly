@@ -5,7 +5,6 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 import AuthInput from "../_components/AuthInput";
 
@@ -18,27 +17,66 @@ function SignUp() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
-
-  const router = useRouter();
+  const [usernameerror, setUsernameerror] = useState<string>("null");
+  const [emailerror, setEmailerror] = useState<string>("null");
+  const [passworderror, setPassworderror] = useState<string>("null");
+  const [confirmpassworderror, setConfirmpassworderror] =
+    useState<string>("null");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    try {
-      if (password !== confirmPassword) {
-        alert("Passwords do not match. Please try again.");
-        return;
+    if (!username) {
+      setUsernameerror("username");
+    }
+    if (username) {
+      setUsernameerror("null");
+    }
+    if (!email) {
+      setEmailerror("email");
+    }
+    if (email) {
+      setEmailerror("null");
+    }
+    if (password.length == 8) {
+      setPassworderror("null");
+    }
+    if (!password) {
+      setPassworderror("password");
+    }
+    if (password && password.length !== 8) {
+      setPassworderror("length");
+    }
+    if (!confirmPassword) {
+      setConfirmpassworderror("confirmPassword");
+    }
+    if (confirmPassword && password !== confirmPassword) {
+      setConfirmpassworderror("fail");
+    }
+    if (password === confirmPassword) {
+      setConfirmpassworderror("null");
+    }
+    if (
+      username &&
+      email &&
+      password.length == 8 &&
+      confirmPassword === password
+    ) {
+      try {
+        const res = await signIn("credentials", {
+          username,
+          email,
+          password,
+          redirect: false,
+        });
+        if (res?.error == null) {
+          window.location.href = `${publicEnv.NEXT_PUBLIC_BASE_URL}/preference`;
+        } else {
+          setEmailerror("duplicate");
+          throw new Error(res?.error);
+        }
+      } catch (e) {
+        console.log(e);
       }
-
-      await signIn("credentials", {
-        username,
-        email,
-        password,
-        callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/preference`,
-      });
-    } catch (e) {
-      console.log(e);
-      router.push("/auth/signup");
     }
   };
 
@@ -88,24 +126,28 @@ function SignUp() {
               label="Username"
               type="text"
               value={username}
+              error={usernameerror}
               setValue={setUsername}
             />
             <AuthInput
               label="Email"
               type="email"
               value={email}
+              error={emailerror}
               setValue={setEmail}
             />
             <AuthInput
               label="Password"
               type="password"
               value={password}
+              error={passworderror}
               setValue={setPassword}
             />
             <AuthInput
               label="Confirm Password"
               type="password"
               value={confirmPassword}
+              error={confirmpassworderror}
               setValue={setConfirmPassword}
             />
             <div className="mb-2 mt-4 justify-center text-center text-xl text-gray-500">

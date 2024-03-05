@@ -5,7 +5,6 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 import AuthInput from "../_components/AuthInput";
 
@@ -16,21 +15,46 @@ import { publicEnv } from "@/lib/env/public";
 function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-
-  const router = useRouter();
+  const [emailerror, setEmailerror] = useState<string>("null");
+  const [passworderror, setPassworderror] = useState<string>("null");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    try {
-      await signIn("credentials", {
-        email,
-        password,
-        callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/personal`,
-      });
-    } catch (e) {
-      console.log(e);
-      router.push("/auth/login");
+    if (!email) {
+      setEmailerror("email");
+    }
+    if (email) {
+      setEmailerror("null");
+    }
+    if (password.length == 8) {
+      setPassworderror("null");
+    }
+    if (!password) {
+      setPassworderror("password");
+    }
+    if (password && password.length !== 8) {
+      setPassworderror("length");
+      return;
+    }
+    if (email && password.length == 8) {
+      try {
+        const res = await signIn("credentials", {
+          email,
+          password,
+          //callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/personal`,
+          redirect: false,
+        });
+        console.log(res?.status, res?.error);
+        if (res?.error == null) {
+          window.location.href = `${publicEnv.NEXT_PUBLIC_BASE_URL}/personal`;
+        } else {
+          setEmailerror("wrong");
+          setPassworderror("wrong");
+          throw new Error(res?.error);
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -81,12 +105,14 @@ function Login() {
               type="email"
               value={email}
               setValue={setEmail}
+              error={emailerror}
             />
             <AuthInput
               label="Password"
               type="password"
               value={password}
               setValue={setPassword}
+              error={passworderror}
             />
             <div className="mb-2 mt-4 justify-center text-center text-xl text-gray-500">
               <span>
