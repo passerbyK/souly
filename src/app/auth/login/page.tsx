@@ -26,17 +26,13 @@ function Login() {
     if (email) {
       setEmailerror("null");
     }
-    if (password.length == 8) {
+    if (password) {
       setPassworderror("null");
     }
     if (!password) {
       setPassworderror("password");
     }
-    if (password && password.length !== 8) {
-      setPassworderror("length");
-      return;
-    }
-    if (email && password.length == 8) {
+    if (email && password) {
       try {
         const res = await signIn("credentials", {
           email,

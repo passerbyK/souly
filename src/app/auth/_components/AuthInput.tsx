@@ -46,7 +46,7 @@ function AuthInput({ label, type, value, error, setValue }: Props) {
                 : error == "confirmPassword"
                   ? "confirm password can't be empty"
                   : error == "length"
-                    ? "password must contain 8 characters"
+                    ? "password must contain at least 8 characters"
                     : error == "fail"
                       ? "confirm password doesn't match password, please try again"
                       : error == "wrong"

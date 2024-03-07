@@ -37,13 +37,13 @@ function SignUp() {
     if (email) {
       setEmailerror("null");
     }
-    if (password.length == 8) {
+    if (password.length >= 8) {
       setPassworderror("null");
     }
     if (!password) {
       setPassworderror("password");
     }
-    if (password && password.length !== 8) {
+    if (password && password.length < 8) {
       setPassworderror("length");
     }
     if (!confirmPassword) {
@@ -58,7 +58,7 @@ function SignUp() {
     if (
       username &&
       email &&
-      password.length == 8 &&
+      password.length >= 8 &&
       confirmPassword === password
     ) {
       try {
