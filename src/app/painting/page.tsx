@@ -4,6 +4,7 @@ import { useRef, useEffect, useState } from "react";
 import { ChromePicker } from "react-color";
 import type { ColorResult } from "react-color";
 import { BsEraser } from "react-icons/bs";
+import { PiPaintBrushDuotone } from "react-icons/pi";
 
 // import { toPng } from "html-to-image";
 import { useSession } from "next-auth/react";
@@ -23,11 +24,14 @@ import { useDraw } from "@/hooks/useDraw";
 import { usePost } from "@/hooks/usePost";
 import type { Draw } from "@/lib/types/shared_types";
 
+import "./style.css";
+
 export default function Painting() {
   const { data: session, status } = useSession();
   const router = useRouter();
 
-  const [color, setColor] = useState<string>("#000");
+  const [color, setColor] = useState<string>("#FFFFFF");
+  const [displayColor, setDisplayColor] = useState<string>("#FFFFFF");
   const [showPicker, setShowPicker] = useState(false);
   const { canvasRef, onMouseDown, onTouchStart, clear } = useDraw(drawLine);
   const elementRef = useRef<HTMLDivElement>(null);
@@ -44,6 +48,12 @@ export default function Painting() {
 
   const [isPostDialog, setIsPostDialog] = useState<boolean>(false);
   const [isConfirmed, setIsConfirmed] = useState<boolean>(false);
+
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [brushSize, setBrushSize] = useState(5);
+
+  const [brush, setBrush] = useState(false);
+  const [eraser, setEraser] = useState(false);
 
   const userId = session?.user?.id ?? "";
 
@@ -111,6 +121,18 @@ export default function Painting() {
 
   const handleColorIconClick = () => {
     setShowPicker(!showPicker);
+    isExpanded && setIsExpanded(!isExpanded);
+  };
+
+  const handleSizeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newSize = parseInt(event.target.value, 10);
+    setBrushSize(newSize);
+    console.log(brushSize);
+  };
+
+  const toggleExpansion = () => {
+    setIsExpanded(!isExpanded);
+    showPicker && setShowPicker(!showPicker);
   };
 
   const handlePostClick = async () => {
@@ -185,7 +207,7 @@ export default function Painting() {
   function drawLine({ prevPoint, currentPoint, ctx }: Draw) {
     const { x: currX, y: currY } = currentPoint;
     const lineColor = color;
-    const lineWidth = 5;
+    const lineWidth = brushSize;
 
     const startPoint = prevPoint ?? currentPoint;
     ctx.beginPath();
@@ -273,24 +295,61 @@ export default function Painting() {
               </div>
             </div>
             <div className="flex w-full justify-center gap-4 lg:justify-start">
-              <div
-                className="z-10 h-[25px] w-[25px] cursor-pointer self-center rounded-full p-2"
-                onClick={handleColorIconClick}
-                style={{ backgroundColor: color }}
-              >
-                {showPicker && (
-                  <ChromePicker
-                    color={color}
-                    onChange={(e: ColorResult) => setColor(e.hex)}
-                  />
-                )}
-              </div>
-
-              <BsEraser
-                className="z-10 h-[30px] w-[30px] cursor-pointer self-center rounded-full p-1 hover:bg-white"
-                onClick={() => setColor("#fff")}
+              <PiPaintBrushDuotone
+                className={`h-[40px] w-[40px] cursor-pointer self-center rounded-full p-1 ${
+                  brush && "bg-slate-100/50"
+                }`}
+                onClick={() => {
+                  setEraser(false);
+                  setBrush(true);
+                  setColor(displayColor);
+                }}
               />
-
+              <BsEraser
+                className={`h-[40px] w-[40px] cursor-pointer self-center rounded-full p-1 ${
+                  eraser && "bg-slate-100/50"
+                }`}
+                onClick={() => {
+                  setColor("#fff");
+                  setEraser(true);
+                  setBrush(false);
+                }}
+              />
+              <div
+                className="h-[30px] w-[30px] cursor-pointer self-center rounded-full p-1"
+                onClick={handleColorIconClick}
+                style={{ backgroundColor: displayColor }}
+              ></div>
+              <div
+                className={`cursor-pointer self-center rounded-full bg-black`}
+                style={{ height: `${brushSize}px`, width: "40px" }}
+                onClick={toggleExpansion}
+              ></div>
+              {showPicker && (
+                <div className="z-10 h-[25px] w-[125px] cursor-pointer self-center p-1">
+                  <ChromePicker
+                    color={displayColor}
+                    onChange={(e: ColorResult) => {
+                      setColor(e.hex);
+                      setDisplayColor(e.hex);
+                    }}
+                  />
+                </div>
+              )}
+              {isExpanded && (
+                <>
+                  <div className="mt-2 h-[40px] w-[150px] cursor-pointer self-center p-1">
+                    <input
+                      type="range"
+                      min="1"
+                      max="30"
+                      value={brushSize}
+                      onChange={handleSizeChange}
+                    />
+                  </div>
+                  <span className="self-center p-1">{brushSize}</span>
+                </>
+              )}
               <button
                 type="button"
                 className="my-4 flex items-end rounded-lg border-2 border-black px-2 text-base text-black hover:bg-description/80"
