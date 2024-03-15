@@ -44,7 +44,7 @@ async function FriendPage(props: Props) {
 
     return (
       <div className="h-full w-full overflow-y-auto bg-brand_2 p-2 lg:flex">
-        <div className="mr-6 lg: flex w-1/2 flex-col items-center lg:items-start">
+        <div className="lg: mr-6 flex w-1/2 flex-col items-center lg:items-start">
           <h1 className="pt-6 text-3xl text-txt_5 md:text-5xl lg:pl-6">
             {friend[0].name}
           </h1>
