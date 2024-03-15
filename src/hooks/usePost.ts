@@ -79,6 +79,7 @@ export const usePost = () => {
       } catch (error) {
         console.error("Error posting your painting:", error);
       } finally {
+        window.location.href = `/personal`;
         setLoading(false);
       }
     },
