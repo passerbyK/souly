@@ -159,10 +159,6 @@ export default function Painting() {
           description: description,
           image: response.image.data.link,
         });
-
-        await new Promise((resolve) => setTimeout(resolve, 3000));
-
-        router.push(`/personal`);
       } catch (error) {
         console.error("Error exporting canvas:", error);
       } finally {
