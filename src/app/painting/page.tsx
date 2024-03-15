@@ -30,8 +30,8 @@ export default function Painting() {
   const { data: session, status } = useSession();
   const router = useRouter();
 
-  const [color, setColor] = useState<string>("#FFFFFF");
-  const [displayColor, setDisplayColor] = useState<string>("#FFFFFF");
+  const [color, setColor] = useState<string>("#000000");
+  const [displayColor, setDisplayColor] = useState<string>("#000000");
   const [showPicker, setShowPicker] = useState(false);
   const { canvasRef, onMouseDown, onTouchStart, clear } = useDraw(drawLine);
   const elementRef = useRef<HTMLDivElement>(null);
