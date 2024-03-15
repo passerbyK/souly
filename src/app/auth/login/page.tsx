@@ -5,7 +5,6 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 import AuthInput from "../_components/AuthInput";
 
@@ -17,20 +16,31 @@ function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const router = useRouter();
+  const [emailError, setEmailError] = useState<string>("null");
+  const [passwordError, setPasswordError] = useState<string>("null");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    try {
-      await signIn("credentials", {
-        email,
-        password,
-        callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/personal`,
-      });
-    } catch (e) {
-      console.log(e);
-      router.push("/auth/login");
+    // check if email or password is empty
+    if (!email) setEmailError("email");
+    if (email) setEmailError("null");
+    if (!password) setPasswordError("password");
+    if (password) setPasswordError("null");
+
+    if (email && password) {
+      try {
+        await signIn("credentials", {
+          email,
+          password,
+          callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/personal`,
+        });
+      } catch (e) {
+        setEmailError("wrong");
+        setPasswordError("wrong");
+        console.log(e);
+        // router.push("/auth/login");
+      }
     }
   };
 
@@ -81,12 +91,14 @@ function Login() {
               type="email"
               value={email}
               setValue={setEmail}
+              error={emailError}
             />
             <AuthInput
               label="Password"
               type="password"
               value={password}
               setValue={setPassword}
+              error={passwordError}
             />
             <div className="mb-2 mt-4 justify-center text-center text-xl text-gray-500">
               <span>
