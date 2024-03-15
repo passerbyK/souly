@@ -44,11 +44,11 @@ async function FriendPage(props: Props) {
 
     return (
       <div className="h-full w-full overflow-y-auto bg-brand_2 p-2 lg:flex">
-        <div className="lg: flex w-full flex-col items-center lg:items-start">
+        <div className="lg: mr-6 flex w-1/2 flex-col items-center lg:items-start">
           <h1 className="pt-6 text-3xl text-txt_5 md:text-5xl lg:pl-6">
             {friend[0].name}
           </h1>
-          <h2 className="mx-8 pt-4 text-center text-xl text-txt_6 md:text-3xl lg:ml-auto lg:pl-6 lg:text-start">
+          <h2 className="pt-4 text-center text-xl text-txt_6 md:text-3xl lg:pl-6 lg:text-start">
             {friendPost.topic}
           </h2>
         </div>
